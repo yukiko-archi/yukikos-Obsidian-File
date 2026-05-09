@@ -1,0 +1,16 @@
+{
+  "provider": "google",
+  "model": "gemini-2.0-flash",
+  "googleApiKey": "AIzaSyBF8RXiqAvINdxLuROG3VBDKY3FdpY1p_g",
+  "baseUrl": "",
+  "temperature": "Default",
+  "thinkingLevel": "Default",
+  "maxOutputTokens": "Default",
+  "rules": "",
+  "chatsFolder": "copilot/copilot-conversations",
+  "maxHistoryTurns": 30,
+  "generateChatName": true,
+  "readImages": true,
+  "reviewChanges": true,
+  "debug": false
+}
