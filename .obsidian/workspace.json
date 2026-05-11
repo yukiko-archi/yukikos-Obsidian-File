@@ -4,70 +4,77 @@
     "type": "split",
     "children": [
       {
-        "id": "14647fc5a37f9067",
-        "type": "tabs",
+        "id": "88934a4cb5e17338",
+        "type": "split",
         "children": [
           {
-            "id": "c6c69a864244f0e8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "その他　ログ.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "その他　ログ"
-            }
-          }
-        ]
-      },
-      {
-        "id": "4d8a02f4a3fb102f",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "d378c7d5bcbc066d",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "terminal:terminal",
-              "state": {
-                "terminal:terminal": {
-                  "cwd": "\\\\LS720DD25\\yukiko\\AIエージェント\\googledrive同期\\google sync\\google sync",
-                  "focus": false,
-                  "profile": {
-                    "args": [],
-                    "executable": "C:\\Windows\\System32\\cmd.exe",
-                    "followTheme": true,
-                    "name": "",
-                    "platforms": {
-                      "win32": true
-                    },
-                    "pythonExecutable": "python3",
-                    "restoreHistory": false,
-                    "rightClickAction": "copyPaste",
-                    "successExitCodes": [
-                      "0",
-                      "SIGINT",
-                      "SIGTERM"
-                    ],
-                    "terminalOptions": {
-                      "documentOverride": null
-                    },
-                    "type": "integrated",
-                    "useWin32Conhost": true
+            "id": "14647fc5a37f9067",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "c6c69a864244f0e8",
+                "type": "leaf",
+                "state": {
+                  "type": "markdown",
+                  "state": {
+                    "file": "理容室のんき/理髪店のんきログ.md",
+                    "mode": "source",
+                    "source": false
                   },
-                  "serial": null
+                  "icon": "lucide-file",
+                  "title": "理髪店のんきログ"
                 }
-              },
-              "pinned": true,
-              "icon": "terminal",
-              "title": "ターミナル: C:\\Windows\\System32\\conhost.exe"
-            }
+              }
+            ]
+          },
+          {
+            "id": "47cf821339a896bc",
+            "type": "tabs",
+            "children": [
+              {
+                "id": "085bcc7c8083fe27",
+                "type": "leaf",
+                "pinned": true,
+                "state": {
+                  "type": "terminal:terminal",
+                  "state": {
+                    "terminal:terminal": {
+                      "cwd": "\\\\LS720DD25\\yukiko\\AIエージェント\\googledrive同期\\google sync\\google sync",
+                      "focus": false,
+                      "profile": {
+                        "args": [],
+                        "executable": "C:\\Windows\\System32\\cmd.exe",
+                        "followTheme": true,
+                        "name": "",
+                        "platforms": {
+                          "win32": true
+                        },
+                        "pythonExecutable": "python3",
+                        "restoreHistory": false,
+                        "rightClickAction": "copyPaste",
+                        "successExitCodes": [
+                          "0",
+                          "SIGINT",
+                          "SIGTERM"
+                        ],
+                        "terminalOptions": {
+                          "documentOverride": null
+                        },
+                        "type": "integrated",
+                        "useWin32Conhost": true
+                      },
+                      "serial": null
+                    }
+                  },
+                  "pinned": true,
+                  "icon": "terminal",
+                  "title": "ターミナル: ✦  Working… ()"
+                }
+              }
+            ]
           }
-        ]
+        ],
+        "direction": "horizontal"
       }
     ],
     "direction": "vertical"
@@ -209,16 +216,6 @@
             }
           },
           {
-            "id": "ce3ad4683fa06602",
-            "type": "leaf",
-            "state": {
-              "type": "copilot-chat-view",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "copilot-chat-view"
-            }
-          },
-          {
             "id": "8aa1115b0d01ccc6",
             "type": "leaf",
             "state": {
@@ -259,49 +256,56 @@
       "smart-connections:Smart Lookup: Open lookup view": false,
       "smart-connections:Toggle Footer Connections": false,
       "terminal:Open terminal": false,
-      "obsidian-kanban:Create new board": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-kanban:Create new board": false
     }
   },
-  "active": "c6c69a864244f0e8",
+  "active": "085bcc7c8083fe27",
   "lastOpenFiles": [
-    "三宅様邸/01 三宅さん案件メインノート.md",
-    "その他　ログ.md",
-    "その他　ログ",
-    "Chats/Hello.md",
+    "理容室のんき/理髪店のんきログ.md",
+    "プロジェクト/architect/uno-base-detail.html",
+    "プロジェクト/architect/katada-tei-detail.html",
+    "プロジェクト/architect/img/katada-tei/Thumbs.db",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_053659516.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_053656922.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_053650165.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_024213303~2.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_024213303.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_020943742.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_020937696.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_020247691.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_020242808.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230304_020215830.jpg",
+    "プロジェクト/architect/img/katada-tei/PXL_20230401_032833772.mp4",
+    "プロジェクト/architect/img/katada-tei/PXL_20230401_032518002.mp4",
+    "プロジェクト/architect/img/katada-tei/PXL_20230401_005757385.mp4",
+    "プロジェクト/architect/img/katada-tei/PXL_20230324_084122307.mp4",
+    "プロジェクト/architect/img/common",
+    "プロジェクト/architect/img/katada-tei",
+    "プロジェクト/architect/img/uno-base",
+    "美容/美容ログ.md",
+    "第二の脳プロジェクト/AI秘書との会話ログ.md",
     "土地家屋調査士/土地家屋調査士勉強 ログ.md",
+    "第二の脳プロジェクト/第二の脳プロジェクト　ログ.md",
+    "第二の脳プロジェクト/第二の脳のログ.md",
+    "その他　ログ.md",
+    "三宅様邸/01 三宅さん案件メインノート.md",
+    "Chats/Hello.md",
     "Untitled Kanban 2.md",
     "支部会館/支部会館.md",
-    "美容/美容ログ.md",
     "copilot/copilot-conversations/'LS720DD25yukikoAIエージェントgoogledrive同期google_syncgoogle_sync'_上@20260509_012404.md",
     "Untitled Kanban 1.md",
     "copilot/copilot-log.md",
     "Untitled Kanban.md",
     "copilot/copilot-conversations/契約金額の確認@20260410_191813.md",
-    "GoogleMAP",
     "copilot/copilot-conversations/三宅さんDIY範囲まとめ@20260425_231043.md",
     "copilot/copilot-conversations/支部会館とRAGツール導入@20260508_124220.md",
     "copilot/copilot-custom-prompts/工程管理アシスタント.md.md",
     "第二の脳プロジェクト/AIとの会話.md",
-    "理容室のんき/理髪店のんきログ.md",
-    "第二の脳プロジェクト/AI秘書との会話ログ.md",
-    "てすてす",
-    "無題のフォルダ 2",
-    "理容室のんき",
     "理髪店のんき/理髪店のんきさんのログ.md",
-    "無題のファイル.base",
     "copilot/copilot-custom-prompts/要約して.md",
     "無題のファイル.canvas",
     "copilot/copilot-conversations/支部会館リフォームと収益化@20260508_124220.md",
     "copilot/copilot-custom-prompts/💄美容研究者.md",
-    "copilot/copilot-conversations/今日の仕事計画@20260424_160722.md",
-    "copilot/copilot-conversations/AI秘書サポートガイド設定@20260401_174350.md",
-    "土地家屋調査士",
-    "理髪店のんき",
-    "建築/三宅様邸/2025.9.5三宅様物件調査レポート のコピー.docx",
-    "建築/三宅様邸/2026.02提案書.pdf のコピー.pdf",
-    "建築/三宅様邸/2026.03.1３契約書.png のコピー.png",
-    "建築/三宅様邸/01 三宅さん案件メインノート.md",
-    "copilot/copilot-custom-prompts/5歳児にもわかるように.md"
+    "copilot/copilot-conversations/今日の仕事計画@20260424_160722.md"
   ]
 }

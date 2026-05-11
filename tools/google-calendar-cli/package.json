@@ -1,0 +1,17 @@
+{
+  "name": "google-calendar-cli",
+  "version": "1.0.0",
+  "description": "Local CLI for Google Calendar CRUD operations",
+  "main": "calendar-cli.js",
+  "type": "commonjs",
+  "scripts": {
+    "auth": "node calendar-cli.js auth",
+    "list": "node calendar-cli.js list",
+    "add": "node calendar-cli.js add",
+    "update": "node calendar-cli.js update",
+    "delete": "node calendar-cli.js delete"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}
