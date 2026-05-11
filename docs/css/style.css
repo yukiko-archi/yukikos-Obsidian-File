@@ -1,33 +1,35 @@
 /* 全体設定 */
 :root {
-    --primary-color: #4CAF50; /* 親しみやすいライトグリーン */
-    --secondary-color: #2196F3; /* 明るい水色 */
-    --accent-color: #FFC107; /* 活力あるイエロー */
-    --text-dark: #212121;
-    --text-light: #424242;
-    --bg-light: #f8fcfd; /* やや淡い水色 */
-    --bg-gradient-start: #e0f7fa;
-    --bg-gradient-end: #bbdefb;
-    --footer-bg: #37474F; /* 落ち着いたダークグレー */
-    --border-light: #e0e0e0;
+    --primary-color: #82B29A; /* くすみ系のセージグリーン (一旦現状維持、後で調整検討) */
+    --secondary-color: #2e6be6; /* 明るいブルー（新しいアクセントカラー2） */
+    --accent-color: #ff8484; /* 明るいレッド（新しいアクセントカラー1） */
+    --text-dark: #000000;
+    --text-light: #000000;
+    --bg-light: #fff7ef; /* 新しい背景色 */
+    --bg-gradient-start: #fffcf9; /* 新しい背景に合わせたグラデーション開始色 */
+    --bg-gradient-end: #fff0e8; /* 新しい背景に合わせたグラデーション終了色 */
+    --footer-bg: #4A4A4A; /* ダークグレー (現状維持) */
+    --border-light: #E0DCDC; /* (現状維持) */
 }
+
 
 body {
     margin: 0;
-    font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+    font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', 'Hiragino Sans', sans-serif;
     color: var(--text-light);
-    line-height: 1.7;
+    line-height: 1.8; /* 少しゆったりと */
     background-color: var(--bg-light);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'UD デジタル教科書体', 'Rounded M+', 'Noto Sans JP', sans-serif;
+    font-family: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif; /* 柔らかく読みやすい丸ゴシックに統一 */
     color: var(--text-dark);
-    line-height: 1.3;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
+    line-height: 1.5; /* 少しゆったりと */
+    margin-top: 1.8em;
+    margin-bottom: 0.8em;
+    letter-spacing: 0.03em; /* 少し広げて上品に */
 }
 
 h1 {
@@ -43,7 +45,7 @@ p {
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--text-dark);
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -52,20 +54,30 @@ a:hover {
     color: var(--secondary-color);
 }
 
+.text-accent-red {
+    color: var(--accent-color);
+    font-weight: 700; /* 太字にして強調 */
+}
+
+.text-accent-blue {
+    color: var(--secondary-color);
+    font-weight: 700; /* 太字にして強調 */
+}
+
 /* コンテナとセクション */
 .content-section {
     max-width: 1000px;
-    margin: 4rem auto;
-    padding: 0 2rem;
+    margin: 6rem auto;
+    padding: 0 3rem;
     text-align: center;
 }
 
 .cta-section {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 6rem 3rem;
     background-color: var(--secondary-color);
     color: #ffffff;
-    margin-top: 4rem;
+    margin-top: 6rem;
 }
 
 .cta-section h2 {
@@ -83,27 +95,29 @@ a:hover {
     border-radius: 30px;
     font-weight: bold;
     font-size: 1.1rem;
+    border: 1px solid var(--text-dark); /* 黒い枠線を追加 */
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .button:hover {
-    background-color: #FFD54F; /* 少し明るいイエロー */
+    background-color: #ff9999; /* 新しい--accent-colorの少し明るい色 */
     transform: translateY(-2px);
 }
 
 .button-small {
-    background-color: var(--primary-color);
+    background-color: var(--text-dark);
     color: #ffffff;
     padding: 0.7rem 1.5rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: normal;
+    border: 1px solid var(--text-dark); /* 黒い枠線を追加 */
     transition: background-color 0.3s ease;
 }
 
 .button-small:hover {
-    background-color: #66BB6A;
+    background-color: #9EC9B2; /* --primary-colorの少し明るい色 */
 }
 
 /* ヘッダーとナビゲーション */
@@ -131,7 +145,9 @@ header {
 }
 
 .logo-img {
-    height: 40px; /* ロゴの高さ調整 */
+    max-width: 100%;
+    height: auto; /* 高さを自動調整し、レスポンシブに対応 */
+    max-height: 40px; /* 元の高さの制約を維持しつつ、縮小を可能にする */
 }
 
 nav {
@@ -140,7 +156,7 @@ nav {
 }
 
 nav a {
-    color: var(--primary-color);
+    color: var(--text-dark);
     font-weight: bold;
     padding: 0.75rem 1.25rem;
     border-radius: 25px;
@@ -148,8 +164,15 @@ nav a {
 }
 
 nav a:hover {
-    background-color: var(--primary-color);
-    color: #ffffff;
+    background-color: transparent;
+    color: var(--accent-color); /* ホバー時はアクセントカラーに */
+}
+
+.nav-active {
+    color: var(--accent-color) !important; /* 選択中のページは赤色に */
+    background-color: transparent !important; /* 背景色も透明に */
+    border-bottom: 2px solid var(--accent-color); /* 下線で強調 */
+    border-radius: 0 !important; /* 下線のために角丸をなくす */
 }
 
 /* ヒーローセクション */
@@ -159,7 +182,7 @@ nav a:hover {
 #portfolio-hero,
 #contact-hero {
     text-align: center;
-    padding: 8rem 2rem;
+    padding: 10rem 3rem;
     background-image: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
     color: var(--text-dark);
     position: relative;
@@ -197,7 +220,7 @@ nav a:hover {
     background-color: #ffffff;
     padding: 2.5rem;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -205,13 +228,32 @@ nav a:hover {
 }
 
 .profile-img {
-    width: 180px;
-    height: 180px;
+    max-width: 100%;
+    height: auto; /* レスポンシブに対応 */
+    width: 180px; /* 元の幅を最大値として維持 */
     border-radius: 50%;
     object-fit: cover;
-    border: 5px solid var(--primary-color);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+
+.hero-illustration,
+.philosophy-illustration {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto; /* 上下の余白と中央寄せ */
+    border-radius: 10px; /* 既存の画像に合わせる */
+}
+
+.hero-illustration,
+.philosophy-illustration {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto; /* 上下の余白と中央寄せ */
+    border-radius: 10px; /* 既存の画像に合わせる */
+}
+
 
 .profile-card p {
     font-size: 1.1rem;
@@ -221,7 +263,7 @@ nav a:hover {
 .service-card {
     background-color: #ffffff;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     padding: 2.5rem;
     margin-bottom: 2.5rem;
     text-align: left;
@@ -233,7 +275,7 @@ nav a:hover {
 }
 
 .service-card h2 {
-    color: var(--primary-color);
+    color: var(--text-dark);
     font-size: 1.8rem;
     margin-bottom: 1rem;
 }
@@ -245,8 +287,8 @@ nav a:hover {
 }
 
 .service-card ul li {
-    background-color: #e8f5e9;
-    border-left: 5px solid var(--primary-color);
+    background-color: #F4F2F0;
+    border-left: 5px solid var(--text-dark); /* 黒い枠線に変更 */
     padding: 0.8rem 1rem;
     margin-bottom: 0.8rem;
     border-radius: 5px;
@@ -268,7 +310,7 @@ nav a:hover {
 .portfolio-item {
     background-color: #ffffff;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     overflow: hidden;
     text-align: left;
     transition: transform 0.3s ease;
@@ -280,13 +322,13 @@ nav a:hover {
 
 .portfolio-img {
     width: 100%;
-    height: 250px;
+    height: auto; /* 高さを自動調整し、レスポンシブに対応 */
     object-fit: cover;
     display: block;
 }
 
 .portfolio-item h3 {
-    color: var(--primary-color);
+    color: var(--text-dark);
     font-size: 1.5rem;
     padding: 1.5rem 1.5rem 0.5rem;
 }
@@ -301,14 +343,14 @@ nav a:hover {
 }
 
 .placeholder-3d {
-    background-color: #e0f2f7; /* 淡い青色 */
-    color: #424242;
+    background-color: #F0F0EE; /* 非常に淡いベージュ */
+    color: var(--text-light);
     padding: 3rem 1.5rem;
     margin: 1.5rem;
     border-radius: 10px;
     text-align: center;
     font-weight: bold;
-    border: 2px dashed var(--secondary-color);
+    border: 2px dashed var(--text-dark);
     font-size: 1.1rem;
 }
 
@@ -316,7 +358,7 @@ nav a:hover {
 .contact-form-section {
     background-color: #ffffff;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     padding: 3rem;
     max-width: 800px;
     margin-left: auto;
@@ -376,10 +418,10 @@ nav a:hover {
 /* フッター */
 footer {
     text-align: center;
-    padding: 2.5rem;
+    padding: 3rem;
     background-color: var(--footer-bg);
     color: #ffffff;
-    margin-top: 5rem;
+    margin-top: 8rem;
     font-size: 0.9rem;
 }
 
@@ -414,20 +456,19 @@ footer {
 
 .detail-img {
     width: 100%;
-    height: 250px;
+    height: auto; /* 高さを自動調整し、レスポンシブに対応 */
     object-fit: cover;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .detail-3d-placeholder {
-    background-color: #e3f2fd; /* 淡い青色 */
+    background-color: #F0F0EE; /* 非常に淡いベージュ */
     padding: 4rem 2rem;
     margin: 4rem 0;
     border-radius: 15px;
     text-align: center;
     font-weight: bold;
-    border: 2px dashed var(--secondary-color);
     font-size: 1.2rem;
 }
 
@@ -446,4 +487,3 @@ footer {
     padding: 1rem 2.5rem;
     font-size: 1rem;
 }
-

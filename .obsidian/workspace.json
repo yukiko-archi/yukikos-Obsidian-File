@@ -4,77 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "88934a4cb5e17338",
-        "type": "split",
+        "id": "14647fc5a37f9067",
+        "type": "tabs",
         "children": [
           {
-            "id": "14647fc5a37f9067",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "c6c69a864244f0e8",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "理容室のんき/理髪店のんきログ.md",
-                    "mode": "source",
-                    "source": false
-                  },
-                  "icon": "lucide-file",
-                  "title": "理髪店のんきログ"
-                }
-              }
-            ]
-          },
-          {
-            "id": "47cf821339a896bc",
-            "type": "tabs",
-            "children": [
-              {
-                "id": "085bcc7c8083fe27",
-                "type": "leaf",
-                "pinned": true,
-                "state": {
-                  "type": "terminal:terminal",
-                  "state": {
-                    "terminal:terminal": {
-                      "cwd": "\\\\LS720DD25\\yukiko\\AIエージェント\\googledrive同期\\google sync\\google sync",
-                      "focus": false,
-                      "profile": {
-                        "args": [],
-                        "executable": "C:\\Windows\\System32\\cmd.exe",
-                        "followTheme": true,
-                        "name": "",
-                        "platforms": {
-                          "win32": true
-                        },
-                        "pythonExecutable": "python3",
-                        "restoreHistory": false,
-                        "rightClickAction": "copyPaste",
-                        "successExitCodes": [
-                          "0",
-                          "SIGINT",
-                          "SIGTERM"
-                        ],
-                        "terminalOptions": {
-                          "documentOverride": null
-                        },
-                        "type": "integrated",
-                        "useWin32Conhost": true
-                      },
-                      "serial": null
-                    }
-                  },
-                  "pinned": true,
-                  "icon": "terminal",
-                  "title": "ターミナル: ✦  Working… ()"
-                }
-              }
-            ]
+            "id": "c6c69a864244f0e8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "お客様の声/うのベース.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "うのベース"
+            }
           }
-        ],
-        "direction": "horizontal"
+        ]
       }
     ],
     "direction": "vertical"
@@ -259,38 +206,46 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "085bcc7c8083fe27",
+  "active": "c6c69a864244f0e8",
   "lastOpenFiles": [
-    "プロジェクト/architect",
-    "docs/uno-base-detail.html",
-    "docs/services.html",
-    "docs/portfolio.html",
-    "docs/katada-tei-detail.html",
-    "docs/index.html",
-    "docs/homepage_management_log.md",
-    "docs/contact.html",
-    "docs/about.html",
-    "docs/js/main.js",
-    "docs/js",
-    "docs/img/katada-tei/PXL_20230401_032833772.mp4",
-    "docs/img/katada-tei/PXL_20230401_031902351.jpg",
-    "docs/img/katada-tei/PXL_20230401_031855931.jpg",
-    "docs/img/katada-tei/PXL_20230401_031851925.jpg",
-    "docs/img/katada-tei/PXL_20230401_031349846.jpg",
-    "docs/img/katada-tei/PXL_20230401_005556586.jpg",
-    "docs/img/katada-tei/PXL_20230401_031343894.jpg",
-    "docs/img/katada-tei/PXL_20230401_005548226.jpg",
-    "docs/img/katada-tei/PXL_20230401_005544938.jpg",
-    "docs/img/katada-tei/PXL_20230330_025101585.jpg",
-    "docs/img/katada-tei/PXL_20230324_085736766.jpg",
+    "お客様の声/うのベース.md",
+    "docs/新しいフォルダー",
+    "docs/unobase-interview.html",
+    "docs/img/uno-base/uno_base_floor_plan.png",
+    "docs/img/uno-base/uno_base_interior_2.jpg",
+    "docs/img/uno-base/uno_base_interior_1.jpg",
+    "docs/img/uno-base/uno_base_entrance.jpg",
+    "docs/img/uno-base/うのベース内観2-1024x768.jpg",
+    "docs/img/uno-base/平面図.png",
+    "docs/img/uno-base/うのベース玄関.jpg",
+    "docs/img/uno-base/うのベース内観-1024x768.jpg",
+    "docs/img/common/three_generations_illustration.png.crswap",
+    "docs/img/common/couple_diy_illustration.png.crswap",
+    "docs/img/common/architect_illustration.png.crswap",
+    "docs/img/common/parent_child_imagination_illustration.png.crswap",
+    "docs/img/common/three_generations_illustration.png",
+    "docs/img/common/parent_child_imagination_illustration.png",
+    "docs/img/common/Thumbs.db",
+    "建築/三宅様邸/01 三宅さん案件メインノート 1.md",
+    "建築/三宅様邸/01 三宅さん案件メインノート.md",
+    "docs/homepage_design_concept.md",
+    "建築/三宅様邸/三宅邸リノベーションプロジェクト_統合ログ.md",
+    "建築/三宅様邸/プロジェクト進捗ログ_20260511.md",
+    "建築/三宅様邸/統合進捗ログ_20260511.md",
+    "建築/三宅様邸/平松電機見積書2026　三宅様邸.pdf",
+    "建築/三宅様邸/大田原さんみつも①.pdf",
+    "建築/三宅様邸/大田原さん見積もり２.pdf",
+    "copilot/copilot-custom-prompts/HP管理コンサルプロンプト.md",
+    "建築/レンタルキッチン計画メモ（文谷様）.md",
+    "copilot/copilot-custom-prompts/用語集を作って.md",
+    "その他　ログ.md",
+    "第二の脳プロジェクト/第二の脳プロジェクト　ログ.md",
     "理容室のんき/理髪店のんきログ.md",
+    "docs/homepage_management_log.md",
     "美容/美容ログ.md",
     "第二の脳プロジェクト/AI秘書との会話ログ.md",
     "土地家屋調査士/土地家屋調査士勉強 ログ.md",
-    "第二の脳プロジェクト/第二の脳プロジェクト　ログ.md",
     "第二の脳プロジェクト/第二の脳のログ.md",
-    "その他　ログ.md",
-    "三宅様邸/01 三宅さん案件メインノート.md",
     "Chats/Hello.md",
     "Untitled Kanban 2.md",
     "支部会館/支部会館.md",
@@ -299,14 +254,6 @@
     "copilot/copilot-log.md",
     "Untitled Kanban.md",
     "copilot/copilot-conversations/契約金額の確認@20260410_191813.md",
-    "copilot/copilot-conversations/三宅さんDIY範囲まとめ@20260425_231043.md",
-    "copilot/copilot-conversations/支部会館とRAGツール導入@20260508_124220.md",
-    "copilot/copilot-custom-prompts/工程管理アシスタント.md.md",
-    "第二の脳プロジェクト/AIとの会話.md",
-    "理髪店のんき/理髪店のんきさんのログ.md",
-    "copilot/copilot-custom-prompts/要約して.md",
-    "無題のファイル.canvas",
-    "copilot/copilot-conversations/支部会館リフォームと収益化@20260508_124220.md",
-    "copilot/copilot-custom-prompts/💄美容研究者.md"
+    "無題のファイル.canvas"
   ]
 }
