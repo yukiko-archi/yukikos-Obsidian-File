@@ -1,7 +1,7 @@
 {
   "userId": "64ffe58d-9969-40ff-8638-da12ea0946b2",
   "isPlusUser": false,
-  "plusLicenseKey": "",
+  "plusLicenseKey": "AIzaSyBpgg7LIMWF6I3eAINJrDM968Gz_vkPMfo",
   "openAIApiKey": "",
   "openAIOrgId": "",
   "huggingfaceApiKey": "",
@@ -12,7 +12,7 @@
   "azureOpenAIApiDeploymentName": "",
   "azureOpenAIApiVersion": "",
   "azureOpenAIApiEmbeddingDeploymentName": "",
-  "googleApiKey": "AIzaSyBF8RXiqAvINdxLuROG3VBDKY3FdpY1p_g",
+  "googleApiKey": "AIzaSyBpgg7LIMWF6I3eAINJrDM968Gz_vkPMfo",
   "openRouterAiApiKey": "",
   "xaiApiKey": "",
   "mistralApiKey": "",
@@ -24,7 +24,7 @@
   "githubCopilotToken": "",
   "githubCopilotTokenExpiresAt": 0,
   "defaultChainType": "llm_chain",
-  "defaultModelKey": "google/gemini-2.5-flash|openrouterai",
+  "defaultModelKey": "gemini-3.1-flash-lite-preview|google",
   "embeddingModelKey": "openai/text-embedding-3-small|openrouterai",
   "temperature": 0.1,
   "maxTokens": 6000,
@@ -48,7 +48,6 @@
   "chatNoteContextTags": [],
   "enableIndexSync": true,
   "debug": false,
-  "enableEncryption": false,
   "maxSourceChunks": 30,
   "enableInlineCitations": true,
   "groqApiKey": "",
@@ -63,7 +62,8 @@
       "projectEnabled": false,
       "capabilities": [
         "vision"
-      ]
+      ],
+      "enableCors": false
     },
     {
       "name": "google/gemini-2.5-flash",
@@ -72,6 +72,26 @@
       "isBuiltIn": true,
       "core": true,
       "projectEnabled": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gpt-5.5",
+      "provider": "openai",
+      "enabled": true,
+      "isBuiltIn": true,
+      "core": true,
+      "capabilities": [
+        "vision"
+      ]
+    },
+    {
+      "name": "gpt-5.4-mini",
+      "provider": "openai",
+      "enabled": true,
+      "isBuiltIn": true,
+      "core": true,
       "capabilities": [
         "vision"
       ]
@@ -99,7 +119,7 @@
     {
       "name": "claude-sonnet-4-6",
       "provider": "anthropic",
-      "enabled": true,
+      "enabled": false,
       "isBuiltIn": true,
       "capabilities": [
         "reasoning",
@@ -129,7 +149,7 @@
     {
       "name": "google/gemini-3-flash-preview",
       "provider": "openrouterai",
-      "enabled": false,
+      "enabled": true,
       "isBuiltIn": true,
       "capabilities": [
         "reasoning",
@@ -139,7 +159,7 @@
     {
       "name": "google/gemini-3.1-pro-preview",
       "provider": "openrouterai",
-      "enabled": false,
+      "enabled": true,
       "isBuiltIn": true,
       "capabilities": [
         "reasoning",
@@ -149,7 +169,7 @@
     {
       "name": "google/gemini-2.5-pro",
       "provider": "openrouterai",
-      "enabled": false,
+      "enabled": true,
       "isBuiltIn": true,
       "core": false,
       "projectEnabled": true,
@@ -236,7 +256,7 @@
     {
       "name": "gemini-3-flash-preview",
       "provider": "google",
-      "enabled": false,
+      "enabled": true,
       "isBuiltIn": true,
       "capabilities": [
         "reasoning",
@@ -246,7 +266,7 @@
     {
       "name": "gemini-3.1-pro-preview",
       "provider": "google",
-      "enabled": false,
+      "enabled": true,
       "isBuiltIn": true,
       "capabilities": [
         "reasoning",
@@ -408,16 +428,18 @@
   "promptSortStrategy": "timestamp",
   "chatHistorySortStrategy": "recent",
   "projectListSortStrategy": "recent",
+  "projectsFolder": "copilot/projects",
   "defaultConversationNoteName": "{$topic}@{$date}_{$time}",
   "inlineEditCommands": [],
   "projectList": [],
-  "lastDismissedVersion": null,
+  "lastDismissedVersion": "3.3.2",
   "passMarkdownImages": true,
   "enableAutonomousAgent": true,
   "enableCustomPromptTemplating": true,
   "enableSemanticSearchV3": true,
   "enableSelfHostMode": false,
   "enableMiyo": false,
+  "miyoSearchAll": false,
   "selfHostModeValidatedAt": null,
   "selfHostValidationCount": 0,
   "selfHostUrl": "",
@@ -455,5 +477,5 @@
   "defaultSystemPromptTitle": "",
   "autoCompactThreshold": 128000,
   "convertedDocOutputFolder": "",
-  "miyoSearchAll": false
+  "_keychainVaultId": "881b56fd"
 }
