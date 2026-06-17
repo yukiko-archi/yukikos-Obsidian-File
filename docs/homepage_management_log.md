@@ -80,3 +80,38 @@
 ### 5. ホームページデザインコンセプトの作成
 - **目的**: ホームページ全体のデザイン方向性（色合い、イラスト、レイアウトなど）を明確にする。
 - **内容**: 宮川えりか研究室のサイトを参考に、「優しさ」「温かさ」「親しみやすさ」「清潔感」を重視したデザインコンセプトを作成し、`docs/homepage_design_concept.md` に保存した。
+
+---
+
+## 2026年6月17日 (Googleアナリティクス登録タスク)
+
+### 1. Googleアナリティクスの登録・タグ設置
+- **目的**: ホームページのアクセス状況を確認できるようにする。
+- **対象**: 公開中のホームページ全体。
+- **測定ID**: `G-WPB19868VH`
+- **対応状況**: 2026年6月17日、各HTMLファイルの`<head>`内にGoogleタグを設置済み。
+- **次の行動**: 公開後、Googleアナリティクス側で計測が始まっているか確認する。 #未確認
+- **設置予定コード**:
+
+```html
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WPB19868VH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WPB19868VH');
+</script>
+```
+
+### 2. Googleサーチコンソールの所有権確認タグ設置
+- **目的**: Googleサーチコンソールでホームページを確認・管理できるようにする。
+- **対象**: 公開中のホームページ全体。
+- **対応状況**: 2026年6月17日、各HTMLファイルの`<head>`内に所有権確認用メタタグを設置済み。
+- **次の行動**: 公開後、Googleサーチコンソール側で所有権確認を実行する。 #未確認
+- **設置コード**:
+
+```html
+<meta name="google-site-verification" content="oRwos4E3aRCZJEO78tX_ZNXZjzF6j9uhTzrIVI2G3vQ" />
+```
