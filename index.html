@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="oRwos4E3aRCZJEO78tX_ZNXZjzF6j9uhTzrIVI2G3vQ" />
@@ -18,6 +18,7 @@
       gtag('config', 'G-WPB19868VH');
     </script>
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Noto Sans JP', sans-serif; }
         .font-paper { font-family: 'Space Grotesk', sans-serif; }
         .bg-paper { background-color: #FBFBFA; }
@@ -32,19 +33,19 @@
 </head>
 <body class="bg-paper text-neutral-900 antialiased selection:bg-salmon selection:text-white">
 
-    <!-- Header / Navbar -->
+    <!-- Header / Navbar (Smooth Scroll Anchors) -->
     <header class="border-b-2 border-neutral-900 sticky top-0 z-50 bg-paper/95 backdrop-blur-sm">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="inline-flex items-center py-1">
+            <a href="#hero" class="inline-flex items-center py-1">
                 <img src="img/common/logo.png" alt="ちとせメタバースデザイン ロゴ" class="h-10 md:h-12 w-auto object-contain">
             </a>
             
             <nav class="flex items-center space-x-6 text-sm font-bold font-paper">
-                <a href="index.html" class="text-salmon underline decoration-4 underline-offset-4">HOME</a>
-                <a href="about.html" class="hover:underline decoration-4 underline-offset-4 decoration-salmon">ABOUT</a>
-                <a href="services.html" class="hover:underline decoration-4 underline-offset-4 decoration-electric-blue">SERVICES</a>
-                <a href="portfolio.html" class="hover:underline decoration-4 underline-offset-4 decoration-salmon">WORKS</a>
-                <a href="contact.html" class="bg-neutral-900 text-white px-6 py-2.5 rounded-2xl border-2 border-neutral-900 box-shadow-pop hover:bg-electric-blue hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+                <a href="#hero" class="hover:underline decoration-4 underline-offset-4 decoration-salmon">HOME</a>
+                <a href="#about" class="hover:underline decoration-4 underline-offset-4 decoration-salmon text-salmon">ABOUT</a>
+                <a href="#features" class="hover:underline decoration-4 underline-offset-4 decoration-electric-blue">SERVICES</a>
+                <a href="#works" class="hover:underline decoration-4 underline-offset-4 decoration-salmon">WORKS</a>
+                <a href="#contact" class="bg-neutral-900 text-white px-6 py-2.5 rounded-2xl border-2 border-neutral-900 box-shadow-pop hover:bg-electric-blue hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
                     CONTACT →
                 </a>
             </nav>
@@ -52,7 +53,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="py-20 md:py-28 border-b-2 border-neutral-900 bg-white relative overflow-hidden">
+    <section id="hero" class="py-20 md:py-28 border-b-2 border-neutral-900 bg-white relative overflow-hidden">
         <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
             
             <div class="md:col-span-7 space-y-8">
@@ -89,11 +90,11 @@
 
                 <!-- CTA Buttons -->
                 <div class="pt-4 flex flex-wrap gap-4">
-                    <a href="contact.html" class="bg-neutral-900 text-white text-base font-bold font-paper px-9 py-4 rounded-2xl border-bold box-shadow-pop hover:bg-electric-blue hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+                    <a href="#contact" class="bg-neutral-900 text-white text-base font-bold font-paper px-9 py-4 rounded-2xl border-bold box-shadow-pop hover:bg-electric-blue hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
                         LINEで無料相談する →
                     </a>
-                    <a href="about.html" class="bg-white text-neutral-900 text-base font-bold font-paper px-8 py-4 rounded-2xl border-bold box-shadow-pop hover:bg-stone-100 transition-all">
-                        私たちの想いを見る ↓
+                    <a href="#about" class="bg-white text-neutral-900 text-base font-bold font-paper px-8 py-4 rounded-2xl border-bold box-shadow-pop hover:bg-stone-100 transition-all">
+                        私たちの想い（ABOUT）へスクロール ↓
                     </a>
                 </div>
             </div>
@@ -132,17 +133,89 @@
         </div>
     </section>
 
-    <!-- Services Overview -->
-    <section class="py-24 border-b-2 border-neutral-900 bg-paper">
+    <!-- ABOUT Section (旧ABOUTの全ストーリー完全包含・スムーズスクロール先) -->
+    <section id="about" class="py-24 border-b-2 border-neutral-900 bg-white">
+        <div class="max-w-5xl mx-auto px-6 space-y-16">
+            
+            <div class="space-y-4">
+                <div class="inline-block bg-neutral-900 text-electric-blue font-paper font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-xl border-2 border-neutral-900 transform -rotate-2">
+                    ABOUT US / 私たちの想い
+                </div>
+                <h2 class="text-3xl md:text-5xl font-black text-neutral-900 tracking-tight leading-tight">
+                    「ちとせメタバースデザイン」が大切にする、<br class="hidden sm:block">
+                    家族と未来へのメッセージ
+                </h2>
+            </div>
+
+            <!-- Profile & Main Message Card -->
+            <div class="bg-paper p-8 md:p-12 rounded-3xl border-bold box-shadow-pop space-y-8 relative">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                    <div class="w-32 h-32 rounded-full border-bold overflow-hidden shrink-0 box-shadow-salmon bg-white">
+                        <img src="img/common/profile.png" alt="二級建築士 阿部千子" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-4 text-center md:text-left">
+                        <div class="inline-block bg-salmon text-white font-black text-xs px-4 py-1.5 rounded-xl border-bold transform rotate-1">
+                            ちとせメタバースデザイン合同会社 代表 / 二級建築士
+                        </div>
+                        <h3 class="text-3xl md:text-4xl font-black text-neutral-900">阿部 千子（あべ ゆきこ）</h3>
+                        <p class="text-base text-neutral-800 leading-relaxed font-bold">
+                            こんにちは！二級建築士の阿部 千子です。<br>
+                            「せっかくの家づくり、人任せにするのはもったいない」「自分でも手を動かしてこだわりを形にしたい」と考えているなら、私はあなたにとって最高のパートナーになれる自信があります。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story 01 & 02 Grid -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 遊園地設計10年 -->
+                <div class="bg-white p-8 rounded-3xl border-bold box-shadow-pop space-y-4 relative">
+                    <div class="inline-block bg-electric-blue text-white font-paper font-black text-xs px-3 py-1 rounded-lg border-bold transform -rotate-2">
+                        STORY 01
+                    </div>
+                    <h4 class="text-xl font-black text-neutral-900">遊園地の設計から、暮らしの設計へ</h4>
+                    <p class="text-sm text-neutral-700 leading-relaxed font-medium">
+                        ナガシマスパーランドやハウステンボスの観覧車など、「人を笑顔にする巨大装置」の設計に10年間没頭。ドイツやポーランドの技術者とミリ単位の精度を求めた日々が、私の「安全への厳しい目」を養ってくれました。独学で二級建築士を取得し、BIM（ArchiCAD）で頭の中のわがままを瞬時に立体化します。
+                    </p>
+                </div>
+
+                <!-- DIYガチ勢 -->
+                <div class="bg-white p-8 rounded-3xl border-bold box-shadow-pop space-y-4 relative">
+                    <div class="inline-block bg-salmon text-white font-paper font-black text-xs px-3 py-1 rounded-lg border-bold transform rotate-2">
+                        STORY 02
+                    </div>
+                    <h4 class="text-xl font-black text-neutral-900">「理想」と「現実」の間にあるDIYのドラマ</h4>
+                    <p class="text-sm text-neutral-700 leading-relaxed font-medium">
+                        自分自身の家も耐震補強や断熱材挿入から自分で施工する「DIYガチ勢」です。楽なことばかりではなく、想定外の隙間に頭を抱えることも。でも、そんなトラブルすら「どう解決してやろうか！」とニヤリと面白がるのがモノづくりの醍醐味です。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Quote Manifesto -->
+            <div class="bg-neutral-900 text-white p-10 rounded-3xl border-bold box-shadow-salmon space-y-6 text-center">
+                <h3 class="text-2xl md:text-3xl font-black leading-tight">
+                    「建築士は先生ではありません。<br>
+                    あなたの夢というイベントを支える<span class="text-salmon">『最強の裏方』</span>です。」
+                </h3>
+                <p class="text-sm text-neutral-300 font-bold max-w-2xl mx-auto leading-relaxed">
+                    「こんなこと言ったら笑われるかな？」というこだわりこそ大歓迎です。プロを便利に使い倒して、予算との格闘も筋肉痛も全部思い出にしていきましょう！
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SERVICES Section -->
+    <section id="features" class="py-24 border-b-2 border-neutral-900 bg-paper">
         <div class="max-w-6xl mx-auto px-6 space-y-12">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b-2 border-neutral-900">
                 <div class="space-y-2">
                     <div class="inline-block bg-neutral-900 text-white text-xs font-paper font-black uppercase tracking-widest px-3 py-1 rounded-md border-2 border-neutral-900 transform -rotate-1">
-                        OUR CAPABILITIES
+                        SERVICES & VALUES
                     </div>
                     <h2 class="text-3xl md:text-5xl font-black text-neutral-900 tracking-tight">3つのコアバリュー</h2>
                 </div>
-                <a href="services.html" class="text-sm font-bold text-electric-blue hover:underline">すべてのサービス・料金プランを見る →</a>
+                <a href="services.html" class="text-sm font-bold text-electric-blue hover:underline">サービス詳細・料金プランはこちら →</a>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
@@ -165,44 +238,72 @@
         </div>
     </section>
 
-    <!-- Representative Story Section -->
-    <section class="py-24 border-b-2 border-neutral-900 bg-white">
-        <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
-            <div class="md:col-span-5">
-                <div class="bg-paper p-8 rounded-3xl border-bold box-shadow-pop text-center space-y-5 relative">
-                    <div class="w-32 h-32 rounded-full border-bold overflow-hidden mx-auto box-shadow-salmon bg-white">
-                        <img src="img/common/profile.png" alt="二級建築士 阿部千子" class="w-full h-full object-cover">
+    <!-- WORKS Section -->
+    <section id="works" class="py-24 border-b-2 border-neutral-900 bg-white">
+        <div class="max-w-6xl mx-auto px-6 space-y-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b-2 border-neutral-900">
+                <div class="space-y-2">
+                    <div class="inline-block bg-salmon text-white text-xs font-paper font-black uppercase tracking-widest px-3 py-1 rounded-md border-2 border-neutral-900 transform rotate-1">
+                        FEATURED WORKS
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-neutral-900 tracking-tight">実績事例</h2>
+                </div>
+                <a href="portfolio.html" class="text-sm font-bold text-electric-blue hover:underline">実績一覧ページを見る →</a>
+            </div>
+
+            <!-- Work 1: うのベース -->
+            <div class="bg-paper rounded-3xl border-bold box-shadow-pop overflow-hidden grid md:grid-cols-12 gap-0 hover:-translate-y-1 transition-all">
+                <div class="md:col-span-5 bg-neutral-900 min-h-[260px] flex items-center justify-center p-6 relative">
+                    <img src="img/uno-base/uno_base_interior_1.jpg" alt="うのベース 内観" class="w-full h-full object-cover rounded-2xl border-bold">
+                    <span class="absolute top-4 left-4 bg-electric-blue text-white font-paper font-black text-xs px-3 py-1 rounded-lg border-bold transform rotate-2">
+                        COMMUNITY BASE
+                    </span>
+                </div>
+                <div class="md:col-span-7 p-8 md:p-10 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <span class="text-xs font-paper font-bold text-salmon">CASE 01 / OKAYAMA UNO</span>
+                        <h3 class="text-2xl font-black text-neutral-900">うのベース: 「やりたい」が集い、地域に愛される共創拠点</h3>
+                        <p class="text-sm text-neutral-700 leading-relaxed font-medium">
+                            岡山県玉野市のコワーキングスペース。ちとせメタバースデザインもDIYディレクションで携わり、代表東本様と利用者さんの手によって温かく作り上げられました。
+                        </p>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-black text-neutral-900">阿部 千子</h3>
-                        <p class="text-xs font-bold text-electric-blue font-paper mt-1">YUKIKO ABE / ARCHITECT</p>
-                    </div>
-                    <div class="text-xs font-bold bg-salmon text-white py-2 px-4 rounded-xl border-bold uppercase tracking-wider transform -rotate-2 inline-block box-shadow-pop">
-                        二級建築士 / ちとせメタバースデザイン 代表
+                        <a href="uno-base-detail.html" class="inline-block bg-neutral-900 text-white text-xs font-bold px-6 py-3 rounded-xl border-bold hover:bg-salmon transition-all">
+                            詳細対談インタビュー・写真ギャラリーを見る →
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <div class="md:col-span-7 space-y-6">
-                <div class="inline-block bg-neutral-900 text-electric-blue text-xs font-paper font-black uppercase tracking-widest px-3 py-1 rounded-md border-2 border-neutral-900 transform rotate-1">
-                    PHILOSOPHY
+            <!-- Work 2: 片田様邸 -->
+            <div class="bg-paper rounded-3xl border-bold box-shadow-pop overflow-hidden grid md:grid-cols-12 gap-0 hover:-translate-y-1 transition-all">
+                <div class="md:col-span-5 bg-neutral-900 min-h-[260px] flex items-center justify-center p-6 relative">
+                    <img src="img/katada-tei/PXL_20230401_031343894.jpg" alt="片田様邸 リノベーション" class="w-full h-full object-cover rounded-2xl border-bold">
+                    <span class="absolute top-4 left-4 bg-salmon text-white font-paper font-black text-xs px-3 py-1 rounded-lg border-bold transform -rotate-2">
+                        RESIDENTIAL DIY
+                    </span>
                 </div>
-                <h2 class="text-3xl md:text-4xl font-black text-neutral-900 leading-tight">
-                    「建築士は先生ではありません。<br>
-                    あなたの夢というイベントを支える<span class="inline-block bg-salmon text-white px-3 py-0.5 rounded-lg border-2 border-neutral-900 transform -rotate-2">『最強の裏方』</span>です。」
-                </h2>
-                <p class="text-neutral-700 leading-relaxed font-bold">
-                    「こんなこと言ったら笑われるかな？」というこだわりこそ大歓迎です。プロを便利に使い倒して、最高の家づくり体験を一緒に形にしていきましょう！
-                </p>
-                <a href="about.html" class="inline-block bg-neutral-900 text-white text-sm font-bold px-6 py-3 rounded-xl border-bold hover:bg-electric-blue transition-all">
-                    詳しいメッセージを読む →
-                </a>
+                <div class="md:col-span-7 p-8 md:p-10 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <span class="text-xs font-paper font-bold text-electric-blue">CASE 02 / KATADA-TEI</span>
+                        <h3 class="text-2xl font-black text-neutral-900">片田様邸: 家族で作り上げた、温もりと愛着あふれる住空間</h3>
+                        <p class="text-sm text-neutral-700 leading-relaxed font-medium">
+                            旦那様が電気工事、お父様が大工・水道工事を担当し、家族全員で漆喰塗りを体験。汗を流して協力したDIYは家族の絆を深めました。
+                        </p>
+                    </div>
+                    <div>
+                        <a href="katada-tei-detail.html" class="inline-block bg-neutral-900 text-white text-xs font-bold px-6 py-3 rounded-xl border-bold hover:bg-electric-blue transition-all">
+                            詳細ストーリーを見る →
+                        </a>
+                    </div>
+                </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Footer CTA -->
-    <footer class="py-20 bg-neutral-900 text-white relative">
+    <!-- CONTACT Section (スムーズスクロール先) -->
+    <footer id="contact" class="py-20 bg-neutral-900 text-white relative">
         <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
             <div class="inline-block bg-electric-blue text-white text-xs font-paper font-black uppercase tracking-widest px-4 py-1.5 rounded-xl border-2 border-white transform -rotate-2">
                 GET IN TOUCH
