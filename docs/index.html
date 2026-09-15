@@ -5,59 +5,219 @@
     <meta name="google-site-verification" content="oRwos4E3aRCZJEO78tX_ZNXZjzF6j9uhTzrIVI2G3vQ" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ちとせメタバースデザイン - 家族と創る、失敗しない理想の家づくり</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WPB19868VH"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-WPB19868VH');
     </script>
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; }
+        .font-paper { font-family: 'Space Grotesk', sans-serif; }
+        .bg-paper { background-color: #FBFBFA; }
+        .border-bold { border: 2px solid #171717; }
+        .box-shadow-pop { box-shadow: 6px 6px 0px #171717; }
+        .box-shadow-salmon { box-shadow: 6px 6px 0px #FF7067; }
+        .bg-salmon { background-color: #FF7067; }
+        .text-salmon { color: #FF7067; }
+        .bg-electric-blue { background-color: #2563EB; }
+        .text-electric-blue { color: #2563EB; }
+    </style>
 </head>
-<body>
-    <header>
-        <div class="header-container">
-            <a href="index.html" class="logo-link">
-                <img src="img/common/logo.png" alt="ちとせメタバースデザイン ロゴ" class="logo-img">
+<body class="bg-paper text-neutral-900 antialiased selection:bg-salmon selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="border-b-2 border-neutral-900 sticky top-0 z-50 bg-paper/95 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="inline-flex items-center py-1">
+                <img src="img/common/logo.png" alt="ちとせメタバースデザイン ロゴ" class="h-10 md:h-12 w-auto object-contain">
             </a>
-            <nav>
-                <a href="index.html">ホーム</a>
-                <a href="about.html">私たちの想い</a>
-                <a href="services.html">サービス</a>
-                <a href="portfolio.html">実績事例</a>
-                <a href="contact.html">お問い合わせ</a>
+            
+            <nav class="flex items-center space-x-6 text-sm font-bold font-paper">
+                <a href="index.html" class="text-salmon underline decoration-4 underline-offset-4">HOME</a>
+                <a href="about.html" class="hover:underline decoration-4 underline-offset-4 decoration-salmon">ABOUT</a>
+                <a href="services.html" class="hover:underline decoration-4 underline-offset-4 decoration-electric-blue">SERVICES</a>
+                <a href="portfolio.html" class="hover:underline decoration-4 underline-offset-4 decoration-salmon">WORKS</a>
+                <a href="contact.html" class="bg-neutral-900 text-white px-6 py-2.5 rounded-2xl border-2 border-neutral-900 box-shadow-pop hover:bg-electric-blue hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+                    CONTACT →
+                </a>
             </nav>
         </div>
     </header>
 
-    <main>
-        <section id="hero">
-            <h1><span class="text-accent-blue">遊園地の夢</span>と、<span class="text-accent-blue">建築士の安心</span>を。<br><span class="text-accent-red">家族で叶える、失敗しない理想の家づくり。</span></h1>
-            <div class="hero-illustration-placeholder">
-                <img src="img/common/parent_child_imagination_illustration.png" alt="親子で妄想しているイラスト" class="hero-illustration">
+    <!-- Hero Section -->
+    <section class="py-20 md:py-28 border-b-2 border-neutral-900 bg-white relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
+            
+            <div class="md:col-span-7 space-y-8">
+                <!-- Badges -->
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="inline-block bg-neutral-900 text-white font-paper font-black text-xs uppercase tracking-widest px-5 py-2 rounded-xl border-2 border-neutral-900 transform -rotate-2 box-shadow-salmon">
+                        二級建築士 × 3D BIM (ArchiCAD)
+                    </div>
+                    <div class="inline-block bg-salmon text-white font-paper font-black text-xs uppercase tracking-widest px-5 py-2 rounded-xl border-2 border-neutral-900 transform rotate-2 box-shadow-pop">
+                        DIYガチ勢
+                    </div>
+                </div>
+
+                <!-- Main Headline -->
+                <div class="relative py-2">
+                    <h1 class="text-4xl sm:text-6xl font-black text-neutral-900 tracking-tighter leading-[1.12]">
+                        建築士を、<br>
+                        <span class="inline-block bg-neutral-900 text-white px-6 py-2.5 rounded-2xl border-2 border-neutral-900 transform -rotate-2 box-shadow-salmon my-2">
+                            <span class="text-salmon">使い倒せ。</span>
+                        </span>
+                    </h1>
+                </div>
+
+                <!-- Sub Copy Card -->
+                <div class="bg-paper p-6 md:p-8 rounded-3xl border-bold box-shadow-pop relative">
+                    <div class="absolute -top-3 -right-3 bg-electric-blue text-white text-xs font-paper font-black px-3 py-1 rounded-lg border-2 border-neutral-900 transform rotate-3">
+                        DESIGN YOUR STORY
+                    </div>
+                    <p class="text-base md:text-lg font-bold text-neutral-800 leading-relaxed">
+                        プロの技術とDIYの遊び心で、一生モノの「家づくりイベント」を。<br>
+                        見えない不安をゼロにする<span class="text-electric-blue underline decoration-wavy decoration-2">高精度3Dパース</span>で、あなたの「わがまま」を即座に形にします。
+                    </p>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="pt-4 flex flex-wrap gap-4">
+                    <a href="contact.html" class="bg-neutral-900 text-white text-base font-bold font-paper px-9 py-4 rounded-2xl border-bold box-shadow-pop hover:bg-electric-blue hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all">
+                        LINEで無料相談する →
+                    </a>
+                    <a href="about.html" class="bg-white text-neutral-900 text-base font-bold font-paper px-8 py-4 rounded-2xl border-bold box-shadow-pop hover:bg-stone-100 transition-all">
+                        私たちの想いを見る ↓
+                    </a>
+                </div>
             </div>
-        </section>
 
-        <!-- 他のセクションがここに追加されます -->
-
-        <section id="our-philosophy" class="content-section">
-            <h2>あなたの『わがまま』は、最高のアイデアです。<br>一緒にカタチにしませんか？</h2>
-            <p>阿部千子は、お客様の「こうしたい！」という熱い想いを何よりも大切にしています。<br>「自分で作りたい、でも失敗したくない」そんなこだわり派の夢を、プロの視点と技術で全力でサポートします。</p>
-            <div class="philosophy-illustration-placeholder">
-                <!-- 阿部さんがお客様の夢に耳を傾け、アイデアを共有しているような、親しみやすい手描き風イラスト -->
-                <img src="img/common/architect_illustration.png" alt="阿部千子の想い" class="philosophy-illustration">
+            <!-- Hero Illustration Card -->
+            <div class="md:col-span-5">
+                <div class="bg-paper p-6 rounded-3xl border-bold box-shadow-pop text-center space-y-4 relative transform rotate-1 hover:rotate-0 transition-transform">
+                    <div class="overflow-hidden rounded-2xl border-bold bg-white">
+                        <img src="img/common/couple_diy_illustration.png" alt="夫婦でDIY家づくり" class="w-full h-auto object-cover max-h-[340px]">
+                    </div>
+                    <div class="text-xs font-bold text-neutral-800 bg-salmon text-white py-2 rounded-xl border-bold uppercase tracking-wider box-shadow-pop">
+                        プロの安全 × 家族で塗るDIYの余白
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
 
-    </main>
+        <!-- Stats Bar -->
+        <div class="max-w-6xl mx-auto px-6 mt-16 pt-8 border-t-2 border-neutral-900 grid grid-cols-2 md:grid-cols-4 gap-6 font-paper">
+            <div class="p-6 border-bold rounded-2xl bg-paper box-shadow-pop transform hover:-rotate-1 transition-transform">
+                <span class="block text-3xl font-black text-electric-blue">10 YRS</span>
+                <span class="text-xs text-neutral-700 font-bold">遊園地大型機械設計歴</span>
+            </div>
+            <div class="p-6 border-bold rounded-2xl bg-paper box-shadow-pop transform hover:rotate-1 transition-transform">
+                <span class="block text-3xl font-black text-slate-900">3D BIM</span>
+                <span class="text-xs text-neutral-700 font-bold">ArchiCAD立体可視化</span>
+            </div>
+            <div class="p-6 border-bold rounded-2xl bg-paper box-shadow-pop transform hover:-rotate-1 transition-transform">
+                <span class="block text-3xl font-black text-salmon">DIY FULL</span>
+                <span class="text-xs text-neutral-700 font-bold">プロ安全×施主施工</span>
+            </div>
+            <div class="p-6 border-bold rounded-2xl bg-salmon text-white box-shadow-pop transform hover:rotate-1 transition-transform">
+                <span class="block text-3xl font-black text-white">100%</span>
+                <span class="text-xs text-white font-bold">わがまま徹底共有</span>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2026 ちとせメタバースデザイン All Rights Reserved.</p>
+    <!-- Services Overview -->
+    <section class="py-24 border-b-2 border-neutral-900 bg-paper">
+        <div class="max-w-6xl mx-auto px-6 space-y-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b-2 border-neutral-900">
+                <div class="space-y-2">
+                    <div class="inline-block bg-neutral-900 text-white text-xs font-paper font-black uppercase tracking-widest px-3 py-1 rounded-md border-2 border-neutral-900 transform -rotate-1">
+                        OUR CAPABILITIES
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-neutral-900 tracking-tight">3つのコアバリュー</h2>
+                </div>
+                <a href="services.html" class="text-sm font-bold text-electric-blue hover:underline">すべてのサービス・料金プランを見る →</a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl border-bold box-shadow-pop space-y-4 relative hover:-translate-y-1 transition-all">
+                    <div class="w-12 h-12 bg-electric-blue text-white font-paper font-black text-xl flex items-center justify-center rounded-2xl border-bold transform -rotate-3 box-shadow-pop">01</div>
+                    <h3 class="text-xl font-black text-neutral-900">「見えない」不安をゼロにする3D BIM</h3>
+                    <p class="text-sm text-neutral-700 leading-relaxed font-medium">ArchiCADによる高精度3Dモデルで、光の差し込み方や実際の家事動線を建てる前に立体体験。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border-bold box-shadow-pop space-y-4 relative hover:-translate-y-1 transition-all">
+                    <div class="w-12 h-12 bg-salmon text-white font-paper font-black text-xl flex items-center justify-center rounded-2xl border-bold transform rotate-3 box-shadow-pop">02</div>
+                    <h3 class="text-xl font-black text-neutral-900">プロの安全 × DIYの自由度</h3>
+                    <p class="text-sm text-neutral-700 leading-relaxed font-medium">耐震補強や断熱改修まで行う「DIYガチ勢」の二級建築士が、プロが守る構造と施主DIYの余白を判定。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border-bold box-shadow-pop space-y-4 relative hover:-translate-y-1 transition-all">
+                    <div class="w-12 h-12 bg-neutral-900 text-white font-paper font-black text-xl flex items-center justify-center rounded-2xl border-bold transform -rotate-3 box-shadow-pop">03</div>
+                    <h3 class="text-xl font-black text-neutral-900">遊園地大型機械10年の安全基準</h3>
+                    <p class="text-sm text-neutral-700 leading-relaxed font-medium">観覧車設計で培ったミリ単位の安全基準で、家族の笑顔を守る空間を確実に支えます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Representative Story Section -->
+    <section class="py-24 border-b-2 border-neutral-900 bg-white">
+        <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-5">
+                <div class="bg-paper p-8 rounded-3xl border-bold box-shadow-pop text-center space-y-5 relative">
+                    <div class="w-32 h-32 rounded-full border-bold overflow-hidden mx-auto box-shadow-salmon bg-white">
+                        <img src="img/common/profile.png" alt="二級建築士 阿部千子" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-neutral-900">阿部 千子</h3>
+                        <p class="text-xs font-bold text-electric-blue font-paper mt-1">YUKIKO ABE / ARCHITECT</p>
+                    </div>
+                    <div class="text-xs font-bold bg-salmon text-white py-2 px-4 rounded-xl border-bold uppercase tracking-wider transform -rotate-2 inline-block box-shadow-pop">
+                        二級建築士 / ちとせメタバースデザイン 代表
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-7 space-y-6">
+                <div class="inline-block bg-neutral-900 text-electric-blue text-xs font-paper font-black uppercase tracking-widest px-3 py-1 rounded-md border-2 border-neutral-900 transform rotate-1">
+                    PHILOSOPHY
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black text-neutral-900 leading-tight">
+                    「建築士は先生ではありません。<br>
+                    あなたの夢というイベントを支える<span class="inline-block bg-salmon text-white px-3 py-0.5 rounded-lg border-2 border-neutral-900 transform -rotate-2">『最強の裏方』</span>です。」
+                </h2>
+                <p class="text-neutral-700 leading-relaxed font-bold">
+                    「こんなこと言ったら笑われるかな？」というこだわりこそ大歓迎です。プロを便利に使い倒して、最高の家づくり体験を一緒に形にしていきましょう！
+                </p>
+                <a href="about.html" class="inline-block bg-neutral-900 text-white text-sm font-bold px-6 py-3 rounded-xl border-bold hover:bg-electric-blue transition-all">
+                    詳しいメッセージを読む →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="py-20 bg-neutral-900 text-white relative">
+        <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
+            <div class="inline-block bg-electric-blue text-white text-xs font-paper font-black uppercase tracking-widest px-4 py-1.5 rounded-xl border-2 border-white transform -rotate-2">
+                GET IN TOUCH
+            </div>
+            <h2 class="text-3xl md:text-5xl font-black tracking-tighter leading-tight">本気の遊び（家づくり）、<br>一緒に始めましょう。</h2>
+            <div class="pt-4">
+                <a href="contact.html" class="inline-block bg-salmon text-white font-paper font-black text-lg px-12 py-5 rounded-2xl border-2 border-white box-shadow-pop transform -rotate-2 hover:rotate-0 hover:scale-105 transition-all">
+                    LINEで無料相談・お問い合わせ →
+                </a>
+            </div>
+            <p class="text-xs text-neutral-400 font-paper pt-8 border-t border-neutral-800">
+                © 2026 CHITOSE METAVERSE DESIGN LLC. ALL RIGHTS RESERVED.
+            </p>
+        </div>
     </footer>
 
-    <script src="js/main.js"></script>
 </body>
 </html>

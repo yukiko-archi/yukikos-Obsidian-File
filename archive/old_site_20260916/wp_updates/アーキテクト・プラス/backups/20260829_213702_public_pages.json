@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1291,
+    "date": "2025-08-30T00:50:43",
+    "slug": "information",
+    "link": "https://www.ys-lamp.com/architect-plus/information/",
+    "title": {
+      "rendered": "新着記事"
+    }
+  },
+  {
+    "id": 1063,
+    "date": "2025-08-29T00:15:34",
+    "slug": "home-20250831",
+    "link": "https://www.ys-lamp.com/architect-plus/",
+    "title": {
+      "rendered": "ホーム"
+    }
+  },
+  {
+    "id": 730,
+    "date": "2025-08-23T01:37:45",
+    "slug": "contact",
+    "link": "https://www.ys-lamp.com/architect-plus/contact/",
+    "title": {
+      "rendered": "お問い合わせ"
+    }
+  },
+  {
+    "id": 439,
+    "date": "2025-08-22T17:18:18",
+    "slug": "about",
+    "link": "https://www.ys-lamp.com/architect-plus/about/",
+    "title": {
+      "rendered": "会社概要"
+    }
+  },
+  {
+    "id": 3,
+    "date": "2025-08-11T14:31:09",
+    "slug": "privacy-policy",
+    "link": "https://www.ys-lamp.com/architect-plus/privacy-policy/",
+    "title": {
+      "rendered": "プライバシーポリシー"
+    }
+  },
+  {
+    "id": 2,
+    "date": "2025-08-11T14:31:09",
+    "slug": "renovation-flow",
+    "link": "https://www.ys-lamp.com/architect-plus/renovation-flow/",
+    "title": {
+      "rendered": "リノベーションの流れ"
+    }
+  }
+]

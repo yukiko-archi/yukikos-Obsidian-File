@@ -1,0 +1,30 @@
+[
+  {
+    "id": 9,
+    "count": 7,
+    "link": "https://www.ys-lamp.com/architect-plus/category/news/",
+    "name": "お知らせ",
+    "slug": "news"
+  },
+  {
+    "id": 11,
+    "count": 4,
+    "link": "https://www.ys-lamp.com/architect-plus/category/strength/",
+    "name": "当社の強み",
+    "slug": "strength"
+  },
+  {
+    "id": 13,
+    "count": 8,
+    "link": "https://www.ys-lamp.com/architect-plus/category/technique/",
+    "name": "技術",
+    "slug": "technique"
+  },
+  {
+    "id": 1,
+    "count": 4,
+    "link": "https://www.ys-lamp.com/architect-plus/category/works/",
+    "name": "施工事例",
+    "slug": "works"
+  }
+]
