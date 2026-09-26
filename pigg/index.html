@@ -792,8 +792,11 @@
     </div>
 
     <div class="header-actions">
+      <button class="btn-icon" id="btn-save-modal" title="セーブデータ管理・バックアップ復元">
+        💾 セーブ・復元
+      </button>
       <button class="btn-icon" id="btn-sound-toggle">
-        🔊 音声: <span id="sound-state">ON</span>
+        🔊 <span id="sound-state">ON</span>
       </button>
     </div>
   </header>
@@ -905,6 +908,73 @@
         </div>
         <p style="font-size:0.8rem; color:#555; margin-bottom:12px;">埃を掃除して貯めた調査ポイントで家具と交換できます。</p>
         <div class="card-grid" id="furniture-options"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル：セーブデータ管理＆バックアップ復元 -->
+  <div class="modal-overlay" id="modal-save">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>💾 セーブ管理・バックアップ復元</h2>
+        <button class="modal-close" onclick="closeModal('modal-save')">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 16px; overflow-y: auto;">
+        
+        <!-- 自動保存ステータス -->
+        <div style="background:#e8dfca; border-left:4px solid #1b382b; padding:10px 14px; border-radius:6px; margin-bottom:14px;">
+          <div style="font-weight:bold; font-size:0.88rem; color:#1b382b; display:flex; align-items:center; justify-content:space-between;">
+            <span>🛡️ 自動保存（端末内ストレージ）</span>
+            <span style="background:#2e7d32; color:#fff; font-size:0.7rem; padding:2px 8px; border-radius:10px;">常時稼働中</span>
+          </div>
+          <p style="font-size:0.76rem; color:#444; margin-top:5px; line-height:1.4;">
+            お掃除や家具配置などの変更は、都度ブラウザ（localStorage）へ<strong>自動保存</strong>されています。画面を閉じたり再起動しても消えません。
+          </p>
+          <div id="save-info-stats" style="font-size:0.78rem; color:#1b382b; font-weight:bold; margin-top:6px; background:rgba(255,255,255,0.6); padding:4px 8px; border-radius:4px;"></div>
+        </div>
+
+        <!-- キャッシュクリア対策＆バックアップ保存 -->
+        <div style="margin-bottom:14px; border:1px solid #d5c8b0; border-radius:8px; padding:12px; background:#fff;">
+          <h3 style="font-size:0.86rem; color:#3e2723; margin-bottom:4px;">📋 安心バックアップ（キャッシュクリア対策・引継ぎ）</h3>
+          <p style="font-size:0.74rem; color:#666; margin-bottom:10px; line-height:1.35;">
+            ※ブラウザの「履歴・全サイトデータ削除」を行うと端末内データが消える場合があります。念のためセーブコードを保存しておくと安心です。
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn-icon" style="background:#1b382b; color:#ffd700; padding:8px 12px; font-weight:bold; cursor:pointer;" onclick="exportSaveCode()">
+              📋 セーブコードをコピー
+            </button>
+            <button class="btn-icon" style="background:#3e2723; color:#fff; padding:8px 12px; cursor:pointer;" onclick="downloadSaveFile()">
+              💾 ファイル保存 (.json)
+            </button>
+          </div>
+        </div>
+
+        <!-- 復元（インポート） -->
+        <div style="margin-bottom:14px; border:1px solid #d5c8b0; border-radius:8px; padding:12px; background:#fff;">
+          <h3 style="font-size:0.86rem; color:#3e2723; margin-bottom:4px;">📥 データの復元（インポート）</h3>
+          <p style="font-size:0.74rem; color:#666; margin-bottom:8px; line-height:1.35;">
+            保存しておいたセーブコードを貼り付けるか、JSONファイルを選択して元通り復元できます。
+          </p>
+          <textarea id="import-code-area" placeholder="ここにセーブコードを貼り付け..." style="width:100%; height:48px; font-size:0.75rem; padding:6px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box; margin-bottom:8px; font-family:monospace; resize:none;"></textarea>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <button class="btn-icon" style="background:#2d5a45; color:#fff; padding:6px 12px; cursor:pointer;" onclick="importFromCode()">
+              📥 コードから復元
+            </button>
+            <label class="btn-icon" style="background:#4a3b32; color:#fff; padding:6px 12px; cursor:pointer; margin:0;">
+              📁 ファイル読込
+              <input type="file" accept=".json" style="display:none;" onchange="importFromFile(event)">
+            </label>
+          </div>
+        </div>
+
+        <!-- リセット -->
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-top:4px;">
+          <span style="font-size:0.7rem; color:#888;">推奨ブラウザ: Chrome / Safari / Edge</span>
+          <button style="background:none; border:none; color:#c62828; font-size:0.74rem; text-decoration:underline; cursor:pointer; padding:4px;" onclick="resetSaveData()">
+            ⚠️ データを初期化（リセット）
+          </button>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1201,7 +1271,7 @@
         id: 'supply_crates',
         name: '補給所の木箱と樽',
         desc: '立体機動装置の替刃やガス缶が整然と保管されている木箱。',
-        cost: 30,
+        cost: 150,
         svg: `
           <svg viewBox="0 0 75 65" width="75" height="65">
             <ellipse cx="37" cy="58" rx="30" ry="6" fill="rgba(0,0,0,0.35)"/>
@@ -1216,7 +1286,7 @@
         id: 'cleaning_rack',
         name: '兵長謹製・お掃除スタンド',
         desc: 'はたき・ほうき・モップ・雑巾が美しく収まる片付けの象徴。',
-        cost: 60,
+        cost: 300,
         svg: `
           <svg viewBox="0 0 55 80" width="55" height="80">
             <ellipse cx="28" cy="74" rx="20" ry="5" fill="rgba(0,0,0,0.3)"/>
@@ -1232,7 +1302,7 @@
         id: 'corps_banner',
         name: '自由の翼タペストリー',
         desc: '部屋を飾る調査兵団の紋章旗。士気が向上する。',
-        cost: 75,
+        cost: 400,
         svg: `
           <svg viewBox="0 0 60 75" width="60" height="75">
             <ellipse cx="30" cy="70" rx="18" ry="4" fill="rgba(0,0,0,0.3)"/>
@@ -1245,7 +1315,7 @@
         id: 'study_desk',
         name: '調査兵団の作戦机',
         desc: '巨人の研究書や作戦計画書が並ぶ重厚な机。',
-        cost: 90,
+        cost: 600,
         svg: `
           <svg viewBox="0 0 90 70" width="90" height="70">
             <ellipse cx="45" cy="64" rx="40" ry="6" fill="rgba(0,0,0,0.35)"/>
@@ -1277,21 +1347,141 @@
       dragOffset: { x: 0, y: 0 }
     };
 
-    // 初期化
-    let currentRoomScale = 1.0;
-    function updateRoomScale() {
-      const container = document.getElementById('main-container');
-      const viewport = document.getElementById('room-viewport');
-      if (!container || !viewport) return;
-      const cw = container.clientWidth, ch = container.clientHeight;
-      if (!cw || !ch) return;
-      const scaleX = (cw - 20) / 900;
-      const scaleY = (ch - 20) / 640;
-      currentRoomScale = Math.min(scaleX, scaleY);
-      viewport.style.transform = `scale(${currentRoomScale})`;
+    function saveGame() {
+      const data = {
+        points: GameState.points,
+        unlockedChars: GameState.unlockedChars,
+        unlockedBuddies: GameState.unlockedBuddies,
+        furnitureList: GameState.furnitureList,
+        charId: GameState.player.charId,
+        buddyId: GameState.buddy.buddyId,
+        savedAt: new Date().toISOString()
+      };
+      localStorage.setItem('pigg_save_data', JSON.stringify(data));
+      updateSaveModalInfo();
+    }
+
+    function loadGame() {
+      const saved = localStorage.getItem('pigg_save_data');
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          GameState.points = typeof data.points === 'number' ? data.points : 0;
+          GameState.unlockedChars = Array.isArray(data.unlockedChars) ? data.unlockedChars : ['levi'];
+          GameState.unlockedBuddies = Array.isArray(data.unlockedBuddies) ? data.unlockedBuddies : ['none'];
+          GameState.furnitureList = Array.isArray(data.furnitureList) ? data.furnitureList : [];
+          GameState.player.charId = data.charId || 'levi';
+          GameState.buddy.buddyId = data.buddyId || 'none';
+          document.getElementById('pts-count').innerText = GameState.points;
+        } catch (e) {
+          console.warn('Failed to parse save data:', e);
+        }
+      }
+    }
+
+    function updateSaveModalInfo() {
+      const statsEl = document.getElementById('save-info-stats');
+      if (statsEl) {
+        const charName = (CHARACTERS.find(c => c.id === GameState.player.charId) || {}).name || 'リヴァイ';
+        statsEl.innerText = `所持: ${GameState.points} Pt | 着任: ${charName} (解放済${GameState.unlockedChars.length}名) | 設置家具: ${GameState.furnitureList.length}点`;
+      }
+    }
+
+    function exportSaveCode() {
+      saveGame();
+      const raw = localStorage.getItem('pigg_save_data') || JSON.stringify({
+        points: GameState.points,
+        unlockedChars: GameState.unlockedChars,
+        unlockedBuddies: GameState.unlockedBuddies,
+        furnitureList: GameState.furnitureList,
+        charId: GameState.player.charId,
+        buddyId: GameState.buddy.buddyId
+      });
+      navigator.clipboard.writeText(raw).then(() => {
+        SoundFX.playCoin();
+        alert('📋 セーブコードをクリップボードにコピーしました！\nメモ帳などに貼り付けて保管できます。');
+      }).catch(() => {
+        prompt('以下のセーブコードをコピーして保管してください：', raw);
+      });
+    }
+
+    function downloadSaveFile() {
+      saveGame();
+      const raw = localStorage.getItem('pigg_save_data');
+      if (!raw) return;
+      const blob = new Blob([raw], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `進撃のピグ片付け_セーブデータ_${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      SoundFX.playCoin();
+    }
+
+    function importFromCode() {
+      const code = document.getElementById('import-code-area').value.trim();
+      if (!code) {
+        alert('セーブコードを入力してください。');
+        return;
+      }
+      try {
+        const data = JSON.parse(code);
+        if (!data || typeof data.points !== 'number') {
+          throw new Error('セーブデータの形式が正しくありません。');
+        }
+        if (confirm('現在のデータを上書きして復元しますか？')) {
+          localStorage.setItem('pigg_save_data', code);
+          loadGame();
+          buildModals();
+          renderAll();
+          closeModal('modal-save');
+          SoundFX.playSalute();
+          showSpeech('セーブデータを復元したぞ！調査を再開する！');
+        }
+      } catch (err) {
+        alert('復元に失敗しました: ' + err.message);
+      }
+    }
+
+    function importFromFile(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const content = event.target.result;
+          const data = JSON.parse(content);
+          if (!data || typeof data.points !== 'number') {
+            throw new Error('セーブデータの形式が正しくありません。');
+          }
+          if (confirm('現在のデータを上書きして復元しますか？')) {
+            localStorage.setItem('pigg_save_data', content);
+            loadGame();
+            buildModals();
+            renderAll();
+            closeModal('modal-save');
+            SoundFX.playSalute();
+            showSpeech('セーブデータを復元したぞ！調査を再開する！');
+          }
+        } catch (err) {
+          alert('復元に失敗しました: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetSaveData() {
+      if (confirm('本当に全てのデータを初期化しますか？\n（所持Pt、解放キャラ、家具が初期状態に戻ります）')) {
+        localStorage.removeItem('pigg_save_data');
+        location.reload();
+      }
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      loadGame();
       buildModals();
       renderAll();
       setupEvents();
@@ -1300,9 +1490,20 @@
       window.addEventListener('resize', updateRoomScale);
 
       setTimeout(() => {
-        showSpeech('おい…埃を掃除して調査Ptを貯め、仲間や家具を手に入れろ。');
+        showSpeech('おい…埃を掃除して調査Ptを貯め、仲間や家具を手に入れろ。データは自動保存されている。');
       }, 500);
     });
+
+    function openModal(id) {
+      SoundFX.playPop();
+      document.getElementById(id).style.display = 'flex';
+    }
+    window.openModal = openModal;
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+    window.closeModal = closeModal;
 
     function buildModals() {
       // キャラ
@@ -1552,6 +1753,7 @@
       window.removeEventListener('touchmove', onDrag);
       window.removeEventListener('mouseup', endDrag);
       window.removeEventListener('touchend', endDrag);
+      saveGame();
     }
 
     function cleanDust(dust) {
@@ -1560,9 +1762,10 @@
         SoundFX.playClean();
         createSparkles(dust.x, dust.y);
         GameState.dustTargets = GameState.dustTargets.filter(d => d.id !== dust.id);
-        const earned = 30;
+        const earned = 10;
         GameState.points += earned;
         document.getElementById('pts-count').innerText = GameState.points;
+        saveGame(); // 追加
         updateCleanRate();
 
         showFloatingText(dust.x, dust.y - 20, `+${earned} Pt!`, '#ffd700');
@@ -1651,6 +1854,8 @@
 
       document.getElementById('btn-spawn-dust').addEventListener('click', () => {
         SoundFX.playPop();
+        // 埃の発生コストを上げる（発生させた時のポイント消費ではなく、純粋に発生自体を調整）
+        // 埃は「たまに」出るようにするため、確率的要素を強化してもよいが、まずは発生の閾値を変更
         const newDust = {
           id: `d_${Date.now()}`,
           x: Math.floor(250 + Math.random() * 320),
@@ -1659,7 +1864,12 @@
         GameState.dustTargets.push(newDust);
         updateCleanRate();
         renderAll();
-        showSpeech('おい！部屋にチリが散らかったぞ！掃除してPtを稼げ！');
+        showSpeech('おい！部屋にチリが溜まってきたな…掃除してPtを稼げ！');
+      });
+
+      document.getElementById('btn-save-modal').addEventListener('click', () => {
+        updateSaveModalInfo();
+        openModal('modal-save');
       });
 
       document.getElementById('btn-sound-toggle').addEventListener('click', () => {
@@ -1708,6 +1918,7 @@
           GameState.points -= c.cost;
           GameState.unlockedChars.push(charId);
           GameState.player.charId = charId;
+          saveGame(); // 追加
           SoundFX.playCoin();
           closeModal('modal-char');
           buildModals();
@@ -1737,6 +1948,7 @@
           GameState.points -= b.cost;
           GameState.unlockedBuddies.push(buddyId);
           GameState.buddy.buddyId = buddyId;
+          saveGame(); // 追加
           SoundFX.playCoin();
           closeModal('modal-buddy');
           buildModals();
@@ -1765,7 +1977,7 @@
       const newId = `f_${Date.now()}`;
       GameState.furnitureList.push({ id: newId, catalogId: catId, x: 390, y: 330 });
       GameState.selectedFurniture = newId;
-
+      saveGame(); // 追加
       SoundFX.playCoin();
       closeModal('modal-furniture');
       renderAll();
@@ -1789,6 +2001,7 @@
         SoundFX.playPop();
         showFloatingText(target.x, target.y - 30, `+${refund} Pt還元!`, '#76ff03');
       }
+      saveGame(); // 追加
       renderAll();
     };
 
