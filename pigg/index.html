@@ -207,7 +207,6 @@
       overflow: hidden;
     }
 
-    /* レンガ・石造り風テクスチャのライン */
     .wall-brick-lines {
       position: absolute;
       width: 100%;
@@ -216,7 +215,6 @@
       pointer-events: none;
     }
 
-    /* 壁掛けタペストリー（調査兵団エンブレム） */
     .wall-banner {
       position: absolute;
       width: 80px;
@@ -234,7 +232,6 @@
       box-shadow: 2px 5px 12px rgba(0,0,0,0.5);
     }
 
-    /* 床（アイソメトリック菱形グリッド） */
     .floor-canvas {
       position: absolute;
       width: 480px;
@@ -255,7 +252,6 @@
       cursor: crosshair;
     }
 
-    /* 床の光彩 */
     .floor-light {
       position: absolute;
       width: 100%;
@@ -264,7 +260,6 @@
       pointer-events: none;
     }
 
-    /* アイテム・キャラ配置レイヤー */
     #entities-layer {
       position: absolute;
       width: 820px;
@@ -275,7 +270,6 @@
       pointer-events: none;
     }
 
-    /* ピグキャラクター */
     .pigg-avatar {
       position: absolute;
       width: 80px;
@@ -291,20 +285,6 @@
       filter: drop-shadow(0 10px 12px rgba(197, 160, 89, 0.6));
     }
 
-    /* アバターの足元シャドウ */
-    .pigg-shadow {
-      position: absolute;
-      bottom: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      height: 18px;
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: 50%;
-      z-index: -1;
-    }
-
-    /* お供（ペット/バディ） */
     .pigg-companion {
       position: absolute;
       width: 64px;
@@ -316,7 +296,6 @@
       transition: all 0.25s ease-out;
     }
 
-    /* 家具エンティティ */
     .pigg-furniture {
       position: absolute;
       pointer-events: auto;
@@ -359,7 +338,6 @@
       outline-offset: 4px;
     }
 
-    /* 掃除対象（ホコリ・汚れの塊） */
     .dust-target {
       position: absolute;
       width: 44px;
@@ -372,7 +350,6 @@
       touch-action: manipulation;
     }
 
-    /* スマホで指でタップしやすいように判定を拡張 */
     .dust-target::before {
       content: '';
       position: absolute;
@@ -388,7 +365,6 @@
       100% { transform: translate(-50%, -50%) translateY(-6px); }
     }
 
-    /* 歩行アニメーション */
     .walking {
       animation: piggWalk 0.25s infinite alternate ease-in-out;
     }
@@ -398,7 +374,6 @@
       100% { transform: translate(-50%, -90%) translateY(-7px) rotate(2deg); }
     }
 
-    /* セリフ吹き出し（アメーバピグ風） */
     .speech-bubble {
       position: absolute;
       top: -45px;
@@ -434,7 +409,6 @@
       100% { opacity: 1; transform: translateX(-50%) scale(1); }
     }
 
-    /* クリック地点波紋エフェクト */
     .click-ripple {
       position: absolute;
       width: 24px;
@@ -451,7 +425,6 @@
       100% { opacity: 0; transform: translate(-50%, -50%) scale(2.8); }
     }
 
-    /* 掃除キラキラエフェクト */
     .sparkle {
       position: absolute;
       color: #ffd700;
@@ -465,7 +438,22 @@
       100% { opacity: 0; transform: translate(-50%, -90px) scale(1.6) rotate(45deg); }
     }
 
-    /* 下部ドックUI：ピグ風アイコンバー */
+    .floating-text {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      font-weight: 900;
+      font-size: 16px;
+      text-shadow: 0 2px 4px #000;
+      pointer-events: none;
+      animation: floatUp 1s ease-out forwards;
+      z-index: 9999;
+    }
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translate(-50%, 0); }
+      100% { opacity: 0; transform: translate(-50%, -45px); }
+    }
+
+    /* 下部ドックUI */
     footer {
       height: auto;
       min-height: 80px;
@@ -495,7 +483,7 @@
       justify-content: center;
       gap: 3px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
       transition: all 0.15s ease;
     }
 
@@ -503,77 +491,20 @@
       transform: translateY(-4px);
       border-color: #ffd700;
       background: linear-gradient(145deg, #446150, #2b3e33);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.5), 0 0 10px rgba(197, 160, 89, 0.4);
-    }
-
-    .dock-btn:active {
-      transform: translateY(0);
     }
 
     .dock-btn svg {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       fill: currentColor;
     }
 
     .dock-btn span {
       font-size: 0.68rem;
       font-weight: bold;
-      letter-spacing: 0.5px;
     }
 
-    .dock-btn.active {
-      background: var(--corps-gold);
-      color: #18241d;
-      border-color: #fff;
-    }
-
-    /* セリフ入力チャットバー */
-    .chat-container {
-      position: absolute;
-      bottom: 95px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-      background: rgba(18, 24, 21, 0.85);
-      backdrop-filter: blur(8px);
-      padding: 6px 10px;
-      border-radius: 30px;
-      border: 1px solid var(--corps-gold);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      z-index: 90;
-    }
-
-    .chat-input {
-      background: #fff;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      outline: none;
-      width: 260px;
-      font-family: inherit;
-    }
-
-    .chat-submit-btn {
-      background: var(--corps-green-light);
-      color: #fff;
-      border: 1px solid var(--corps-gold);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-
-    .chat-submit-btn:hover {
-      background: var(--corps-gold);
-      color: #121815;
-    }
-
-    /* モーダルダイアログ（キャラ変更・お供選択・家具ショップ） */
+    /* モーダル */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -599,16 +530,10 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      animation: modalFadeIn 0.25s ease-out;
-    }
-
-    @keyframes modalFadeIn {
-      0% { opacity: 0; transform: scale(0.92); }
-      100% { opacity: 1; transform: scale(1); }
     }
 
     .modal-header {
-      background: linear-gradient(90deg, #24352a 0%, #17241c 100%);
+      background: #3e2723;
       color: var(--corps-gold-light);
       padding: 12px 18px;
       display: flex;
@@ -618,11 +543,8 @@
     }
 
     .modal-header h2 {
-      font-size: 1.1rem;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      margin: 0;
+      font-size: 1.05rem;
     }
 
     .modal-close {
@@ -631,7 +553,6 @@
       color: var(--corps-gold-light);
       font-size: 1.4rem;
       cursor: pointer;
-      line-height: 1;
     }
 
     .modal-body {
@@ -642,15 +563,15 @@
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
     }
 
     .select-item-card {
       background: #fff;
       border: 2px solid #c9bda4;
       border-radius: 8px;
-      padding: 12px;
+      padding: 12px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -663,7 +584,6 @@
     .select-item-card:hover {
       border-color: var(--corps-gold);
       transform: translateY(-3px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     }
 
     .select-item-card.current {
@@ -685,39 +605,115 @@
       font-weight: bold;
     }
 
-    .card-preview {
-      width: 72px;
-      height: 72px;
+    .select-item-card.locked {
+      background: #ebe5d8;
+      border-color: #999;
+      opacity: 0.85;
+    }
+
+    .select-item-card .card-preview {
+      width: 60px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 8px;
     }
 
-    .card-name {
-      font-size: 0.88rem;
+    .select-item-card .card-name {
+      font-size: 0.82rem;
       font-weight: bold;
       color: #2b1f14;
       margin-bottom: 4px;
     }
 
-    .card-desc {
-      font-size: 0.72rem;
-      color: #665b50;
-      line-height: 1.3;
-    }
-
-    .card-badge {
-      margin-top: 6px;
-      font-size: 0.68rem;
+    .select-item-card .card-badge {
+      font-size: 0.65rem;
       background: #e8ded0;
       color: #4a3e30;
-      padding: 2px 8px;
-      border-radius: 10px;
+      padding: 2px 6px;
+      border-radius: 8px;
       font-weight: bold;
     }
 
-    /* クイック片付け指令バナー */
+    .select-item-card .card-desc {
+      font-size: 0.65rem;
+      color: #665b50;
+      line-height: 1.3;
+      margin-top: 6px;
+    }
+
+    .select-item-card .lock-badge {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      background: #611818;
+      color: #fff;
+      font-size: 0.62rem;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-weight: bold;
+      border: 1px solid #ffd700;
+    }
+
+    .shop-wallet-banner {
+      background: linear-gradient(135deg, #1e3325 0%, #101c14 100%);
+      border: 1.5px solid var(--corps-gold);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .shop-wallet-label {
+      color: var(--corps-gold-light);
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .shop-wallet-val {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #ffd700;
+    }
+
+    .furn-card .card-cost-badge {
+      position: absolute;
+      top: -7px;
+      left: -6px;
+      background: linear-gradient(135deg, #c5a059, #8a6a28);
+      color: #111;
+      font-weight: bold;
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 12px;
+      border: 1px solid #fff;
+    }
+
+    .buy-btn {
+      margin-top: 8px;
+      width: 100%;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: bold;
+      padding: 6px 8px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .buy-btn.btn-active {
+      background: linear-gradient(180deg, #ffd700, #c5a059);
+      color: #121815;
+    }
+
+    .buy-btn.btn-disabled {
+      background: #ccc;
+      color: #666;
+      cursor: not-allowed;
+    }
+
     .mission-hud {
       position: absolute;
       top: 75px;
@@ -736,10 +732,6 @@
       font-size: 0.8rem;
       color: var(--corps-gold);
       margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      letter-spacing: 1px;
     }
 
     .mission-hud p {
@@ -759,295 +751,24 @@
       padding: 6px;
       border-radius: 4px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: 0.15s;
     }
 
-    .mission-btn:hover {
-      background: linear-gradient(180deg, #942525, #611818);
-    }
-
-    /* 操作ガイドトースト */
-    .toast-guide {
-      position: absolute;
-      top: 75px;
-      right: 16px;
-      background: rgba(0, 0, 0, 0.75);
-      border-left: 4px solid var(--corps-gold);
-      color: #eee;
-      padding: 8px 12px;
-      font-size: 0.74rem;
-      border-radius: 0 6px 6px 0;
-      max-width: 240px;
-      line-height: 1.4;
-      pointer-events: none;
-      z-index: 80;
-    }
-
-    /* 家具交換所（ショップ）スタイル */
-    .shop-wallet-banner {
-      background: linear-gradient(135deg, #1e3325 0%, #101c14 100%);
-      border: 1.5px solid var(--corps-gold);
-      border-radius: 8px;
-      padding: 10px 16px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-    }
-    .shop-wallet-label {
-      color: var(--corps-gold-light);
-      font-size: 0.85rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    .shop-wallet-val {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #ffd700;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
-    }
-    .shop-wallet-val small {
-      font-size: 0.75rem;
-      color: #fff;
-      font-weight: normal;
-      margin-left: 2px;
-    }
-    .furn-card {
-      position: relative;
-    }
-    .furn-card.cannot-afford {
-      opacity: 0.75;
-      background: #fbf8f3;
-    }
-    .card-cost-badge {
-      position: absolute;
-      top: -7px;
-      left: -6px;
-      background: linear-gradient(135deg, #c5a059, #8a6a28);
-      color: #111;
-      font-weight: bold;
-      font-size: 0.7rem;
-      padding: 2px 7px;
-      border-radius: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      border: 1px solid #fff;
-    }
-    .buy-btn {
-      margin-top: 8px;
-      width: 100%;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: bold;
-      padding: 6px 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .buy-btn.btn-active {
-      background: linear-gradient(180deg, #2d5a45, #1b382b);
-      color: #fff;
-      border: 1.5px solid var(--corps-gold);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .buy-btn.btn-active:hover {
-      background: linear-gradient(180deg, #3f7b5f, #254d3b);
-      transform: scale(1.03);
-    }
-    .buy-btn.btn-disabled {
-      background: #d1c7b7;
-      color: #7d7265;
-      border: 1px solid #b5a996;
-      cursor: not-allowed;
-    }
-
-    /* 浮動テキスト（ポイント加算・減算演出） */
-    .floating-text {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      font-size: 1.05rem;
-      font-weight: bold;
-      pointer-events: none;
-      z-index: 10000;
-      animation: floatUpFade 1s ease-out forwards;
-      text-shadow: 1px 1px 2px #000, 0 0 6px rgba(0,0,0,0.8);
-      white-space: nowrap;
-    }
-    @keyframes floatUpFade {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -30%) scale(0.6);
-      }
-      20% {
-        opacity: 1;
-        transform: translate(-50%, -60%) scale(1.15);
-      }
-      60% {
-        opacity: 1;
-        transform: translate(-50%, -100%) scale(1.0);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -140%) scale(0.9);
-      }
-    }
-
-    /* モバイル対応（画面幅600px以下） */
-    @media (max-width: 600px) {
-      header {
-        height: 48px;
-        padding: env(safe-area-inset-top, 0px) 8px 0 8px;
-      }
-      .brand-group {
-        gap: 6px;
-      }
-      .wings-badge {
-        width: 32px;
-        height: 32px;
-        border-radius: 4px;
-      }
-      .wings-badge svg {
-        width: 22px;
-        height: 22px;
-      }
-      .brand-title h1 {
-        font-size: 0.8rem;
-        letter-spacing: 0.5px;
-      }
-      .brand-title span {
-        display: none;
-      }
-      .stats-panel {
-        gap: 6px;
-      }
-      .stats-panel .stat-badge {
-        padding: 3px 6px;
-        font-size: 0.68rem;
-        gap: 3px;
-      }
-      .header-actions .btn-icon {
-        padding: 3px 6px;
-        font-size: 0.65rem;
-      }
-
-      footer {
-        min-height: 62px;
-        gap: 5px;
-        padding: 4px 6px calc(4px + env(safe-area-inset-bottom, 12px)) 6px;
-      }
-      .dock-btn {
-        flex: 1;
-        max-width: 64px;
-        height: 52px;
-        border-radius: 8px;
-        padding: 2px;
-        gap: 2px;
-      }
-      .dock-btn svg {
-        width: 20px;
-        height: 20px;
-      }
-      .dock-btn span {
-        font-size: 0.58rem;
-        letter-spacing: -0.5px;
-      }
-
-      .chat-container {
-        bottom: calc(68px + env(safe-area-inset-bottom, 12px));
-        width: 94%;
-        padding: 4px 8px;
-      }
-      .chat-input {
-        width: 100%;
-        font-size: 0.78rem;
-        padding: 4px 10px;
-      }
-      .chat-submit-btn {
-        padding: 4px 10px;
-        font-size: 0.75rem;
-      }
-
-      .mission-hud {
-        top: 6px;
-        left: 6px;
-        max-width: 180px;
-        padding: 6px 8px;
-        font-size: 0.68rem;
-        background: rgba(18, 24, 21, 0.92);
-        border-width: 1px;
-      }
-      .mission-hud h3 {
-        font-size: 0.72rem;
-        margin-bottom: 2px;
-      }
-      .mission-hud p {
-        font-size: 0.64rem;
-        line-height: 1.25;
-        max-height: 38px;
-        overflow: hidden;
-      }
-      .mission-btn {
-        margin-top: 4px;
-        padding: 4px 6px;
-        font-size: 0.65rem;
-      }
-
-      .toast-guide {
-        display: none;
-      }
-
-      .modal-card {
-        width: 95%;
-        max-height: 84vh;
-        max-height: 84dvh;
-        border-width: 2px;
-      }
-      .modal-header {
-        padding: 10px 14px;
-      }
-      .modal-header h2 {
-        font-size: 0.95rem;
-      }
-      .modal-body {
-        padding: 10px;
-      }
-      .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-      .select-item-card {
-        padding: 8px 6px;
-      }
-      .card-preview {
-        width: 52px;
-        height: 52px;
-        margin-bottom: 4px;
-      }
-      .card-name {
-        font-size: 0.78rem;
-      }
-      .card-desc {
-        font-size: 0.64rem;
-      }
-      .buy-btn {
-        font-size: 0.68rem;
-        padding: 5px 4px;
-        margin-top: 6px;
-      }
+    @media(max-width: 600px) {
+      header { height: 48px; padding: env(safe-area-inset-top, 0px) 8px 0 8px; }
+      .brand-title h1 { font-size: 0.85rem; }
+      .brand-title span { display: none; }
+      footer { min-height: 60px; padding: 4px 6px calc(4px + env(safe-area-inset-bottom, 12px)) 6px; }
+      .dock-btn { width: 56px; height: 50px; }
+      .mission-hud { top: 6px; left: 6px; max-width: 180px; font-size: 0.68rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 上部ヘッダー -->
   <header>
     <div class="brand-group">
       <div class="wings-badge" title="自由の翼">
         <svg viewBox="0 0 100 100" width="30" height="30">
-          <!-- 自由の翼風エンブレム -->
           <path d="M50 15 L80 30 L70 85 L50 95 L30 85 L20 30 Z" fill="#1b382b" stroke="#c5a059" stroke-width="3"/>
           <path d="M38 35 C45 35 48 45 42 60 C38 68 33 72 30 75 C35 70 42 62 44 54 C48 42 42 38 38 35 Z" fill="#ffffff" />
           <path d="M62 35 C55 35 52 45 58 60 C62 68 67 72 70 75 C65 70 58 62 56 54 C52 42 58 38 62 35 Z" fill="#205081" />
@@ -1060,8 +781,8 @@
     </div>
 
     <div class="stats-panel">
-      <div class="stat-badge" title="綺麗さ・片付け度">
-        <span>✨ 部屋の清潔度:</span>
+      <div class="stat-badge" title="綺麗さ・清潔度">
+        <span>✨ 清潔度:</span>
         <span class="value" id="clean-rate">100%</span>
       </div>
       <div class="stat-badge" title="自由の翼ポイント">
@@ -1071,82 +792,54 @@
     </div>
 
     <div class="header-actions">
-      <button class="btn-icon" id="btn-sound-toggle" title="効果音/BGM">
+      <button class="btn-icon" id="btn-sound-toggle">
         🔊 音声: <span id="sound-state">ON</span>
       </button>
     </div>
   </header>
 
-  <!-- メイン部屋エリア -->
   <main id="main-container">
-    <!-- 左上ミッションHUD -->
     <div class="mission-hud">
       <h3>⚔️ お掃除作戦指令</h3>
-      <p id="mission-text">宿舎はまだ家具がゼロの空き部屋！床を掃除して調査Ptを貯め、「家具交換所」で家具を手に入れよう！</p>
+      <p id="mission-text">床を掃除して調査Ptを貯め、ロックされた仲間やお供を解放しよう！</p>
       <button class="mission-btn" id="btn-spawn-dust">
-        <span>🧹 埃（巨人汚れ）を発生させる</span>
+        <span>🧹 埃（汚れ）を発生させる</span>
       </button>
     </div>
 
-    <!-- 右上操作ガイド -->
-    <div class="toast-guide">
-      💡 <b>ピグ操作法</b><br>
-      ・床をクリック：その場所へトコトコ移動<br>
-      ・家具：ドラッグして好きな位置に模様替え<br>
-      ・キャラ/お供：クリックでポーズ＆台詞
-    </div>
-
-    <!-- アイソメトリック部屋空間 -->
     <div id="room-viewport">
       <div class="room-stage">
-        <!-- 左壁 -->
         <div class="wall-left">
           <div class="wall-brick-lines"></div>
-          <!-- 調査兵団バナー -->
           <div class="wall-banner">
             <svg viewBox="0 0 100 100" width="50" height="50">
               <path d="M50 10 L85 25 L75 80 L50 92 L25 80 L15 25 Z" fill="#15261d" stroke="#c5a059" stroke-width="4"/>
               <path d="M38 30 C46 30 50 40 44 58 C40 68 34 72 30 75 C36 70 44 60 46 52 C50 40 43 33 38 30 Z" fill="#ffffff" />
               <path d="M62 30 C54 30 50 40 56 58 C60 68 66 72 70 75 C64 70 56 60 54 52 C50 40 57 33 62 30 Z" fill="#205081" />
             </svg>
-            <span style="font-size:8px; color:#c5a059; margin-top:4px; font-weight:bold; letter-spacing:1px;">調査兵団</span>
+            <span style="font-size:8px; color:#c5a059; margin-top:4px; font-weight:bold;">調査兵団</span>
           </div>
         </div>
 
-        <!-- 右壁 -->
         <div class="wall-right">
           <div class="wall-brick-lines"></div>
-          <!-- 壁の窓（巨大樹の森） -->
           <div style="position:absolute; top:45px; right:60px; width:110px; height:120px; background:#4a829e; border:6px solid #3c2f23; box-shadow:inset 0 0 15px rgba(0,0,0,0.5); overflow:hidden;">
-            <!-- 窓の外の空と山 -->
             <div style="width:100%; height:60%; background:linear-gradient(#7ac1eb, #c8e6f5);"></div>
             <div style="width:100%; height:40%; background:#2d502f; border-radius:50% 50% 0 0; transform:scale(1.4);"></div>
-            <!-- 格子 -->
             <div style="position:absolute; top:0; left:50%; width:4px; height:100%; background:#3c2f23; transform:translateX(-50%);"></div>
             <div style="position:absolute; top:50%; left:0; width:100%; height:4px; background:#3c2f23; transform:translateY(-50%);"></div>
           </div>
         </div>
 
-        <!-- 床 -->
         <div class="floor-canvas" id="floor-area">
           <div class="floor-light"></div>
         </div>
       </div>
 
-      <!-- キャラ・家具・汚れをレンダリングするレイヤー -->
-      <div id="entities-layer">
-        <!-- 家具・アバター・お供がJSによってこの中に配置されます -->
-      </div>
-    </div>
-
-    <!-- チャットセリフ入力バー -->
-    <div class="chat-container">
-      <input type="text" id="chat-input" class="chat-input" placeholder="ピグに喋らせる（例：綺麗にしろ！）" maxlength="40">
-      <button id="chat-send" class="chat-submit-btn">発言</button>
+      <div id="entities-layer"></div>
     </div>
   </main>
 
-  <!-- 下部操作ドック（ピグUI風） -->
   <footer>
     <button class="dock-btn" id="btn-open-char" title="キャラクター変更">
       <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -1156,7 +849,7 @@
       <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><circle cx="12" cy="12" r="3" fill="none"/></svg>
       <span>お供連れ</span>
     </button>
-    <button class="dock-btn" id="btn-open-furniture" title="家具交換所・模様替え">
+    <button class="dock-btn" id="btn-open-furniture" title="家具交換所">
       <svg viewBox="0 0 24 24"><path d="M20 10V7c0-1.1-.9-2-2-2H6c-1.1 0-2 .9-2 2v3c-1.1 0-2 .9-2 2v5h1.33L4 19h1l.67-2h12.67l.66 2h1l.67-2H22v-5c0-1.1-.9-2-2-2zm-9 0H6V7h5v3zm7 0h-5V7h5v3z"/></svg>
       <span>家具交換所</span>
     </button>
@@ -1170,7 +863,7 @@
     </button>
   </footer>
 
-  <!-- モーダル：キャラクター選択 -->
+  <!-- モーダル：キャラ選択 -->
   <div class="modal-overlay" id="modal-char">
     <div class="modal-card">
       <div class="modal-header">
@@ -1178,15 +871,13 @@
         <button class="modal-close" onclick="closeModal('modal-char')">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.8rem; color:#555; margin-bottom:12px;">宿舎で生活し、片付けを指揮する兵士を選んでください。</p>
-        <div class="card-grid" id="char-options">
-          <!-- JSで描画 -->
-        </div>
+        <p style="font-size:0.8rem; color:#555; margin-bottom:12px;">初期設定はリヴァイ兵長のみ。お掃除ポイントで仲間を解放できます！</p>
+        <div class="card-grid" id="char-options"></div>
       </div>
     </div>
   </div>
 
-  <!-- モーダル：お供（バディ）選択 -->
+  <!-- モーダル：お供選択 -->
   <div class="modal-overlay" id="modal-buddy">
     <div class="modal-card">
       <div class="modal-header">
@@ -1194,15 +885,13 @@
         <button class="modal-close" onclick="closeModal('modal-buddy')">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:0.8rem; color:#555; margin-bottom:12px;">あなたの後ろをトコトコ付いてくる頼もしいお供を選んで連れて歩けます。</p>
-        <div class="card-grid" id="buddy-options">
-          <!-- JSで描画 -->
-        </div>
+        <p style="font-size:0.8rem; color:#555; margin-bottom:12px;">初めは全てロックされています。調査Ptで相棒をアンロックしよう！</p>
+        <div class="card-grid" id="buddy-options"></div>
       </div>
     </div>
   </div>
 
-  <!-- モーダル：家具カタログ＆交換所 -->
+  <!-- モーダル：家具交換所 -->
   <div class="modal-overlay" id="modal-furniture">
     <div class="modal-card">
       <div class="modal-header">
@@ -1211,145 +900,127 @@
       </div>
       <div class="modal-body">
         <div class="shop-wallet-banner">
-          <div class="shop-wallet-label">🕊️ あなたの所持ポイント</div>
-          <div class="shop-wallet-val"><span id="shop-pts-val">0</span> <small>Pt</small></div>
+          <div class="shop-wallet-label">🕊️ 所持ポイント:</div>
+          <div class="shop-wallet-val"><span id="shop-pts-val">0</span> Pt</div>
         </div>
-        <p style="font-size:0.8rem; color:#555; margin-bottom:12px;">
-          部屋のホコリを掃除して貯めた調査ポイントで、宿舎の家具と交換できます。<br>
-          配置後は部屋の中でドラッグして自由に模様替えが可能です。
-        </p>
-        <div class="card-grid" id="furniture-options">
-          <!-- JSで描画 -->
-        </div>
+        <p style="font-size:0.8rem; color:#555; margin-bottom:12px;">埃を掃除して貯めた調査ポイントで家具と交換できます。</p>
+        <div class="card-grid" id="furniture-options"></div>
       </div>
     </div>
   </div>
 
   <script>
-    /* ==========================================================================
-       進撃のピグ片付けルーム - コアスクリプト
-       ========================================================================== */
-
-    // 1. サウンド生成システム (Web Audio API)
+    // 1. Web Audio API 音響シンセサイザー
     const SoundFX = {
       ctx: null,
       enabled: true,
       init() {
         if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          this.ctx = new AudioContext();
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) this.ctx = new AC();
         }
         if (this.ctx && this.ctx.state === 'suspended') {
           this.ctx.resume();
         }
       },
+      playPop() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'sine';
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      },
       playStep() {
         if (!this.enabled) return;
         this.init();
+        if (!this.ctx) return;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(140 + Math.random() * 40, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(60, this.ctx.currentTime + 0.08);
-        gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.08);
+        osc.type = 'triangle';
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(140 + Math.random() * 40, now);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
       },
       playClean() {
         if (!this.enabled) return;
         this.init();
-        // シャキーン＋掃除音
+        if (!this.ctx) return;
+        const freqs = [659, 880, 1046, 1318];
         const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(520, now);
-        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.18);
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.linearRampToValueAtTime(0.001, now + 0.25);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(now + 0.25);
-
-        // 鈴のような高音
-        setTimeout(() => {
-          if (!this.ctx) return;
-          const osc2 = this.ctx.createOscillator();
-          const gain2 = this.ctx.createGain();
-          osc2.type = 'sine';
-          osc2.frequency.setValueAtTime(1760, this.ctx.currentTime);
-          gain2.gain.setValueAtTime(0.1, this.ctx.currentTime);
-          gain2.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.3);
-          osc2.connect(gain2);
-          gain2.connect(this.ctx.destination);
-          osc2.start();
-          osc2.stop(this.ctx.currentTime + 0.3);
-        }, 80);
-      },
-      playSalute() {
-        if (!this.enabled) return;
-        this.init();
-        // 重厚なドスン＆ファンファーレ
-        const now = this.ctx.currentTime;
-        const notes = [261.63, 329.63, 392.00, 523.25]; // C E G C
-        notes.forEach((freq, i) => {
+        freqs.forEach((f, i) => {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(freq, now + i * 0.09);
-          gain.gain.setValueAtTime(0.08, now + i * 0.09);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.35);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-          osc.start(now + i * 0.09);
-          osc.stop(now + i * 0.09 + 0.35);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, now + i * 0.06);
+          gain.gain.setValueAtTime(0.15, now + i * 0.06);
+          gain.gain.linearRampToValueAtTime(0.01, now + i * 0.06 + 0.12);
+          osc.start(now + i * 0.06);
+          osc.stop(now + i * 0.06 + 0.12);
         });
-      },
-      playPop() {
-        if (!this.enabled) return;
-        this.init();
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(440, this.ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.001, this.ctx.currentTime + 0.1);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start();
-        osc.stop(this.ctx.currentTime + 0.1);
       },
       playCoin() {
         if (!this.enabled) return;
         this.init();
+        if (!this.ctx) return;
         const now = this.ctx.currentTime;
-        [987.77, 1318.51].forEach((freq, i) => {
+        [987, 1318].forEach((f, i) => {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + i * 0.08);
-          gain.gain.setValueAtTime(0.14, now + i * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.3);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, now + i * 0.08);
+          gain.gain.setValueAtTime(0.2, now + i * 0.08);
+          gain.gain.linearRampToValueAtTime(0.01, now + i * 0.08 + 0.2);
           osc.start(now + i * 0.08);
-          osc.stop(now + i * 0.08 + 0.3);
+          osc.stop(now + i * 0.08 + 0.2);
+        });
+      },
+      playSalute() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [523, 659, 784, 1046].forEach((f, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(f, now + i * 0.07);
+          gain.gain.setValueAtTime(0.25, now + i * 0.07);
+          gain.gain.linearRampToValueAtTime(0.01, now + i * 0.07 + 0.25);
+          osc.start(now + i * 0.07);
+          osc.stop(now + i * 0.07 + 0.25);
         });
       }
     };
 
-    // 2. ゲームマスターデータ
+    // 2. キャラクター定義（初期設定はリヴァイのみアンロック）
     const CHARACTERS = [
       {
         id: 'levi',
-        name: '潔癖の兵長',
-        title: '人類最強の掃除番長',
-        desc: '頭に三角巾、手にはたき。部屋の僅かなチリも見逃さず徹底的に片付ける。',
+        name: 'リヴァイ兵長',
+        title: '潔癖のお掃除番長',
+        cost: 0,
+        desc: '頭にお掃除三角巾、手にはたき。部屋の埃を徹底的に駆逐する！',
         lines: [
           'チッ…汚ねぇな。全く出来ていない。',
           '削ぎ落としてやる、部屋の埃をな。',
@@ -1358,432 +1029,241 @@
         ],
         svg: `
           <svg viewBox="0 0 80 110" width="80" height="110">
-            <!-- 影 -->
-            <ellipse cx="40" cy="102" rx="26" ry="8" fill="rgba(0,0,0,0.3)"/>
-            <!-- 体/制服 -->
-            <rect x="28" y="58" width="24" height="28" rx="4" fill="#fff" stroke="#333" stroke-width="2"/>
-            <!-- 調査兵団ジャケット (茶) -->
-            <path d="M26 58 L54 58 L52 76 L28 76 Z" fill="#6d4c41" stroke="#3e2723" stroke-width="2"/>
-            <!-- お掃除三角エプロン (白) -->
-            <path d="M30 64 L50 64 L46 86 L34 86 Z" fill="#ffffff" stroke="#bbb" stroke-width="1.5"/>
-            <!-- ズボン -->
-            <rect x="30" y="82" width="9" height="18" fill="#f5eedc" stroke="#333" stroke-width="1.5"/>
-            <rect x="41" y="82" width="9" height="18" fill="#f5eedc" stroke="#333" stroke-width="1.5"/>
-            <!-- ブーツ (茶) -->
-            <rect x="29" y="94" width="10" height="8" rx="2" fill="#2d1b11"/>
-            <rect x="41" y="94" width="10" height="8" rx="2" fill="#2d1b11"/>
-            <!-- 頭部・顔 -->
-            <circle cx="40" cy="34" r="22" fill="#ffe0bd" stroke="#222" stroke-width="2"/>
-            <!-- リヴァイ風 黒髪ツーブロック -->
-            <path d="M18 32 C18 16 32 14 40 14 C48 14 62 16 62 32 C62 30 58 24 50 24 C44 24 42 28 40 28 C38 28 36 24 30 24 C22 24 18 30 18 32 Z" fill="#151515"/>
-            <path d="M20 32 L26 40 L28 34 L36 38 L40 32 L44 38 L52 34 L54 40 L60 32" fill="#151515"/>
-            <!-- 鋭い三白眼 -->
-            <line x1="28" y1="34" x2="36" y2="35" stroke="#111" stroke-width="2.5"/>
-            <circle cx="32" cy="37" r="1.5" fill="#111"/>
-            <line x1="44" y1="35" x2="52" y2="34" stroke="#111" stroke-width="2.5"/>
-            <circle cx="48" cy="37" r="1.5" fill="#111"/>
-            <!-- 一文字の口 -->
-            <line x1="37" y1="45" x2="43" y2="45" stroke="#444" stroke-width="1.8"/>
-            <!-- 頭の三角巾 (白) -->
-            <polygon points="18,22 40,8 62,22 40,16" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>
-            <!-- 手にはたき（掃除道具） -->
-            <g transform="translate(56, 45) rotate(25)">
-              <rect x="0" y="0" width="3" height="34" fill="#a17442"/>
-              <ellipse cx="1.5" cy="0" rx="9" ry="14" fill="#fafafa" stroke="#ddd" stroke-width="1"/>
-              <line x1="-4" y1="-2" x2="7" y2="-2" stroke="#bbb" stroke-width="1"/>
-            </g>
+            <ellipse cx="40" cy="104" rx="26" ry="6" fill="rgba(0,0,0,0.3)"/>
+            <rect x="27" y="82" width="10" height="22" rx="3" fill="#3e2723"/>
+            <rect x="43" y="82" width="10" height="22" rx="3" fill="#3e2723"/>
+            <rect x="28" y="70" width="24" height="16" fill="#f5f5f5"/>
+            <line x1="40" y1="70" x2="40" y2="86" stroke="#ccc" stroke-width="1.5"/>
+            <rect x="26" y="68" width="28" height="4" fill="#4e342e"/>
+            <rect x="38" y="67" width="4" height="6" fill="#ffd700"/>
+            <rect x="25" y="44" width="30" height="26" rx="4" fill="#a17442"/>
+            <polygon points="36,44 44,44 40,56" fill="#ffffff"/>
+            <ellipse cx="40" cy="50" rx="4" ry="5" fill="#ffffff" stroke="#ddd" stroke-width="0.5"/>
+            <polygon points="38,50 42,50 44,58 36,58" fill="#ffffff"/>
+            <path d="M23 44 C20 62 18 80 22 84 C26 84 32 80 40 82 C48 80 54 84 58 84 C62 80 60 62 57 44 Z" fill="#1b382b" opacity="0.95"/>
+            <path d="M38 56 C40 56 42 60 40 66 C38 68 36 70 35 71 C37 69 40 65 41 62 Z" fill="#ffffff"/>
+            <path d="M42 56 C40 56 38 60 40 66 C42 68 44 70 45 71 C43 69 40 65 39 62 Z" fill="#205081"/>
+            <path d="M25 46 L15 56 L18 64" stroke="#a17442" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <circle cx="18" cy="64" r="3" fill="#ffe0bd"/>
+            <line x1="18" y1="64" x2="10" y2="40" stroke="#5d4037" stroke-width="2.5"/>
+            <ellipse cx="9" cy="36" rx="7" ry="10" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
+            <circle cx="6" cy="34" r="4" fill="#f0f0f0"/>
+            <circle cx="12" cy="38" r="4" fill="#f0f0f0"/>
+            <path d="M55 46 L64 56 L61 64" stroke="#a17442" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <circle cx="61" cy="64" r="3" fill="#ffe0bd"/>
+            <rect x="36" y="38" width="8" height="8" fill="#ffe0bd"/>
+            <ellipse cx="40" cy="27" rx="19" ry="17" fill="#ffe0bd"/>
+            <circle cx="21" cy="28" r="3.5" fill="#ffe0bd"/>
+            <circle cx="59" cy="28" r="3.5" fill="#ffe0bd"/>
+            <path d="M30 24 L37 25" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+            <ellipse cx="34" cy="27" rx="2.5" ry="3" fill="#1b2a38"/>
+            <circle cx="35" cy="26" r="0.9" fill="#ffffff"/>
+            <line x1="30" y1="21" x2="37" y2="23" stroke="#111" stroke-width="1.5"/>
+            <path d="M43 25 L50 24" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+            <ellipse cx="46" cy="27" rx="2.5" ry="3" fill="#1b2a38"/>
+            <circle cx="47" cy="26" r="0.9" fill="#ffffff"/>
+            <line x1="43" y1="23" x2="50" y2="21" stroke="#111" stroke-width="1.5"/>
+            <line x1="37" y1="35" x2="43" y2="35" stroke="#a66" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M21 24 C20 12 28 8 40 8 C52 8 60 12 59 24 C57 20 54 18 40 18 C26 18 23 20 21 24 Z" fill="#15171c"/>
+            <polygon points="21,16 59,16 40,4" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
+            <ellipse cx="40" cy="5" rx="3" ry="2" fill="#ffffff"/>
           </svg>
         `
       },
       {
         id: 'eren',
-        name: '熱血の新兵',
-        title: '駆逐への強い意志',
-        desc: '散らかった部屋を一匹残らず駆逐（片付け）するために立ち上がった熱き新兵。',
+        name: 'エレン・イェーガー',
+        title: '熱血の新兵',
+        cost: 150,
+        desc: '「駆逐してやる…埃を一匹残らず！」調査Ptで解放可能。',
         lines: [
-          '部屋のゴミを一匹残らず…駆逐してやる！',
-          '片付けなければ勝てない。整理整頓だ！',
-          'オレには部屋を片付ける使命がある！',
-          '戦わなければ…綺麗な部屋は手に入らない！'
+          '駆逐してやる…！この部屋の埃を、一匹残らず！',
+          '戦わなければ勝てない…掃除も同じだ！'
         ],
         svg: `
           <svg viewBox="0 0 80 110" width="80" height="110">
-            <ellipse cx="40" cy="102" rx="26" ry="8" fill="rgba(0,0,0,0.3)"/>
-            <!-- 体/インナー (緑) -->
-            <rect x="28" y="58" width="24" height="28" rx="4" fill="#3c5a3e" stroke="#333" stroke-width="2"/>
-            <!-- 調査兵団ジャケット (キャメル) -->
-            <path d="M26 58 L54 58 L52 74 L28 74 Z" fill="#8d6e63" stroke="#4e342e" stroke-width="2"/>
-            <!-- 地下室の鍵ペンダント -->
-            <line x1="40" y1="58" x2="40" y2="68" stroke="#111" stroke-width="1.2"/>
-            <polygon points="38,68 42,68 40,73" fill="#c5a059"/>
-            <!-- ズボン (白) -->
-            <rect x="30" y="80" width="9" height="18" fill="#fdfbf7" stroke="#333" stroke-width="1.5"/>
-            <rect x="41" y="80" width="9" height="18" fill="#fdfbf7" stroke="#333" stroke-width="1.5"/>
-            <!-- ブーツ (茶) -->
-            <rect x="29" y="94" width="10" height="8" rx="2" fill="#3e2723"/>
-            <rect x="41" y="94" width="10" height="8" rx="2" fill="#3e2723"/>
-            <!-- 頭部・顔 -->
-            <circle cx="40" cy="34" r="22" fill="#ffe0bd" stroke="#222" stroke-width="2"/>
-            <!-- 茶色のミディアムヘア -->
-            <path d="M17 34 C17 14 30 12 40 12 C50 12 63 14 63 34 C63 38 60 48 58 48 C56 42 54 30 50 28 C45 34 42 38 40 32 C38 38 35 34 30 28 C26 30 24 42 22 48 C20 48 17 38 17 34 Z" fill="#4a2e18"/>
-            <!-- 意志の強いエメラルドの瞳 -->
-            <ellipse cx="32" cy="36" rx="4" ry="5" fill="#2e7d32"/>
-            <circle cx="33" cy="35" r="1.5" fill="#fff"/>
-            <ellipse cx="48" cy="36" rx="4" ry="5" fill="#2e7d32"/>
-            <circle cx="49" cy="35" r="1.5" fill="#fff"/>
-            <!-- 凛々しい眉 -->
-            <line x1="27" y1="30" x2="36" y2="32" stroke="#22140a" stroke-width="2.5"/>
-            <line x1="44" y1="32" x2="53" y2="30" stroke="#22140a" stroke-width="2.5"/>
-            <!-- 口（気合い） -->
-            <path d="M37 45 Q40 48 43 45" stroke="#333" stroke-width="2" fill="none"/>
-            <!-- マントの緑の布 (背中) -->
-            <path d="M22 62 L18 88 L30 84 Z" fill="#1b382b" opacity="0.9"/>
+            <ellipse cx="40" cy="104" rx="26" ry="6" fill="rgba(0,0,0,0.3)"/>
+            <rect x="27" y="82" width="10" height="22" rx="3" fill="#3e2723"/>
+            <rect x="43" y="82" width="10" height="22" rx="3" fill="#3e2723"/>
+            <rect x="28" y="70" width="24" height="16" fill="#f5f5f5"/>
+            <rect x="25" y="44" width="30" height="26" rx="4" fill="#a17442"/>
+            <polygon points="36,44 44,44 40,56" fill="#33691e"/>
+            <rect x="36" y="38" width="8" height="8" fill="#ffe0bd"/>
+            <ellipse cx="40" cy="27" rx="19" ry="17" fill="#ffe0bd"/>
+            <ellipse cx="33" cy="27" rx="3" ry="3.5" fill="#2e7d32"/>
+            <ellipse cx="47" cy="27" rx="3" ry="3.5" fill="#2e7d32"/>
+            <path d="M19 22 C18 10 26 6 40 6 C54 6 62 10 61 22 C56 16 50 14 40 14 C30 14 24 16 19 22 Z" fill="#4e342e"/>
           </svg>
         `
       },
       {
         id: 'armin',
-        name: '知略の参謀',
-        title: '理論派の収納マスター',
-        desc: '部屋のレイアウトや動線を理論的に分析し、完璧な収納計画を立案する。',
+        name: 'アルミン・アルレルト',
+        title: '知略の参謀',
+        cost: 200,
+        desc: '「効率的な片付けの作戦を立てよう」調査Ptで解放可能。',
         lines: [
-          '何かを片付けるには、何かを捨てる覚悟が必要です！',
-          '動線を考えれば、効率は3倍に向上します！',
-          '僕には見える…この部屋が完璧に片付いた未来が！',
-          '本棚の整理こそ、知性の証ですよ。'
+          '何かを変えることができる人は、部屋の埃を捨てることができる人だ。',
+          'よく観察すれば、効率的な掃除のルートが見えてくるよ。'
         ],
         svg: `
           <svg viewBox="0 0 80 110" width="80" height="110">
-            <ellipse cx="40" cy="102" rx="26" ry="8" fill="rgba(0,0,0,0.3)"/>
-            <!-- 体/制服 -->
-            <rect x="28" y="58" width="24" height="28" rx="4" fill="#fff" stroke="#333" stroke-width="2"/>
-            <!-- 調査兵団ジャケット (茶) -->
-            <path d="M26 58 L54 58 L52 74 L28 74 Z" fill="#795548" stroke="#3e2723" stroke-width="2"/>
-            <!-- 調査兵団マント（緑） -->
-            <path d="M24 60 C24 60 16 75 16 88 L26 84 Z" fill="#1e3f20"/>
-            <path d="M56 60 C56 60 64 75 64 88 L54 84 Z" fill="#1e3f20"/>
-            <!-- ズボン (白) -->
-            <rect x="30" y="80" width="9" height="18" fill="#fdfbf7" stroke="#333" stroke-width="1.5"/>
-            <rect x="41" y="80" width="9" height="18" fill="#fdfbf7" stroke="#333" stroke-width="1.5"/>
-            <!-- ブーツ (茶) -->
-            <rect x="29" y="94" width="10" height="8" rx="2" fill="#3e2723"/>
-            <rect x="41" y="94" width="10" height="8" rx="2" fill="#3e2723"/>
-            <!-- 頭部・顔 -->
-            <circle cx="40" cy="34" r="22" fill="#ffe0bd" stroke="#222" stroke-width="2"/>
-            <!-- 金髪ボブヘア -->
-            <path d="M16 34 C16 12 30 12 40 12 C50 12 64 12 64 34 C64 45 60 48 58 48 C56 40 56 32 50 30 C45 36 42 36 40 32 C38 36 35 36 30 30 C24 32 24 40 22 48 C20 48 16 45 16 34 Z" fill="#e6c65b"/>
-            <!-- 澄んだ青い瞳 -->
-            <ellipse cx="32" cy="36" rx="4.5" ry="5.5" fill="#1976d2"/>
-            <circle cx="33" cy="35" r="1.5" fill="#fff"/>
-            <ellipse cx="48" cy="36" rx="4.5" ry="5.5" fill="#1976d2"/>
-            <circle cx="49" cy="35" r="1.5" fill="#fff"/>
-            <!-- 優しい眉 -->
-            <line x1="28" y1="29" x2="36" y2="30" stroke="#a0852e" stroke-width="2"/>
-            <line x1="44" y1="30" x2="52" y2="29" stroke="#a0852e" stroke-width="2"/>
-            <!-- 穏やかな口元 -->
-            <path d="M37 45 Q40 47 43 45" stroke="#333" stroke-width="1.8" fill="none"/>
-            <!-- 片手に作戦手帖（収納ノート） -->
-            <rect x="18" y="65" width="10" height="14" rx="2" fill="#8d6e63" stroke="#4e342e"/>
-            <line x1="22" y1="67" x2="26" y2="67" stroke="#fff" stroke-width="1"/>
-            <line x1="20" y1="71" x2="26" y2="71" stroke="#fff" stroke-width="1"/>
+            <ellipse cx="40" cy="104" rx="26" ry="6" fill="rgba(0,0,0,0.3)"/>
+            <rect x="27" y="82" width="10" height="22" rx="3" fill="#3e2723"/>
+            <rect x="43" y="82" width="10" height="22" rx="3" fill="#3e2723"/>
+            <rect x="28" y="70" width="24" height="16" fill="#f5f5f5"/>
+            <rect x="25" y="44" width="30" height="26" rx="4" fill="#a17442"/>
+            <polygon points="36,44 44,44 40,54" fill="#ffffff"/>
+            <rect x="36" y="38" width="8" height="8" fill="#ffe0bd"/>
+            <ellipse cx="40" cy="27" rx="19" ry="17" fill="#ffe0bd"/>
+            <ellipse cx="33" cy="27" rx="3.5" ry="4" fill="#0277bd"/>
+            <ellipse cx="47" cy="27" rx="3.5" ry="4" fill="#0277bd"/>
+            <path d="M18 20 C18 6 28 4 40 4 C52 4 62 6 62 20 C62 34 58 36 56 36 L54 26 C48 18 32 18 26 26 L24 36 C22 36 18 34 18 20 Z" fill="#ffd54f"/>
           </svg>
         `
       }
     ];
 
+    // 3. お供定義（初めは全てロック！「なし」のみ選択可）
     const BUDDIES = [
       {
-        id: 'horse',
-        name: '調査兵団の軍馬',
-        title: '駿馬・ホワイト号',
-        desc: '壁外調査でも頼りになる忠実な白馬。ピグの後をパッカパッカとついて歩きます。',
+        id: 'none',
+        name: 'なし（単独行動）',
+        title: 'お供を連れずに掃除',
+        cost: 0,
+        desc: '身軽に一人で宿舎のお掃除に励みます。',
         svg: `
           <svg viewBox="0 0 64 64" width="64" height="64">
-            <ellipse cx="32" cy="58" rx="22" ry="5" fill="rgba(0,0,0,0.3)"/>
-            <!-- 馬の胴体 (白) -->
-            <ellipse cx="32" cy="36" rx="18" ry="12" fill="#f5f5f5" stroke="#333" stroke-width="1.5"/>
-            <!-- 首・頭 -->
-            <path d="M38 34 L48 20 C48 15 54 14 56 18 C58 22 54 26 50 30 L44 38 Z" fill="#fafafa" stroke="#333" stroke-width="1.5"/>
-            <!-- たてがみ (グレー/銀) -->
-            <path d="M44 18 C43 24 40 28 38 32" stroke="#bbb" stroke-width="3" fill="none"/>
-            <!-- 馬の耳 -->
-            <polygon points="50,14 54,9 53,16" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
-            <!-- 馬のつぶらな目 -->
-            <circle cx="52" cy="20" r="2" fill="#111"/>
-            <!-- 馬具 (革・緑) -->
-            <path d="M42 36 L30 36 L30 42 L42 42 Z" fill="#1b382b" stroke="#c5a059" stroke-width="1"/>
-            <!-- 脚 -->
-            <rect x="20" y="44" width="4" height="14" fill="#eee" stroke="#333" stroke-width="1.2"/>
-            <rect x="28" y="44" width="4" height="14" fill="#eee" stroke="#333" stroke-width="1.2"/>
-            <rect x="36" y="44" width="4" height="14" fill="#eee" stroke="#333" stroke-width="1.2"/>
-            <rect x="42" y="44" width="4" height="14" fill="#eee" stroke="#333" stroke-width="1.2"/>
-            <!-- ひづめ -->
-            <rect x="20" y="56" width="4" height="3" fill="#333"/>
-            <rect x="28" y="56" width="4" height="3" fill="#333"/>
-            <rect x="36" y="56" width="4" height="3" fill="#333"/>
-            <rect x="42" y="56" width="4" height="3" fill="#333"/>
-            <!-- しっぽ -->
-            <path d="M14 36 C10 40 10 48 14 52" stroke="#ccc" stroke-width="3" fill="none"/>
+            <circle cx="32" cy="32" r="24" fill="#ddd" stroke="#999" stroke-dasharray="4 4"/>
+            <text x="32" y="38" text-anchor="middle" font-size="20" fill="#777">👤</text>
+          </svg>
+        `
+      },
+      {
+        id: 'horse',
+        name: '軍馬（ホワイト号）',
+        title: '誇り高き白馬',
+        cost: 100,
+        desc: '後ろをとことこ付いてくる調査兵団の駿馬。調査Ptで解放！',
+        svg: `
+          <svg viewBox="0 0 64 64" width="64" height="64">
+            <ellipse cx="32" cy="58" rx="20" ry="5" fill="rgba(0,0,0,0.3)"/>
+            <ellipse cx="32" cy="38" rx="16" ry="12" fill="#f5f5f5" stroke="#ccc"/>
+            <rect x="22" y="44" width="4" height="14" fill="#e0e0e0"/>
+            <rect x="38" y="44" width="4" height="14" fill="#e0e0e0"/>
+            <ellipse cx="44" cy="26" rx="10" ry="8" fill="#f5f5f5" stroke="#ccc"/>
+            <polygon points="46,18 42,12 50,16" fill="#f5f5f5"/>
+            <circle cx="48" cy="24" r="2" fill="#333"/>
+            <rect x="26" y="32" width="12" height="10" fill="#1b382b" stroke="#c5a059" rx="2"/>
           </svg>
         `
       },
       {
         id: 'drone',
-        name: '立体機動ドローン',
-        title: '蒸気駆動型ルンバ',
-        desc: 'ガスとアンカー射出機構を搭載した自律型浮遊お掃除メカ。シューシュー蒸気を出します。',
+        name: '蒸気駆動型ルンバ',
+        title: '立体機動式自律モップ',
+        cost: 180,
+        desc: '蒸気機関で自走し、床のチリを吸引・拭き掃除する。調査Ptで解放！',
         svg: `
           <svg viewBox="0 0 64 64" width="64" height="64">
-            <ellipse cx="32" cy="58" rx="16" ry="4" fill="rgba(0,0,0,0.25)"/>
-            <!-- 蒸気雲 -->
-            <circle cx="18" cy="42" r="5" fill="rgba(255,255,255,0.7)"/>
-            <circle cx="14" cy="46" r="3" fill="rgba(255,255,255,0.5)"/>
-            <!-- メインボディ (真鍮・アイアン) -->
-            <circle cx="32" cy="32" r="18" fill="#455a64" stroke="#263238" stroke-width="2"/>
-            <!-- ガスボンベ2本 (シルバー) -->
-            <rect x="20" y="24" width="6" height="16" rx="2" fill="#cfd8dc" stroke="#37474f" stroke-width="1"/>
-            <rect x="38" y="24" width="6" height="16" rx="2" fill="#cfd8dc" stroke="#37474f" stroke-width="1"/>
-            <!-- 中央レンズアイ（光る緑） -->
-            <circle cx="32" cy="32" r="7" fill="#00e676" stroke="#1b5e20" stroke-width="1.5"/>
-            <circle cx="34" cy="30" r="2.5" fill="#ffffff"/>
-            <!-- プロペラ・ファン -->
-            <line x1="16" y1="16" x2="48" y2="16" stroke="#c5a059" stroke-width="2.5"/>
-            <circle cx="32" cy="16" r="3" fill="#c5a059"/>
-            <!-- 下部ブラシ -->
-            <line x1="26" y1="48" x2="26" y2="52" stroke="#333" stroke-width="2"/>
-            <line x1="32" y1="48" x2="32" y2="52" stroke="#333" stroke-width="2"/>
-            <line x1="38" y1="48" x2="38" y2="52" stroke="#333" stroke-width="2"/>
+            <ellipse cx="32" cy="58" rx="18" ry="4" fill="rgba(0,0,0,0.3)"/>
+            <ellipse cx="32" cy="40" rx="18" ry="10" fill="#8d6e63" stroke="#3e2723" stroke-width="1.5"/>
+            <ellipse cx="32" cy="38" rx="14" ry="7" fill="#bcaaa4"/>
+            <circle cx="32" cy="36" r="4" fill="#00acc1"/>
           </svg>
         `
       },
       {
         id: 'mini_titan',
         name: 'モップ持ちミニ巨人',
-        title: '改心したお掃除巨人',
-        desc: '人を襲うのをやめ、モップを持って部屋の床掃除に励む小さくて愛嬌のあるミニ巨人。',
+        title: '改心したお掃除隊員',
+        cost: 300,
+        desc: '頭に手ぬぐいを巻き、真面目にモップ掛けを手伝う。調査Ptで解放！',
         svg: `
           <svg viewBox="0 0 64 64" width="64" height="64">
             <ellipse cx="32" cy="58" rx="16" ry="4" fill="rgba(0,0,0,0.3)"/>
-            <!-- ふっくらした巨人ボディ -->
-            <ellipse cx="32" cy="38" rx="16" ry="14" fill="#ffd1a4" stroke="#222" stroke-width="1.5"/>
-            <!-- 大きな頭 -->
-            <circle cx="32" cy="22" r="14" fill="#ffd1a4" stroke="#222" stroke-width="1.5"/>
-            <!-- ボサボサ髪 -->
-            <path d="M18 20 C18 10 26 8 32 8 C38 8 46 10 46 20 Z" fill="#8d6e63"/>
-            <!-- にんまりした大きな笑顔 -->
-            <path d="M24 24 Q32 32 40 24 Z" fill="#ffffff" stroke="#222" stroke-width="1"/>
-            <line x1="28" y1="26" x2="28" y2="28" stroke="#bbb" stroke-width="1"/>
-            <line x1="32" y1="26" x2="32" y2="29" stroke="#bbb" stroke-width="1"/>
-            <line x1="36" y1="26" x2="36" y2="28" stroke="#bbb" stroke-width="1"/>
-            <!-- つぶらな黒目 -->
-            <circle cx="26" cy="18" r="2" fill="#111"/>
-            <circle cx="38" cy="18" r="2" fill="#111"/>
-            <!-- 足 -->
-            <rect x="24" y="48" width="6" height="8" rx="3" fill="#ffd1a4" stroke="#222" stroke-width="1"/>
-            <rect x="34" y="48" width="6" height="8" rx="3" fill="#ffd1a4" stroke="#222" stroke-width="1"/>
-            <!-- 持っているお掃除モップ -->
-            <line x1="46" y1="18" x2="46" y2="56" stroke="#5d4037" stroke-width="2"/>
-            <path d="M42 54 L50 54 L48 60 L44 60 Z" fill="#00bcd4"/>
+            <rect x="25" y="42" width="6" height="14" fill="#ffe0bd"/>
+            <rect x="33" y="42" width="6" height="14" fill="#ffe0bd"/>
+            <rect x="24" y="28" width="16" height="16" rx="3" fill="#ffe0bd"/>
+            <ellipse cx="32" cy="20" rx="12" ry="11" fill="#ffe0bd"/>
+            <circle cx="28" cy="18" r="2" fill="#333"/>
+            <circle cx="36" cy="18" r="2" fill="#333"/>
+            <rect x="20" y="11" width="24" height="4" fill="#fff" rx="1"/>
+            <line x1="18" y1="20" x2="22" y2="52" stroke="#8d6e63" stroke-width="2"/>
           </svg>
         `
       }
     ];
 
+    // 4. 家具カタログ
     const FURNITURE_CATALOG = [
       {
         id: 'supply_crates',
         name: '補給所の木箱と樽',
         desc: '立体機動装置の替刃やガス缶が整然と保管されている木箱。',
         cost: 30,
-        width: 75,
-        height: 65,
         svg: `
           <svg viewBox="0 0 75 65" width="75" height="65">
             <ellipse cx="37" cy="58" rx="30" ry="6" fill="rgba(0,0,0,0.35)"/>
-            <!-- 下の木箱 -->
             <rect x="15" y="32" width="30" height="25" fill="#a17442" stroke="#5d4037" stroke-width="1.5"/>
-            <line x1="15" y1="32" x2="45" y2="57" stroke="#5d4037" stroke-width="1"/>
-            <line x1="45" y1="32" x2="15" y2="57" stroke="#5d4037" stroke-width="1"/>
-            <!-- 上の木箱 -->
             <rect x="22" y="16" width="22" height="18" fill="#b58752" stroke="#5d4037" stroke-width="1.5"/>
-            <!-- 右の樽 -->
             <ellipse cx="54" cy="30" rx="12" ry="5" fill="#6d4c41"/>
             <path d="M42 30 C40 40 40 48 44 54 L64 54 C68 48 68 40 66 30 Z" fill="#8d6e63" stroke="#3e2723" stroke-width="1.5"/>
-            <line x1="41" y1="38" x2="67" y2="38" stroke="#333" stroke-width="1.5"/>
-            <line x1="43" y1="46" x2="65" y2="46" stroke="#333" stroke-width="1.5"/>
           </svg>
         `
       },
       {
         id: 'cleaning_rack',
         name: '兵長謹製・お掃除スタンド',
-        desc: 'はたき・ほうき・モップ・雑巾が所定の位置に美しく収まる片付けの象徴。',
+        desc: 'はたき・ほうき・モップ・雑巾が美しく収まる片付けの象徴。',
         cost: 60,
-        width: 55,
-        height: 80,
         svg: `
           <svg viewBox="0 0 55 80" width="55" height="80">
             <ellipse cx="28" cy="74" rx="20" ry="5" fill="rgba(0,0,0,0.3)"/>
-            <!-- スタンド木枠 -->
             <rect x="26" y="20" width="4" height="52" fill="#5d4037"/>
-            <ellipse cx="28" cy="72" rx="14" ry="4" fill="#3e2723"/>
-            <!-- モップ -->
             <line x1="18" y1="15" x2="22" y2="68" stroke="#8d6e63" stroke-width="2"/>
             <rect x="20" y="60" width="8" height="10" fill="#00acc1" rx="1"/>
-            <!-- はたき（白） -->
             <line x1="36" y1="20" x2="33" y2="68" stroke="#8d6e63" stroke-width="2"/>
             <circle cx="37" cy="18" r="6" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
-            <!-- バケツ -->
-            <polygon points="12,58 22,58 20,70 14,70" fill="#b0bec5" stroke="#78909c" stroke-width="1"/>
           </svg>
         `
       },
       {
         id: 'corps_banner',
         name: '自由の翼タペストリー',
-        desc: '部屋を飾る調査兵団の誇り高き紋章旗。士気が大きく向上する。',
+        desc: '部屋を飾る調査兵団の紋章旗。士気が向上する。',
         cost: 75,
-        width: 60,
-        height: 75,
         svg: `
           <svg viewBox="0 0 60 75" width="60" height="75">
             <ellipse cx="30" cy="70" rx="18" ry="4" fill="rgba(0,0,0,0.3)"/>
-            <!-- 旗ポール -->
             <rect x="28" y="6" width="4" height="66" fill="#3e2723"/>
-            <polygon points="30,2 26,8 34,8" fill="#ffd700"/>
             <polygon points="12,12 48,12 44,50 30,60 16,50" fill="#1b382b" stroke="#c5a059" stroke-width="1.5"/>
-            <!-- 紋章羽根 -->
-            <path d="M25 22 C30 22 32 28 28 40 C26 46 22 49 20 51 C23 48 28 42 29 36 C32 28 28 24 25 22 Z" fill="#ffffff"/>
-            <path d="M35 22 C30 22 28 28 32 40 C34 46 38 49 40 51 C37 48 32 42 31 36 C28 28 32 24 35 22 Z" fill="#205081"/>
           </svg>
         `
       },
       {
         id: 'study_desk',
         name: '調査兵団の作戦机',
-        desc: '巨人の生態研究や壁外作戦の計画書、整頓された書類が並ぶ重厚な机。',
+        desc: '巨人の研究書や作戦計画書が並ぶ重厚な机。',
         cost: 90,
-        width: 90,
-        height: 70,
         svg: `
           <svg viewBox="0 0 90 70" width="90" height="70">
             <ellipse cx="45" cy="64" rx="40" ry="6" fill="rgba(0,0,0,0.35)"/>
-            <!-- 机の脚と引き出し -->
-            <rect x="12" y="28" width="14" height="34" fill="#4e342e" stroke="#261713" stroke-width="1.5"/>
-            <rect x="64" y="28" width="14" height="34" fill="#4e342e" stroke="#261713" stroke-width="1.5"/>
-            <rect x="14" y="32" width="10" height="6" fill="#6d4c41"/>
-            <rect x="14" y="42" width="10" height="6" fill="#6d4c41"/>
-            <rect x="66" y="32" width="10" height="6" fill="#6d4c41"/>
-            <rect x="66" y="42" width="10" height="6" fill="#6d4c41"/>
-            <!-- 天板 -->
+            <rect x="12" y="28" width="14" height="34" fill="#4e342e"/>
+            <rect x="64" y="28" width="14" height="34" fill="#4e342e"/>
             <polygon points="10,24 80,24 88,14 18,14" fill="#5d4037" stroke="#261713" stroke-width="2"/>
-            <rect x="10" y="24" width="70" height="6" fill="#3e2723"/>
-            <!-- 机上の羽ペン＆書類 -->
-            <rect x="30" y="16" width="14" height="6" fill="#f5eedc" stroke="#aaa" stroke-width="0.5"/>
-            <line x1="56" y1="18" x2="62" y2="10" stroke="#ffffff" stroke-width="1.5"/>
-          </svg>
-        `
-      },
-      {
-        id: 'book_shelf',
-        name: '兵団の片付け書棚',
-        desc: '整理術の本や壁外調査記録が背表紙を揃えて完璧に整理された本棚。',
-        cost: 120,
-        width: 70,
-        height: 85,
-        svg: `
-          <svg viewBox="0 0 70 85" width="70" height="85">
-            <ellipse cx="35" cy="80" rx="30" ry="5" fill="rgba(0,0,0,0.35)"/>
-            <!-- 本棚本体 -->
-            <rect x="10" y="10" width="50" height="68" fill="#4e342e" stroke="#2c1a14" stroke-width="2"/>
-            <!-- 棚板 -->
-            <line x1="10" y1="32" x2="60" y2="32" stroke="#2c1a14" stroke-width="2"/>
-            <line x1="10" y1="54" x2="60" y2="54" stroke="#2c1a14" stroke-width="2"/>
-            <!-- 1段目の本 -->
-            <rect x="14" y="16" width="6" height="16" fill="#b71c1c"/>
-            <rect x="21" y="14" width="7" height="18" fill="#1b382b"/>
-            <rect x="29" y="17" width="5" height="15" fill="#f5eedc"/>
-            <rect x="35" y="15" width="8" height="17" fill="#0d47a1"/>
-            <rect x="44" y="18" width="10" height="14" fill="#f57f17"/>
-            <!-- 2段目の本 -->
-            <rect x="14" y="38" width="8" height="16" fill="#37474f"/>
-            <rect x="23" y="36" width="6" height="18" fill="#880e4f"/>
-            <rect x="30" y="39" width="12" height="15" fill="#33691e"/>
-            <!-- 3段目の巻物・地図 -->
-            <rect x="14" y="60" width="16" height="8" rx="2" fill="#d7ccc8"/>
-            <rect x="34" y="58" width="18" height="10" rx="2" fill="#d7ccc8"/>
-          </svg>
-        `
-      },
-      {
-        id: 'levi_tea_table',
-        name: '兵長愛用の紅茶テーブル',
-        desc: 'リヴァイが執務の合間に紅茶を嗜むアンティーク円卓。ピカピカに磨かれている。',
-        cost: 150,
-        width: 70,
-        height: 60,
-        svg: `
-          <svg viewBox="0 0 70 60" width="70" height="60">
-            <ellipse cx="35" cy="54" rx="28" ry="6" fill="rgba(0,0,0,0.3)"/>
-            <!-- テーブル脚 -->
-            <rect x="33" y="24" width="4" height="28" fill="#3e2723"/>
-            <path d="M35 48 L22 54 M35 48 L48 54" stroke="#3e2723" stroke-width="3" stroke-linecap="round"/>
-            <!-- 天板 -->
-            <ellipse cx="35" cy="24" rx="30" ry="12" fill="#5d4037" stroke="#2d1b11" stroke-width="2"/>
-            <ellipse cx="35" cy="23" rx="26" ry="10" fill="#795548"/>
-            <!-- 紅茶カップ＆ソーサー -->
-            <ellipse cx="35" cy="22" rx="7" ry="3" fill="#ffffff" stroke="#c5a059" stroke-width="1"/>
-            <ellipse cx="35" cy="21" rx="4" ry="2" fill="#b71c1c"/>
-          </svg>
-        `
-      },
-      {
-        id: 'soldier_bed',
-        name: '古城宿舎の兵士ベッド',
-        desc: '調査兵団宿舎の頑丈な木製ベッド。シーツの四隅は兵長基準でビシッと整頓されている。',
-        cost: 180,
-        width: 100,
-        height: 75,
-        svg: `
-          <svg viewBox="0 0 100 75" width="100" height="75">
-            <ellipse cx="50" cy="68" rx="45" ry="6" fill="rgba(0,0,0,0.3)"/>
-            <!-- ヘッドボード -->
-            <rect x="10" y="15" width="14" height="45" fill="#3e2723" stroke="#1d110b" stroke-width="2"/>
-            <!-- ベッドフレーム -->
-            <polygon points="14,48 88,48 94,36 20,36" fill="#5d4037" stroke="#22130c" stroke-width="2"/>
-            <!-- マットレス・シーツ (白) -->
-            <polygon points="18,46 84,46 90,38 24,38" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
-            <!-- 調査兵団カラーの毛布（深緑） -->
-            <polygon points="36,46 84,46 90,38 42,38" fill="#1b382b" stroke="#0e1f17" stroke-width="1"/>
-            <!-- 枕 -->
-            <ellipse cx="28" cy="40" rx="8" ry="4" fill="#fff" stroke="#ccc" stroke-width="1"/>
-            <!-- フット脚 -->
-            <rect x="84" y="44" width="6" height="22" fill="#3e2723"/>
           </svg>
         `
       }
     ];
 
-    // 3. ゲーム状態ステート
+    // 5. ゲーム状態ステート
     const GameState = {
-      player: {
-        x: 410,
-        y: 350,
-        targetX: 410,
-        targetY: 350,
-        charId: 'levi',
-        isWalking: false
-      },
-      buddy: {
-        x: 360,
-        y: 370,
-        targetX: 360,
-        targetY: 370,
-        buddyId: 'horse'
-      },
-      // 初期状態：部屋にはまだ家具なし！
+      player: { x: 410, y: 350, targetX: 410, targetY: 350, charId: 'levi', isWalking: false },
+      buddy: { x: 360, y: 370, targetX: 360, targetY: 370, buddyId: 'none' },
+      unlockedChars: ['levi'],      // 初期設定はリヴァイのみ
+      unlockedBuddies: ['none'],    // 初めはお供もロック
       furnitureList: [],
-      // 初期配置の埃ターゲット
       dustTargets: [
         { id: 'd_1', x: 380, y: 280 },
         { id: 'd_2', x: 470, y: 390 },
@@ -1791,36 +1271,23 @@
         { id: 'd_4', x: 260, y: 340 }
       ],
       points: 0,
-      cleanRate: 40,
       activeSpeechTimer: null,
       selectedFurniture: null,
       draggedFurniture: null,
       dragOffset: { x: 0, y: 0 }
     };
 
-    // 4. 初期化処理 & スマホ対応画面自動スケーリング
+    // 初期化
     let currentRoomScale = 1.0;
-
     function updateRoomScale() {
       const container = document.getElementById('main-container');
       const viewport = document.getElementById('room-viewport');
       if (!container || !viewport) return;
-
-      const cw = container.clientWidth;
-      const ch = container.clientHeight;
+      const cw = container.clientWidth, ch = container.clientHeight;
       if (!cw || !ch) return;
-
-      const BASE_W = 900;
-      const BASE_H = 640;
-
-      // スマホでは少し余白をタイトに、PCではゆったりと全体を収める
-      const padX = cw < 600 ? 6 : 20;
-      const padY = cw < 600 ? 6 : 20;
-
-      const scaleX = (cw - padX * 2) / BASE_W;
-      const scaleY = (ch - padY * 2) / BASE_H;
+      const scaleX = (cw - 20) / 900;
+      const scaleY = (ch - 20) / 640;
       currentRoomScale = Math.min(scaleX, scaleY);
-
       viewport.style.transform = `scale(${currentRoomScale})`;
     }
 
@@ -1830,138 +1297,103 @@
       setupEvents();
       updateCleanRate();
       updateRoomScale();
-
-      // ウィンドウサイズ変更・スマホ画面回転時の自動リサイズ
       window.addEventListener('resize', updateRoomScale);
-      window.addEventListener('orientationchange', () => {
-        setTimeout(updateRoomScale, 150);
-      });
 
-      // 初期セリフ：家具なし＆ポイント交換への導線
       setTimeout(() => {
-        showSpeech('おい…この部屋にはまだ家具が一つもない。まずは埃を掃除して調査Ptを貯め、家具交換所で手に入れろ。');
-      }, 600);
+        showSpeech('おい…埃を掃除して調査Ptを貯め、仲間や家具を手に入れろ。');
+      }, 500);
     });
 
-    // モーダルのカード生成
     function buildModals() {
-      // キャラ一覧
+      // キャラ
       const charContainer = document.getElementById('char-options');
-      charContainer.innerHTML = CHARACTERS.map(c => `
-        <div class="select-item-card ${c.id === GameState.player.charId ? 'current' : ''}" onclick="selectCharacter('${c.id}')">
-          <div class="card-preview">${c.svg}</div>
-          <div class="card-name">${c.name}</div>
-          <div class="card-badge">${c.title}</div>
-          <div class="card-desc" style="margin-top:6px;">${c.desc}</div>
-        </div>
-      `).join('');
+      charContainer.innerHTML = CHARACTERS.map(c => {
+        const isUnlocked = GameState.unlockedChars.includes(c.id);
+        const isCurrent = GameState.player.charId === c.id;
+        return `
+          <div class="select-item-card ${isCurrent ? 'current' : ''} ${!isUnlocked ? 'locked' : ''}" onclick="selectCharacter('${c.id}')">
+            ${!isUnlocked ? `<div class="lock-badge">🔒 調査Pt ${c.cost}</div>` : ''}
+            <div class="card-preview">${c.svg}</div>
+            <div class="card-name">${c.name}</div>
+            <div class="card-badge">${c.title}</div>
+            <div class="card-desc">${isUnlocked ? c.desc : `調査Pt ${c.cost} でアンロック`}</div>
+          </div>
+        `;
+      }).join('');
 
-      // お供一覧
+      // お供
       const buddyContainer = document.getElementById('buddy-options');
-      buddyContainer.innerHTML = BUDDIES.map(b => `
-        <div class="select-item-card ${b.id === GameState.buddy.buddyId ? 'current' : ''}" onclick="selectBuddy('${b.id}')">
-          <div class="card-preview">${b.svg}</div>
-          <div class="card-name">${b.name}</div>
-          <div class="card-badge">${b.title}</div>
-          <div class="card-desc" style="margin-top:6px;">${b.desc}</div>
-        </div>
-      `).join('');
+      buddyContainer.innerHTML = BUDDIES.map(b => {
+        const isUnlocked = GameState.unlockedBuddies.includes(b.id);
+        const isCurrent = GameState.buddy.buddyId === b.id;
+        return `
+          <div class="select-item-card ${isCurrent ? 'current' : ''} ${!isUnlocked ? 'locked' : ''}" onclick="selectBuddy('${b.id}')">
+            ${!isUnlocked ? `<div class="lock-badge">🔒 調査Pt ${b.cost}</div>` : ''}
+            <div class="card-preview">${b.svg}</div>
+            <div class="card-name">${b.name}</div>
+            <div class="card-badge">${b.title}</div>
+            <div class="card-desc">${isUnlocked ? b.desc : `調査Pt ${b.cost} でアンロック`}</div>
+          </div>
+        `;
+      }).join('');
 
-      // 家具交換所（ショップ）一覧＆所持ポイント更新
+      // 家具
       const furnContainer = document.getElementById('furniture-options');
-      const shopWallet = document.getElementById('shop-pts-val');
-      if (shopWallet) shopWallet.innerText = GameState.points;
-
+      document.getElementById('shop-pts-val').innerText = GameState.points;
       furnContainer.innerHTML = FURNITURE_CATALOG.map(f => {
         const canAfford = GameState.points >= f.cost;
-        const diff = f.cost - GameState.points;
         return `
-          <div class="select-item-card furn-card ${canAfford ? 'can-afford' : 'cannot-afford'}" onclick="buyFurniture('${f.id}')">
+          <div class="select-item-card furn-card" onclick="buyFurniture('${f.id}')">
             <div class="card-cost-badge">🪙 ${f.cost} Pt</div>
             <div class="card-preview">${f.svg}</div>
             <div class="card-name">${f.name}</div>
             <div class="card-desc">${f.desc}</div>
-            <button class="buy-btn ${canAfford ? 'btn-active' : 'btn-disabled'}" ${canAfford ? '' : 'disabled'}>
-              ${canAfford ? `＋ 交換して配置 (${f.cost}pt)` : `あと ${diff} pt 不足`}
+            <button class="buy-btn ${canAfford ? 'btn-active' : 'btn-disabled'}">
+              ${canAfford ? `＋ 交換 (${f.cost}pt)` : `あと ${f.cost - GameState.points} pt`}
             </button>
           </div>
         `;
       }).join('');
     }
 
-    // 5. 描画レンダリングエンジン
     function renderAll() {
       const layer = document.getElementById('entities-layer');
       layer.innerHTML = '';
-
-      // ソート順（Y座標が小さいものが奥、大きいものが手前）
       const renderQueue = [];
 
-      // 家具
       GameState.furnitureList.forEach(item => {
         const cat = FURNITURE_CATALOG.find(c => c.id === item.catalogId);
-        if (cat) {
-          renderQueue.push({
-            type: 'furniture',
-            y: item.y,
-            data: item,
-            cat: cat
-          });
-        }
+        if (cat) renderQueue.push({ type: 'furniture', y: item.y, data: item, cat });
       });
 
-      // 掃除ホコリ
       GameState.dustTargets.forEach(dust => {
-        renderQueue.push({
-          type: 'dust',
-          y: dust.y,
-          data: dust
-        });
+        renderQueue.push({ type: 'dust', y: dust.y, data: dust });
       });
 
-      // お供
-      const currentBuddy = BUDDIES.find(b => b.id === GameState.buddy.buddyId);
-      if (currentBuddy) {
-        renderQueue.push({
-          type: 'buddy',
-          y: GameState.buddy.y,
-          data: GameState.buddy,
-          info: currentBuddy
-        });
+      if (GameState.buddy.buddyId && GameState.buddy.buddyId !== 'none') {
+        const currentBuddy = BUDDIES.find(b => b.id === GameState.buddy.buddyId);
+        if (currentBuddy) renderQueue.push({ type: 'buddy', y: GameState.buddy.y, data: GameState.buddy, info: currentBuddy });
       }
 
-      // プレイヤーキャラ
-      const currentChar = CHARACTERS.find(c => c.id === GameState.player.charId);
-      renderQueue.push({
-        type: 'player',
-        y: GameState.player.y,
-        data: GameState.player,
-        info: currentChar
-      });
+      const currentChar = CHARACTERS.find(c => c.id === GameState.player.charId) || CHARACTERS[0];
+      renderQueue.push({ type: 'player', y: GameState.player.y, data: GameState.player, info: currentChar });
 
-      // Y軸ソート
       renderQueue.sort((a, b) => a.y - b.y);
 
-      // DOM生成＆配置
       renderQueue.forEach((item, index) => {
         const zIndex = 10 + index;
         if (item.type === 'furniture') {
-          const el = createFurnitureElement(item.data, item.cat, zIndex);
-          layer.appendChild(el);
+          layer.appendChild(createFurnitureElement(item.data, item.cat, zIndex));
         } else if (item.type === 'dust') {
-          const el = createDustElement(item.data, zIndex);
-          layer.appendChild(el);
+          layer.appendChild(createDustElement(item.data, zIndex));
         } else if (item.type === 'buddy') {
-          const el = createBuddyElement(item.data, item.info, zIndex);
-          layer.appendChild(el);
+          layer.appendChild(createBuddyElement(item.data, item.info, zIndex));
         } else if (item.type === 'player') {
-          const el = createPlayerElement(item.data, item.info, zIndex);
-          layer.appendChild(el);
+          layer.appendChild(createPlayerElement(item.data, item.info, zIndex));
         }
       });
     }
 
-    // プレイヤー要素作成
     function createPlayerElement(player, info, zIndex) {
       const div = document.createElement('div');
       div.className = `pigg-avatar ${player.isWalking ? 'walking' : ''}`;
@@ -1973,7 +1405,6 @@
         ${info.svg}
         <div id="player-bubble-container"></div>
       `;
-
       div.onclick = (e) => {
         e.stopPropagation();
         triggerCharacterAction();
@@ -1981,16 +1412,13 @@
       return div;
     }
 
-    // お供要素作成
     function createBuddyElement(buddy, info, zIndex) {
       const div = document.createElement('div');
       div.className = 'pigg-companion';
-      div.id = 'pigg-buddy-node';
       div.style.left = `${buddy.x}px`;
       div.style.top = `${buddy.y}px`;
       div.style.zIndex = zIndex;
       div.innerHTML = info.svg;
-
       div.onclick = (e) => {
         e.stopPropagation();
         SoundFX.playPop();
@@ -1999,34 +1427,27 @@
       return div;
     }
 
-    // 家具要素作成
     function createFurnitureElement(item, cat, zIndex) {
       const div = document.createElement('div');
       div.className = `pigg-furniture ${GameState.selectedFurniture === item.id ? 'selected' : ''}`;
       div.style.left = `${item.x}px`;
       div.style.top = `${item.y}px`;
       div.style.zIndex = zIndex;
-      div.dataset.id = item.id;
       div.innerHTML = `
         ${cat.svg}
-        <div class="furniture-delete-btn" title="撤去" onclick="deleteFurniture(event, '${item.id}')">&times;</div>
+        <div class="furniture-delete-btn" onclick="deleteFurniture(event, '${item.id}')">&times;</div>
       `;
-
-      // 家具ドラッグ移動イベント
       div.onmousedown = (e) => startDrag(e, item);
       div.ontouchstart = (e) => startDrag(e, item);
-
       div.onclick = (e) => {
         e.stopPropagation();
         SoundFX.playPop();
         GameState.selectedFurniture = (GameState.selectedFurniture === item.id) ? null : item.id;
         renderAll();
       };
-
       return div;
     }
 
-    // ホコリ・汚れ要素作成
     function createDustElement(dust, zIndex) {
       const div = document.createElement('div');
       div.className = 'dust-target';
@@ -2036,17 +1457,12 @@
       div.innerHTML = `
         <svg viewBox="0 0 44 44" width="44" height="44">
           <ellipse cx="22" cy="22" rx="18" ry="14" fill="#555" opacity="0.6"/>
-          <!-- 埃のトゲトゲモヤモヤ -->
           <circle cx="16" cy="18" r="8" fill="#444"/>
           <circle cx="28" cy="18" r="9" fill="#333"/>
           <circle cx="22" cy="26" r="10" fill="#555"/>
-          <circle cx="12" cy="24" r="5" fill="#666"/>
-          <circle cx="32" cy="25" r="6" fill="#444"/>
-          <!-- ドクロマーク風の汚れ -->
           <text x="14" y="24" font-size="12" fill="#fff" opacity="0.8">🧹</text>
         </svg>
       `;
-
       div.onclick = (e) => {
         e.stopPropagation();
         cleanDust(dust);
@@ -2054,18 +1470,12 @@
       return div;
     }
 
-    // 6. 移動＆アニメーション制御
     let moveAnimFrame = null;
-
     function movePlayerTo(targetX, targetY) {
-      // 部屋の床範囲内に収める簡易クランプ
       const clampedX = Math.max(180, Math.min(640, targetX));
       const clampedY = Math.max(220, Math.min(480, targetY));
-
       GameState.player.targetX = clampedX;
       GameState.player.targetY = clampedY;
-
-      // お供はキャラの少し斜め後ろへ
       GameState.buddy.targetX = clampedX - 45;
       GameState.buddy.targetY = clampedY + 20;
 
@@ -2076,23 +1486,12 @@
     }
 
     function animateMovement() {
-      const p = GameState.player;
-      const b = GameState.buddy;
+      const p = GameState.player, b = GameState.buddy;
+      const pDx = p.targetX - p.x, pDy = p.targetY - p.y, pDist = Math.hypot(pDx, pDy);
+      const bDx = b.targetX - b.x, bDy = b.targetY - b.y, bDist = Math.hypot(bDx, bDy);
 
-      const pDx = p.targetX - p.x;
-      const pDy = p.targetY - p.y;
-      const pDist = Math.hypot(pDx, pDy);
+      if (Math.random() < 0.15) SoundFX.playStep();
 
-      const bDx = b.targetX - b.x;
-      const bDy = b.targetY - b.y;
-      const bDist = Math.hypot(bDx, bDy);
-
-      // 足音
-      if (Math.random() < 0.15) {
-        SoundFX.playStep();
-      }
-
-      // プレイヤー前進
       if (pDist > 4) {
         p.x += (pDx / pDist) * 3.5;
         p.y += (pDy / pDist) * 3.5;
@@ -2101,7 +1500,6 @@
         p.y = p.targetY;
       }
 
-      // お供追従
       if (bDist > 4) {
         b.x += (bDx / bDist) * 3.0;
         b.y += (bDy / bDist) * 3.0;
@@ -2120,7 +1518,6 @@
       }
     }
 
-    // 7. 家具ドラッグ＆ドロップ（スマホ・タッチ対応＆スケール補正）
     function startDrag(e, item) {
       e.stopPropagation();
       GameState.draggedFurniture = item;
@@ -2128,7 +1525,6 @@
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
       const stageRect = document.getElementById('room-viewport').getBoundingClientRect();
       const scale = stageRect.width / 900 || 1;
-
       GameState.dragOffset.x = (clientX - stageRect.left) / scale - item.x;
       GameState.dragOffset.y = (clientY - stageRect.top) / scale - item.y;
 
@@ -2145,13 +1541,8 @@
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
       const stageRect = document.getElementById('room-viewport').getBoundingClientRect();
       const scale = stageRect.width / 900 || 1;
-
-      const newX = (clientX - stageRect.left) / scale - GameState.dragOffset.x;
-      const newY = (clientY - stageRect.top) / scale - GameState.dragOffset.y;
-
-      GameState.draggedFurniture.x = Math.max(120, Math.min(700, newX));
-      GameState.draggedFurniture.y = Math.max(160, Math.min(500, newY));
-
+      GameState.draggedFurniture.x = Math.max(120, Math.min(700, (clientX - stageRect.left) / scale - GameState.dragOffset.x));
+      GameState.draggedFurniture.y = Math.max(160, Math.min(500, (clientY - stageRect.top) / scale - GameState.dragOffset.y));
       renderAll();
     }
 
@@ -2163,67 +1554,40 @@
       window.removeEventListener('touchend', endDrag);
     }
 
-    // 8. 掃除・片付けアクション
     function cleanDust(dust) {
-      // プレイヤーが埃に駆け寄る
       movePlayerTo(dust.x + 30, dust.y + 10);
-
       setTimeout(() => {
-        // 効果音とキラキラエフェクト
         SoundFX.playClean();
         createSparkles(dust.x, dust.y);
-
-        // 埃リストから削除
         GameState.dustTargets = GameState.dustTargets.filter(d => d.id !== dust.id);
-
-        // ポイント加算（1回で30pt獲得）
         const earned = 30;
         GameState.points += earned;
         document.getElementById('pts-count').innerText = GameState.points;
         updateCleanRate();
 
-        // 浮動テキスト演出（+30 Pt!）
         showFloatingText(dust.x, dust.y - 20, `+${earned} Pt!`, '#ffd700');
-
-        // 家具モーダル用の所持ポイントも更新
-        const shopWallet = document.getElementById('shop-pts-val');
-        if (shopWallet) shopWallet.innerText = GameState.points;
         buildModals();
 
-        // 初めて最初の家具（30pt）が買えるようになった時の兵長アドバイス
-        if (GameState.points >= 30 && GameState.furnitureList.length === 0) {
-          showSpeech('おい…Ptが貯まったぞ！「家具交換所」で最初の家具（木箱など）を手に入れてみろ。');
-        } else {
-          // キャラクターの名言
-          const char = CHARACTERS.find(c => c.id === GameState.player.charId);
-          const randomLine = char.lines[Math.floor(Math.random() * char.lines.length)];
-          showSpeech(randomLine);
-        }
+        const char = CHARACTERS.find(c => c.id === GameState.player.charId) || CHARACTERS[0];
+        const randomLine = char.lines[Math.floor(Math.random() * char.lines.length)];
+        showSpeech(randomLine);
 
         renderAll();
-      }, 400);
+      }, 350);
     }
 
     function updateCleanRate() {
       const dustCount = GameState.dustTargets.length;
-      let rate = 100 - (dustCount * 15);
-      if (rate < 0) rate = 0;
-      GameState.cleanRate = rate;
+      let rate = Math.max(0, 100 - dustCount * 12);
       const label = document.getElementById('clean-rate');
       label.innerText = `${rate}%`;
-      if (rate >= 90) {
-        label.style.color = '#76ff03';
-      } else if (rate >= 50) {
-        label.style.color = '#ffd700';
-      } else {
-        label.style.color = '#ff5252';
-      }
+      label.style.color = rate >= 80 ? '#76ff03' : (rate >= 40 ? '#ffd700' : '#ff5252');
     }
 
     function createSparkles(x, y) {
       const layer = document.getElementById('entities-layer');
       const icons = ['✨', '🌟', '🧽', '💫'];
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 5; i++) {
         const sp = document.createElement('div');
         sp.className = 'sparkle';
         sp.innerText = icons[Math.floor(Math.random() * icons.length)];
@@ -2235,7 +1599,6 @@
       }
     }
 
-    // 浮動テキスト演出（ポイント加減算）
     function showFloatingText(x, y, text, color = '#ffd700') {
       const layer = document.getElementById('entities-layer');
       if (!layer) return;
@@ -2249,29 +1612,23 @@
       setTimeout(() => el.remove(), 1000);
     }
 
-    // 9. セリフ吹き出し
     function showSpeech(text) {
       clearTimeout(GameState.activeSpeechTimer);
       const container = document.getElementById('player-bubble-container');
       if (!container) return;
       container.innerHTML = `<div class="speech-bubble">${text}</div>`;
-
       GameState.activeSpeechTimer = setTimeout(() => {
         container.innerHTML = '';
       }, 4000);
     }
 
-    // 10. イベントリスナー各種
     function setupEvents() {
       const viewport = document.getElementById('main-container');
-
-      // 部屋の床クリック・タップで移動（スケール補正）
       viewport.addEventListener('click', (e) => {
-        // UIコントロールや家具自体をクリックした場合は除外
         if (e.target.closest('.dock-btn') || e.target.closest('.modal-overlay') || 
             e.target.closest('.mission-hud') || e.target.closest('header') ||
-            e.target.closest('.chat-container') || e.target.closest('.pigg-furniture') ||
-            e.target.closest('.dust-target') || GameState.draggedFurniture) {
+            e.target.closest('.pigg-furniture') || e.target.closest('.dust-target') || 
+            GameState.draggedFurniture) {
           return;
         }
 
@@ -2280,18 +1637,18 @@
         const clickX = (e.clientX - rect.left) / scale;
         const clickY = (e.clientY - rect.top) / scale;
 
-        // 波紋エフェクト
-        createRipple(clickX, clickY);
+        const rip = document.createElement('div');
+        rip.className = 'click-ripple';
+        rip.style.left = `${clickX}px`;
+        rip.style.top = `${clickY}px`;
+        document.getElementById('entities-layer').appendChild(rip);
+        setTimeout(() => rip.remove(), 600);
 
-        // 移動
         movePlayerTo(clickX, clickY);
-
-        // 家具の選択解除
         GameState.selectedFurniture = null;
         renderAll();
       });
 
-      // 埃（巨人汚れ）の再発生ボタン
       document.getElementById('btn-spawn-dust').addEventListener('click', () => {
         SoundFX.playPop();
         const newDust = {
@@ -2302,66 +1659,35 @@
         GameState.dustTargets.push(newDust);
         updateCleanRate();
         renderAll();
-        showSpeech('おい！また部屋にチリが散らかったぞ！掃除してPtを稼げ！');
+        showSpeech('おい！部屋にチリが散らかったぞ！掃除してPtを稼げ！');
       });
 
-      // 音声トグル
       document.getElementById('btn-sound-toggle').addEventListener('click', () => {
         SoundFX.enabled = !SoundFX.enabled;
         document.getElementById('sound-state').innerText = SoundFX.enabled ? 'ON' : 'OFF';
         if (SoundFX.enabled) SoundFX.playPop();
       });
 
-      // チャット発言
-      const chatInput = document.getElementById('chat-input');
-      const chatSend = document.getElementById('chat-send');
-      const handleChat = () => {
-        const val = chatInput.value.trim();
-        if (val) {
-          SoundFX.playPop();
-          showSpeech(val);
-          chatInput.value = '';
-        }
-      };
-      chatSend.addEventListener('click', handleChat);
-      chatInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') handleChat();
-      });
-
-      // ドックボタン：キャラモーダル
-      document.getElementById('btn-open-char').addEventListener('click', () => {
-        openModal('modal-char');
-      });
-
-      // ドックボタン：お供モーダル
-      document.getElementById('btn-open-buddy').addEventListener('click', () => {
-        openModal('modal-buddy');
-      });
-
-      // ドックボタン：家具モーダル（最新ポイント状態で描画してオープン）
+      document.getElementById('btn-open-char').addEventListener('click', () => openModal('modal-char'));
+      document.getElementById('btn-open-buddy').addEventListener('click', () => openModal('modal-buddy'));
       document.getElementById('btn-open-furniture').addEventListener('click', () => {
         buildModals();
         openModal('modal-furniture');
       });
 
-      // ドックボタン：一斉掃除作戦
       document.getElementById('btn-clean-action').addEventListener('click', () => {
         if (GameState.dustTargets.length === 0) {
           showSpeech('埃一つ残っていない。上出来だ。');
           return;
         }
         showSpeech('総員、お掃除作戦開始！部屋を磨き上げろ！');
-        // 全部の埃を順番に掃除
         let delay = 0;
         [...GameState.dustTargets].forEach((dust) => {
-          setTimeout(() => {
-            cleanDust(dust);
-          }, delay);
-          delay += 600;
+          setTimeout(() => cleanDust(dust), delay);
+          delay += 550;
         });
       });
 
-      // ドックボタン：敬礼ポーズ（心臓を捧げよ）
       document.getElementById('btn-pose-action').addEventListener('click', () => {
         SoundFX.playSalute();
         showSpeech('「心臓を捧げよ！」──綺麗な部屋のために！');
@@ -2369,89 +1695,91 @@
       });
     }
 
-    function createRipple(x, y) {
-      const layer = document.getElementById('entities-layer');
-      const rip = document.createElement('div');
-      rip.className = 'click-ripple';
-      rip.style.left = `${x}px`;
-      rip.style.top = `${y}px`;
-      layer.appendChild(rip);
-      setTimeout(() => rip.remove(), 600);
-    }
-
-    // 11. キャラ・お供・家具変更ロジック
     window.selectCharacter = function(charId) {
+      const c = CHARACTERS.find(x => x.id === charId);
+      if (!c) return;
+      if (!GameState.unlockedChars.includes(charId)) {
+        if (GameState.points < c.cost) {
+          SoundFX.playPop();
+          alert(`調査Ptが足りません（必要: ${c.cost} Pt / 所持: ${GameState.points} Pt）`);
+          return;
+        }
+        if (confirm(`調査Pt ${c.cost} を消費して「${c.name}」をアンロックしますか？`)) {
+          GameState.points -= c.cost;
+          GameState.unlockedChars.push(charId);
+          GameState.player.charId = charId;
+          SoundFX.playCoin();
+          closeModal('modal-char');
+          buildModals();
+          renderAll();
+          showSpeech(`「${c.name}」が着任したぞ！`);
+        }
+        return;
+      }
       GameState.player.charId = charId;
       SoundFX.playPop();
       closeModal('modal-char');
       buildModals();
       renderAll();
-
-      const char = CHARACTERS.find(c => c.id === charId);
-      showSpeech(`「${char.name}」に着任した。片付けを指揮する！`);
+      showSpeech(`「${c.name}」に着任した。片付けを指揮する！`);
     };
 
     window.selectBuddy = function(buddyId) {
+      const b = BUDDIES.find(x => x.id === buddyId);
+      if (!b) return;
+      if (!GameState.unlockedBuddies.includes(buddyId)) {
+        if (GameState.points < b.cost) {
+          SoundFX.playPop();
+          alert(`調査Ptが足りません（必要: ${b.cost} Pt / 所持: ${GameState.points} Pt）`);
+          return;
+        }
+        if (confirm(`調査Pt ${b.cost} を消費して「${b.name}」をアンロックしますか？`)) {
+          GameState.points -= b.cost;
+          GameState.unlockedBuddies.push(buddyId);
+          GameState.buddy.buddyId = buddyId;
+          SoundFX.playCoin();
+          closeModal('modal-buddy');
+          buildModals();
+          renderAll();
+          showSpeech(`お供に「${b.name}」を連れたぞ！`);
+        }
+        return;
+      }
       GameState.buddy.buddyId = buddyId;
       SoundFX.playPop();
       closeModal('modal-buddy');
       buildModals();
       renderAll();
-
-      const buddy = BUDDIES.find(b => b.id === buddyId);
-      showSpeech(`お供に「${buddy.name}」を連れたぞ！`);
+      showSpeech(buddyId === 'none' ? '単独で掃除するぞ。' : `お供に「${b.name}」を連れたぞ！`);
     };
 
-    // 家具をポイントで交換して配置する
-    window.buyFurniture = function(catalogId) {
-      const cat = FURNITURE_CATALOG.find(c => c.id === catalogId);
-      if (!cat) return;
-
-      if (GameState.points < cat.cost) {
+    window.buyFurniture = function(catId) {
+      const f = FURNITURE_CATALOG.find(c => c.id === catId);
+      if (!f) return;
+      if (GameState.points < f.cost) {
         SoundFX.playPop();
-        const diff = cat.cost - GameState.points;
-        showSpeech(`おい…ポイントが「${diff} Pt」足りないぞ。部屋を掃除して稼いでこい。`);
+        alert(`ポイントが足りません（必要: ${f.cost} Pt / 所持: ${GameState.points} Pt）`);
         return;
       }
-
-      // ポイント消費
-      GameState.points -= cat.cost;
-      document.getElementById('pts-count').innerText = GameState.points;
-
-      // 家具配置（部屋の中央付近に生成）
+      GameState.points -= f.cost;
       const newId = `f_${Date.now()}`;
-      const posX = 390 + (Math.random() * 60 - 30);
-      const posY = 330 + (Math.random() * 40 - 20);
-      GameState.furnitureList.push({
-        id: newId,
-        catalogId: catalogId,
-        x: posX,
-        y: posY
-      });
+      GameState.furnitureList.push({ id: newId, catalogId: catId, x: 390, y: 330 });
       GameState.selectedFurniture = newId;
 
-      // コイン音と演出
       SoundFX.playCoin();
       closeModal('modal-furniture');
       renderAll();
-
-      showFloatingText(posX, posY - 30, `-${cat.cost} Pt`, '#ff8a80');
-      createSparkles(posX, posY);
-
-      showSpeech(`家具「${cat.name}」と交換して部屋に配置したぞ！ドラッグして好きな位置に置くがいい。`);
+      showFloatingText(390, 300, `-${f.cost} Pt`, '#ff8a80');
+      createSparkles(390, 330);
+      showSpeech(`家具「${f.name}」を配置したぞ！ドラッグして好きな位置に動かせ。`);
     };
 
-    // 後方互換のため addFurniture も buyFurniture に転送
-    window.addFurniture = window.buyFurniture;
-
-    // 家具の片付け（撤去）：リサイクルとして50%ポイント還元！
     window.deleteFurniture = function(e, id) {
       e.stopPropagation();
       const target = GameState.furnitureList.find(f => f.id === id);
       if (!target) return;
       const cat = FURNITURE_CATALOG.find(c => c.id === target.catalogId);
       const refund = cat ? Math.floor(cat.cost * 0.5) : 0;
-
       GameState.furnitureList = GameState.furnitureList.filter(f => f.id !== id);
       GameState.selectedFurniture = null;
 
@@ -2460,24 +1788,18 @@
         document.getElementById('pts-count').innerText = GameState.points;
         SoundFX.playPop();
         showFloatingText(target.x, target.y - 30, `+${refund} Pt還元!`, '#76ff03');
-        showSpeech(`家具を片付け（撤去）したぞ。リサイクルで ${refund} Pt 還元された。`);
-      } else {
-        SoundFX.playPop();
-        showSpeech('家具を片付け（撤去）したぞ。');
       }
-
       renderAll();
     };
 
     function triggerCharacterAction() {
       SoundFX.playPop();
-      const char = CHARACTERS.find(c => c.id === GameState.player.charId);
+      const char = CHARACTERS.find(c => c.id === GameState.player.charId) || CHARACTERS[0];
       const randomLine = char.lines[Math.floor(Math.random() * char.lines.length)];
       showSpeech(randomLine);
       createSparkles(GameState.player.x, GameState.player.y - 40);
     }
 
-    // モーダル開閉
     function openModal(id) {
       SoundFX.playPop();
       document.getElementById(id).style.display = 'flex';
@@ -2488,28 +1810,6 @@
       document.getElementById(id).style.display = 'none';
     }
     window.closeModal = closeModal;
-
-    // ウィンドウサイズに応じたスケーリング調整
-    function handleResize() {
-      const vp = document.getElementById('room-viewport');
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      const targetW = 900;
-      const targetH = 640;
-      
-      const scaleW = (w - 20) / targetW;
-      const scaleH = (h - 170) / targetH;
-      const scale = Math.min(1.05, Math.min(scaleW, scaleH));
-
-      if (scale < 1) {
-        vp.style.transform = `scale(${scale})`;
-      } else {
-        vp.style.transform = 'scale(1)';
-      }
-    }
-
-    window.addEventListener('resize', handleResize);
-    handleResize();
   </script>
 </body>
 </html>
