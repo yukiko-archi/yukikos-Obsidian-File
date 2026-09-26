@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>千春の英単語 忘却曲線テスト | 中3・高校受験期 間隔反復マスター</title>
+
+  <!-- Tesseract.js (ブラウザ完結OCRライブラリ) -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --secondary: #059669;
+      --secondary-light: #ecfdf5;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-card: #243247;
+      --surface-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ==========================================
+       パスコードロック画面（セキュリティ保護）
+    ========================================== */
+    #lockScreen {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(16px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lock-box {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 24px;
+      padding: 36px 28px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: popIn 0.3s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .lock-icon {
+      font-size: 54px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .lock-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+    .lock-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .pin-input {
+      width: 100%;
+      background: #0f172a;
+      border: 2px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 14px;
+      color: #fff;
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 6px;
+      outline: none;
+      margin-bottom: 16px;
+    }
+    .pin-input:focus {
+      border-color: var(--primary);
+    }
+    .btn-unlock {
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+    }
+    .lock-error {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 10px;
+      min-height: 18px;
+      font-weight: bold;
+    }
+
+    /* ヘッダー */
+    header {
+      background-color: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+    .brand-title {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-chiharu {
+      background: #059669;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    /* 今日の統計バー */
+    .header-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .stat-pill {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stat-pill strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    /* メインコンテナ */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* タブ切り替え */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: var(--surface);
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--surface-border);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+    }
+    .tab-badge {
+      background: var(--danger);
+      color: #fff;
+      font-size: 11px;
+      padding: 1px 7px;
+      border-radius: 9999px;
+      font-weight: 800;
+    }
+
+    /* ビュー切り替え */
+    .view-section {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    .view-section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 忘却曲線アラートバナー */
+    .review-banner {
+      background: linear-gradient(135deg, #1e1b4b, #312e81, #1e293b);
+      border: 1px solid #4338ca;
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .review-banner::after {
+      content: "🧠";
+      position: absolute;
+      right: 15px;
+      top: -10px;
+      font-size: 110px;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+    .banner-content h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .banner-content p {
+      font-size: 13px;
+      color: #c7d2fe;
+      line-height: 1.5;
+    }
+    .btn-start-review {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #fff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-start-review:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+    }
+
+    /* カード・パネル共通 */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* 記憶レベル別ステータスグリッド */
+    .level-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .level-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .level-card.due {
+      border-color: var(--danger);
+      background: rgba(239, 68, 68, 0.1);
+    }
+    .level-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .level-card-count {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .level-card-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* 忘却曲線説明インフォ */
+    .curve-explanation {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px dashed var(--surface-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .curve-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .curve-step {
+      background: var(--surface-card);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      text-align: center;
+      flex: 1;
+      min-width: 90px;
+      border-top: 3px solid var(--primary);
+    }
+    .curve-step.active {
+      border-top-color: var(--danger);
+      background: rgba(239, 68, 68, 0.15);
+      color: #fff;
+    }
+
+    /* ===================================================
+       テスト画面（フラッシュカード・4択・スペル）
+    =================================================== */
+    .test-container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .test-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .test-progress-bar {
+      height: 8px;
+      background: var(--surface-border);
+      border-radius: 9999px;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .test-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6366f1, #38bdf8);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* フラッシュカード 3D */
+    .flashcard-box {
+      perspective: 1000px;
+      margin-bottom: 24px;
+    }
+    .flashcard {
+      width: 100%;
+      min-height: 280px;
+      background: var(--surface-card);
+      border: 2px solid var(--surface-border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      cursor: pointer;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+    }
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 24px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .card-front {
+      z-index: 2;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+      background: #1e293b;
+      border-radius: 18px;
+    }
+    .card-word {
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .card-meaning {
+      font-size: 32px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 12px;
+    }
+    .card-hint {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .btn-audio {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+    .btn-audio:hover {
+      background: var(--primary);
+    }
+
+    /* 判定ボタン群 */
+    .answer-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .btn-judge {
+      padding: 16px 12px;
+      border: none;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .btn-judge span {
+      font-size: 11px;
+      font-weight: normal;
+      opacity: 0.8;
+    }
+    .btn-judge.again {
+      background: var(--danger-light);
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .btn-judge.again:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+    .btn-judge.good {
+      background: var(--warning-light);
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .btn-judge.good:hover {
+      background: #f59e0b;
+      color: #fff;
+    }
+    .btn-judge.easy {
+      background: var(--secondary-light);
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .btn-judge.easy:hover {
+      background: #10b981;
+      color: #fff;
+    }
+
+    /* 4択クイズ用グリッド */
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .btn-quiz-opt {
+      background: var(--surface-card);
+      border: 2px solid var(--surface-border);
+      padding: 16px;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .btn-quiz-opt:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+    .btn-quiz-opt.correct {
+      border-color: var(--secondary) !important;
+      background: rgba(16, 185, 129, 0.2) !important;
+      color: #34d399 !important;
+    }
+    .btn-quiz-opt.wrong {
+      border-color: var(--danger) !important;
+      background: rgba(239, 68, 68, 0.2) !important;
+      color: #f87171 !important;
+    }
+
+    /* スペルタイピング用 */
+    .typing-input-box {
+      margin-top: 20px;
+      display: flex;
+      gap: 8px;
+    }
+    .input-spell {
+      flex: 1;
+      background: var(--surface);
+      border: 2px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 20px;
+      color: #fff;
+      font-weight: 800;
+      outline: none;
+    }
+    .input-spell:focus {
+      border-color: var(--primary);
+    }
+
+    /* ===================================================
+       📷 ノート画像OCR・文字認識エリア
+    =================================================== */
+    .ocr-dropzone {
+      border: 2px dashed #4f46e5;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      background: rgba(79, 70, 229, 0.05);
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: all 0.2s;
+    }
+    .ocr-dropzone:hover, .ocr-dropzone.dragover {
+      background: rgba(79, 70, 229, 0.15);
+      border-color: #818cf8;
+    }
+    .ocr-icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+    .ocr-preview-box {
+      display: none;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .ocr-preview-img {
+      max-width: 100%;
+      max-height: 240px;
+      border-radius: 12px;
+      border: 1px solid var(--surface-border);
+    }
+    .ocr-progress-box {
+      display: none;
+      margin-top: 14px;
+    }
+    .ocr-progress-text {
+      font-size: 12px;
+      color: #38bdf8;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    /* 練習ノート追加画面フォーム */
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #cbd5e1;
+    }
+    .form-control {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+    textarea.form-control {
+      min-height: 180px;
+      font-family: monospace;
+      line-height: 1.5;
+    }
+    .btn-date-preset {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      margin-right: 6px;
+      margin-top: 6px;
+      transition: all 0.2s;
+    }
+    .btn-date-preset:hover {
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    /* ノート一覧リスト */
+    .note-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .note-item {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .note-info h4 {
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .note-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* 単語一覧テーブル */
+    .vocab-table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--surface-border);
+    }
+    table.vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    table.vocab-table th {
+      background: var(--surface-card);
+      padding: 12px 16px;
+      color: var(--text-muted);
+      font-weight: 700;
+      border-bottom: 1px solid var(--surface-border);
+      white-space: nowrap;
+    }
+    table.vocab-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    table.vocab-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .badge-level {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .badge-level-0 { background: #475569; color: #f1f5f9; }
+    .badge-level-1 { background: #b45309; color: #fef3c7; }
+    .badge-level-2 { background: #047857; color: #d1fae5; }
+    .badge-level-3 { background: #1d4ed8; color: #dbeafe; }
+    .badge-level-4 { background: #6d28d9; color: #ede9fe; }
+    .badge-level-5 { background: #be185d; color: #fce7f3; }
+
+    footer {
+      border-top: 1px solid var(--surface-border);
+      padding: 18px 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      .header-inner { flex-direction: column; align-items: flex-start; }
+      .header-stats { width: 100%; justify-content: space-between; }
+      .answer-actions { grid-template-columns: 1fr; }
+      .quiz-options { grid-template-columns: 1fr; }
+      .card-word { font-size: 28px; }
+      .card-meaning { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       🔒 パスコードロック画面（初期表示・保護）
+  ========================================== -->
+  <div id="lockScreen" style="display: none;">
+    <div class="lock-box">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-title">千春の英単語テスト</div>
+      <div class="lock-desc">合言葉（パスコード）を入力してください<br><span style="font-size:11px; opacity:0.7;">（初期合言葉: 1234）</span></div>
+      <input type="password" id="inputPin" class="pin-input" maxlength="8" placeholder="••••" onkeydown="handlePinKey(event)">
+      <button class="btn-unlock" onclick="checkPin()">ロック解除 ➔</button>
+      <div id="lockError" class="lock-error"></div>
+    </div>
+  </div>
+
+  <!-- ヘッダー -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">🧠</div>
+        <div>
+          <div class="brand-title">千春の英単語 忘却曲線テスト</div>
+          <div class="brand-sub">
+            <span class="badge-chiharu">中3・高校受験期</span>
+            <span>エビングハウス忘却曲線 × 間隔反復（SM-2）</span>
+          </div>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-pill">
+          <span>🚨 今日の要復習:</span>
+          <strong id="statDueCount">0</strong> 語
+        </div>
+        <div class="stat-pill">
+          <span>🏆 完全定着:</span>
+          <strong id="statMasteredCount" style="color: #10b981;">0</strong> 語
+        </div>
+        <button class="btn-date-preset" style="padding:4px 10px; font-size:11px;" onclick="lockAppNow()">🔒 ロック</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main>
+    <!-- ナビゲーションタブ -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('today')">
+        <span>⚡️ 今日のテスト</span>
+        <span class="tab-badge" id="tabDueBadge">0</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('add')">
+        <span>📷 ノート追加 (OCR)</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('list')">
+        <span>📚 単語帳・定着マップ</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('settings')">
+        <span>⚙️ セキュリティ・設定</span>
+      </button>
+    </div>
+
+    <!-- ==========================================
+         VIEW 1: 今日のテスト（要復習単語出題）
+    ========================================== -->
+    <div id="viewToday" class="view-section active">
+      <div class="review-banner">
+        <div class="banner-content">
+          <h2 id="bannerTitle">🧠 忘れる直前のベストタイミングです！</h2>
+          <p id="bannerDesc">
+            忘却曲線の科学的理論に基づき、本日期日を迎えた単語が <strong id="bannerDueCount" style="color:#fcd34d; font-size:16px;">0</strong> 件あります。<br>
+            短時間の復習で、短期記憶を一気に一生モノの長期記憶（入試即答レベル）へ昇華させましょう！
+          </p>
+        </div>
+        <button class="btn-start-review" onclick="startTest('due')">
+          <span>🚀 今日の復習テストを開始（<span id="btnDueCount">0</span>問）</span>
+        </button>
+      </div>
+
+      <!-- 記憶レベル別ステータス -->
+      <div class="level-grid">
+        <div class="level-card due">
+          <div class="level-card-label">🚨 今日テスト対象</div>
+          <div class="level-card-count" id="gridDueCount" style="color: #f87171;">0</div>
+          <div class="level-card-sub">期限到達・要復習</div>
+        </div>
+        <div class="level-card">
+          <div class="level-card-label">🌱 レベル 0〜1（初歩）</div>
+          <div class="level-card-count" id="gridL1Count">0</div>
+          <div class="level-card-sub">1〜3日後再テスト</div>
+        </div>
+        <div class="level-card">
+          <div class="level-card-label">🌿 レベル 2〜3（定着中）</div>
+          <div class="level-card-count" id="gridL23Count">0</div>
+          <div class="level-card-sub">1〜2週間後再テスト</div>
+        </div>
+        <div class="level-card">
+          <div class="level-card-label">🌳 レベル 4〜5（完全定着）</div>
+          <div class="level-card-count" id="gridL45Count" style="color: #34d399;">0</div>
+          <div class="level-card-sub">1ヶ月以上記憶キープ</div>
+        </div>
+      </div>
+
+      <!-- 忘却曲線ステップ図解 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📈 エビングハウス忘却曲線 × 間隔反復（Spaced Repetition）の仕組み</div>
+        </div>
+        <div class="card-desc">
+          人間は学習した直後から急激に忘れ始め、3日後には約7割を忘れてしまいます。しかし、<strong>「忘れかけた瞬間」に再テストを行うことで、記憶の減衰が緩やかになり、最終的に忘れなくなります。</strong>
+        </div>
+        <div class="curve-steps">
+          <div class="curve-step">
+            <strong>0日目</strong><br>初日ノート練習
+          </div>
+          <div class="curve-step active">
+            <strong>3日後 (★今日)</strong><br>1回目テスト
+          </div>
+          <div class="curve-step">
+            <strong>7日後 (1週)</strong><br>2回目テスト
+          </div>
+          <div class="curve-step">
+            <strong>14日後 (2週)</strong><br>3回目テスト
+          </div>
+          <div class="curve-step">
+            <strong>30日後 (1ヶ月)</strong><br>4回目テスト
+          </div>
+        </div>
+
+        <div style="margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--surface-border);">
+          <div style="font-size: 13px; font-weight: 800; margin-bottom: 8px; color: var(--accent);">
+            🎯 各モードのランク判定ルール（新基準）
+          </div>
+          <div style="font-size: 12px; line-height: 1.6; color: var(--text-muted); margin-bottom: 10px;">
+            千春さんの学習スタイルに合わせて、無理なくモチベーションが続くルールになっています：
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">
+            <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 10px; padding: 12px;">
+              <strong style="color: #818cf8;">🃏 カードめくり（暗記・確認）</strong>
+              <div style="font-size: 11px; margin-top: 6px; color: #e2e8f0; line-height: 1.5;">
+                ・<strong>ランク変化なし（±0）</strong><br>
+                ・覚えるための練習用モードです。安心して何回でもカードをめくって確認できます。
+              </div>
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 12px;">
+              <strong style="color: #34d399;">🔢 4択クイズ（基本テスト）</strong>
+              <div style="font-size: 11px; margin-top: 6px; color: #e2e8f0; line-height: 1.5;">
+                ・正解：<strong>＋1 ランクUP！ 🚀</strong><br>
+                ・不正解：<strong>−1 ランクDOWN ⚠️</strong><br>
+                ・理解度のチェックに最適。正解すると次回間隔が延びます。
+              </div>
+            </div>
+            <div style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 10px; padding: 12px;">
+              <strong style="color: #facc15;">⌨️ スペル入力（挑戦マスター）</strong>
+              <div style="font-size: 11px; margin-top: 6px; color: #e2e8f0; line-height: 1.5;">
+                ・正解：<strong>＋2 ランク大幅UP！ 🌟</strong><br>
+                ・不正解：<strong>ランク変化なし（±0）</strong><br>
+                ・スペルを書ければ一気に定着ゾーンへ！間違えても減点なしで何度でも挑戦できます。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         VIEW 2: テスト実行画面
+    ========================================== -->
+    <div id="viewTestRunning" class="view-section">
+      <div class="test-container">
+        <div class="test-header">
+          <div style="font-size: 14px; font-weight: 800;" id="testModeTitle">フラッシュカード暗記モード</div>
+          <div style="font-size: 13px; color: var(--text-muted);" id="testCounter">1 / 10</div>
+          <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-weight:bold;" onclick="abortTest()">✕ 中断</button>
+        </div>
+        <div class="test-progress-bar">
+          <div class="test-progress-fill" id="testProgressFill"></div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-bottom:16px;">
+          <button class="btn-date-preset" style="background:var(--primary); color:#fff;" id="btnModeCard" onclick="setTestSubMode('card')">🃏 カードめくり</button>
+          <button class="btn-date-preset" id="btnModeQuiz" onclick="setTestSubMode('quiz')">🔢 4択クイズ</button>
+          <button class="btn-date-preset" id="btnModeSpell" onclick="setTestSubMode('spell')">⌨️ スペル入力</button>
+        </div>
+
+        <!-- 1. フラッシュカード -->
+        <div id="subModeCard">
+          <div class="flashcard-box" onclick="flipCard()">
+            <div class="flashcard" id="flashcardElement">
+              <div class="card-face card-front">
+                <div class="card-word" id="cardFrontWord">improve</div>
+                <button class="btn-audio" onclick="event.stopPropagation(); speakWord();">🔊 ネイティブ発音</button>
+                <div class="card-hint" style="margin-top:24px;">タップで日本語訳を表示 ↻</div>
+              </div>
+              <div class="card-face card-back">
+                <div class="card-meaning" id="cardBackMeaning">向上させる、改善する</div>
+                <div style="font-size:16px; color:#cbd5e1; margin-bottom:10px;" id="cardBackWordSub">improve</div>
+                <div class="card-hint">定着度を選んで次回日数を自動計算 ⬇️</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- カードめくり案内・答えを見るボタン -->
+          <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+            <button id="btnFlipCardAction" class="btn-primary" style="padding: 12px 24px; font-size: 15px; font-weight: 800; background: linear-gradient(135deg, #4f46e5, #0ea5e9); border-radius: 9999px; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);" onclick="flipCard()">
+              💡 答え（日本語訳）を見る ↻
+            </button>
+          </div>
+
+          <div style="text-align: center; font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+            📖 カードめくりは【暗記・確認用】のため<strong>ランクは変化しません</strong>。安心して確認してください。
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: center;">
+            <button style="background: var(--surface-card); border: 1px solid var(--surface-border); color: var(--text); padding: 14px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;" onclick="prevQuestion()">
+              ◀️ 前の単語
+            </button>
+            <button class="btn-primary" style="padding: 14px 32px; font-size: 16px; font-weight: 800; background: #10b981; border-radius: 12px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);" onclick="submitCardProgress()">
+              ▶️ 次の単語へ進む ➔
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. 4択クイズ -->
+        <div id="subModeQuiz" style="display: none;">
+          <div class="card" style="text-align: center; padding: 32px 20px;">
+            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">この単語の意味は？</div>
+            <div class="card-word" id="quizQuestionWord">improve</div>
+            <button class="btn-audio" onclick="speakWord();" style="margin-bottom: 16px;">🔊 発音を聞く</button>
+            <div class="quiz-options" id="quizOptionsContainer"></div>
+            <div id="quizNextActionBox" style="margin-top: 24px; display: none; animation: popIn 0.3s ease;">
+              <button id="btnQuizNext" class="btn-primary" style="width: 100%; max-width: 340px; margin: 0 auto; padding: 16px 24px; font-size: 17px; font-weight: 800; border-radius: 9999px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); cursor: pointer;" onclick="proceedQuizNext()">
+                ▶️ 次の問題へ進む ➔
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. スペル入力 -->
+        <div id="subModeSpell" style="display: none;">
+          <div class="card" style="text-align: center; padding: 32px 20px;">
+            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">日本語に合う英単語を入力してください</div>
+            <div class="card-meaning" id="spellQuestionMeaning">向上させる、改善する</div>
+            <div class="typing-input-box">
+              <input type="text" id="spellInput" class="input-spell" placeholder="英単語を入力..." autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="handleSpellKey(event)">
+              <button class="btn-primary" onclick="checkSpell()">回答</button>
+            </div>
+            <div id="spellFeedback" style="margin-top: 16px; font-size: 16px; font-weight: bold; min-height: 32px; line-height: 1.6;"></div>
+            <div id="spellNextActionBox" style="margin-top: 24px; display: none; animation: popIn 0.3s ease;">
+              <button id="btnSpellNext" class="btn-primary" style="width: 100%; max-width: 340px; margin: 0 auto; padding: 16px 24px; font-size: 17px; font-weight: 800; border-radius: 9999px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); cursor: pointer;" onclick="proceedSpellNext()">
+                ▶️ 次の問題へ進む ➔
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         VIEW 3: テスト完了画面
+    ========================================== -->
+    <div id="viewTestFinished" class="view-section">
+      <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center; padding: 40px 24px;">
+        <div style="font-size: 64px; margin-bottom: 12px;">🎉</div>
+        <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">テスト完了！お疲れ様でした！</h2>
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
+          忘却曲線のスケジュールが更新されました。<br>
+          記憶が強固になり、長期記憶フォルダへ移行しています。
+        </p>
+
+        <div style="background: var(--surface-card); border-radius: 14px; padding: 18px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);">実施単語数</div>
+            <div style="font-size: 24px; font-weight: 900;" id="resTotalCount">10 問</div>
+          </div>
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);">完璧（マスター昇格）</div>
+            <div style="font-size: 24px; font-weight: 900; color: #10b981;" id="resEasyCount">8 語</div>
+          </div>
+        </div>
+
+        <button class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;" onclick="switchTab('today')">
+          ホーム画面に戻る
+        </button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         VIEW 4: 練習ノート追加（OCR搭載）
+    ========================================== -->
+    <div id="viewAdd" class="view-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📝 英単語練習ノートの登録（画像OCR対応）</div>
+        </div>
+        <div class="card-desc">
+          ノートの写真を取り込むだけで、自動で英単語と日本語訳をスキャン・抽出できます。<br>
+          もちろんテキストの直接コピペ入力も可能です。
+        </div>
+
+        <!-- 📷 画像OCRドロップゾーン -->
+        <div class="ocr-dropzone" id="ocrDropzone" onclick="document.getElementById('ocrFileInput').click()">
+          <div class="ocr-icon">📷</div>
+          <div style="font-size: 15px; font-weight: 800; color: #818cf8; margin-bottom: 4px;">
+            ノートの写真を選択、またはスマホカメラで撮影
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted);">
+            タップして写真を選択 ｜ または画像をここにドラッグ＆ドロップ
+          </div>
+          <input type="file" id="ocrFileInput" accept="image/*" capture="environment" style="display:none;" onchange="handleImageSelected(event)">
+
+          <!-- プレビュー -->
+          <div class="ocr-preview-box" id="ocrPreviewBox">
+            <img id="ocrPreviewImg" class="ocr-preview-img" alt="ノート写真プレビュー">
+            <div style="margin-top: 10px;">
+              <button type="button" class="btn-primary" id="btnRunOcr" onclick="event.stopPropagation(); startOcrProcess();">
+                🔍 この写真から文字を自動スキャン
+              </button>
+            </div>
+          </div>
+
+          <!-- スキャン進捗 -->
+          <div class="ocr-progress-box" id="ocrProgressBox">
+            <div class="ocr-progress-text" id="ocrProgressText">文字認識中... 0%</div>
+            <div class="test-progress-bar">
+              <div class="test-progress-fill" id="ocrProgressFill" style="background: linear-gradient(90deg, #10b981, #38bdf8);"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ノート名・テーマ</label>
+          <input type="text" id="noteTitle" class="form-control" placeholder="例: 第2回 練習ノート（高校入試頻出動詞）" value="第1回 練習ノート (9/18実施分)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">実施日（学習した日）</label>
+          <input type="date" id="noteDate" class="form-control" style="max-width: 250px;">
+          <div>
+            <button type="button" class="btn-date-preset" onclick="setNoteDatePreset(0)">今日</button>
+            <button type="button" class="btn-date-preset" onclick="setNoteDatePreset(3)" style="border-color: #f59e0b; color: #f59e0b;">★ 3日前</button>
+            <button type="button" class="btn-date-preset" onclick="setNoteDatePreset(7)">1週間前</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">単語リスト（OCR結果がここに入ります・手動編集可能）</label>
+          <textarea id="noteRawText" class="form-control" placeholder="例:
+improve 向上させる、改善する
+discover 発見する
+environment 環境
+convenient 便利な
+opportunity 機会、チャンス"></textarea>
+        </div>
+
+        <button class="btn-primary" onclick="saveNewNote()">
+          <span>💾 この練習ノートを登録して忘却曲線スケジュールを作成</span>
+        </button>
+      </div>
+
+      <!-- 登録済みノート一覧 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📑 登録済み練習ノート一覧</div>
+        </div>
+        <div class="note-list" id="noteListContainer"></div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         VIEW 5: 単語帳・定着マップ
+    ========================================== -->
+    <div id="viewList" class="view-section">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📚 全単語マスター状況・忘却曲線マップ</div>
+          <input type="text" id="tableSearch" class="form-control" style="max-width: 250px; padding: 6px 12px; font-size: 12px;" placeholder="単語・意味で検索..." oninput="filterVocabTable()">
+        </div>
+
+        <div class="vocab-table-wrap">
+          <table class="vocab-table">
+            <thead>
+              <tr>
+                <th>英単語</th>
+                <th>発音</th>
+                <th>日本語の意味</th>
+                <th>所属ノート</th>
+                <th>定着レベル</th>
+                <th>次回テスト予定日</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="vocabTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         VIEW 6: セキュリティ・データ管理
+    ========================================== -->
+    <div id="viewSettings" class="view-section">
+      <!-- セキュリティ設定 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🔒 合言葉（パスコード）セキュリティ</div>
+        </div>
+        <div class="card-desc">
+          インターネット上に公開しても家族以外に学習データを見られないよう、パスコードロックを設定できます。
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
+          <label style="font-size:13px; font-weight:bold;">パスコードロック機能:</label>
+          <button type="button" class="btn-date-preset" id="btnToggleLock" onclick="toggleLockSetting()">有効</button>
+        </div>
+
+        <div class="form-group" style="max-width:320px;">
+          <label class="form-label">合言葉の変更</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="newPinInput" class="form-control" placeholder="新しい合言葉 (4桁以上)" maxlength="16">
+            <button class="btn-primary" onclick="updatePin()">変更</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- バックアップ -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⚙️ バックアップとデータ保存</div>
+        </div>
+        <div class="card-desc">
+          単語データはブラウザ（LocalStorage）に自動保存されています。<br>
+          他のPCやスマホに引き継ぐ場合は、JSONファイルとしてエクスポート／インポートが可能です。
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom: 24px;">
+          <button class="btn-primary" onclick="exportDataJson()">
+            <span>📤 JSONデータをダウンロード保存</span>
+          </button>
+          <label class="btn-primary" style="background:var(--surface-card); border:1px solid var(--surface-border); cursor:pointer;">
+            <span>📥 JSONファイルを読み込んで復元</span>
+            <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="importDataJson(event)">
+          </label>
+          <button class="btn-primary" style="background:rgba(239, 68, 68, 0.2); color:#f87171; border:1px solid var(--danger);" onclick="resetToInitialData()">
+            <span>⚠️ 初期サンプルデータにリセット</span>
+          </button>
+        </div>
+
+        <div class="curve-explanation">
+          <strong>🌐 Web公開（Cloudflare Pages）について:</strong><br>
+          このアプリファイルは Cloudflare Pages にアップロードするだけで、娘さんのPCやスマートフォンから専用URL（HTTPS）で安全にアクセスできます。パスコードを設定しておけば第三者に中身が見られる心配もありません。
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    千春様専用 英単語 忘却曲線テストシステム &copy; 2026 | 高校受験合格サポート
+  </footer>
+
+  <script>
+    // ==========================================
+    // 定数・設定
+    // ==========================================
+    const STORAGE_KEY = "chiharu_vocab_spaced_repetition_v2";
+    const SETTINGS_KEY = "chiharu_vocab_settings_v1";
+
+    // 基準日（今日）
+    function getTodayString() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+    const TODAY_STR = getTodayString();
+
+    const DEFAULT_SETTINGS = {
+      lockEnabled: true,
+      pin: "1234"
+    };
+
+    const INITIAL_DATA = {
+      notes: [
+        {
+          id: "note-1",
+          title: "第1回 練習ノート (高校入試・中3最重要単語)",
+          date: "2026-09-18",
+          wordsCount: 15
+        }
+      ],
+      words: [
+        { id: "w1", noteId: "note-1", word: "improve", meaning: "向上させる、改善する", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w2", noteId: "note-1", word: "discover", meaning: "発見する", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w3", noteId: "note-1", word: "environment", meaning: "環境", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w4", noteId: "note-1", word: "convenient", meaning: "便利な、都合が良い", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w5", noteId: "note-1", word: "opportunity", meaning: "機会、チャンス", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w6", noteId: "note-1", word: "influence", meaning: "影響を与える、影響", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w7", noteId: "note-1", word: "traditional", meaning: "伝統的な", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w8", noteId: "note-1", word: "protect", meaning: "保護する、守る", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w9", noteId: "note-1", word: "experience", meaning: "経験、経験する", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w10", noteId: "note-1", word: "believe", meaning: "信じる", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w11", noteId: "note-1", word: "realize", meaning: "実感する、気づく", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w12", noteId: "note-1", word: "various", meaning: "さまざまな、多様な", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w13", noteId: "note-1", word: "necessary", meaning: "必要な", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w14", noteId: "note-1", word: "suggest", meaning: "提案する", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR },
+        { id: "w15", noteId: "note-1", word: "accept", meaning: "受け入れる", level: 1, lastTest: "2026-09-18", nextTest: TODAY_STR }
+      ]
+    };
+
+    let appData = null;
+    let appSettings = null;
+
+    // 現在のテスト実行ステート
+    let currentTestQueue = [];
+    let currentTestIndex = 0;
+    let currentSubMode = "card";
+    let isFlipped = false;
+    let testStats = { total: 0, easy: 0, good: 0, again: 0 };
+    let selectedImageFile = null;
+
+    // ==========================================
+    // 初期化・ロック判定
+    // ==========================================
+    function init() {
+      // 設定読み込み
+      const savedSettings = localStorage.getItem(SETTINGS_KEY);
+      appSettings = savedSettings ? JSON.parse(savedSettings) : { ...DEFAULT_SETTINGS };
+
+      // パスコードロック判定
+      if (appSettings.lockEnabled && !sessionStorage.getItem("chiharu_unlocked")) {
+        document.getElementById("lockScreen").style.display = "flex";
+        setTimeout(() => document.getElementById("inputPin").focus(), 200);
+      } else {
+        document.getElementById("lockScreen").style.display = "none";
+      }
+
+      // データ読み込み
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        try {
+          appData = JSON.parse(savedData);
+        } catch (e) {
+          appData = JSON.parse(JSON.stringify(INITIAL_DATA));
+        }
+      } else {
+        appData = JSON.parse(JSON.stringify(INITIAL_DATA));
+        saveData();
+      }
+
+      setNoteDatePreset(3);
+      updateSettingsUI();
+      renderStats();
+      renderNoteList();
+      renderVocabTable();
+      setupDragAndDrop();
+    }
+
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+      renderStats();
+    }
+
+    function saveSettings() {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+      updateSettingsUI();
+    }
+
+    // パスコード関連
+    function handlePinKey(e) {
+      if (e.key === "Enter") checkPin();
+    }
+    function checkPin() {
+      const input = document.getElementById("inputPin").value.trim();
+      const err = document.getElementById("lockError");
+      if (input === appSettings.pin) {
+        sessionStorage.setItem("chiharu_unlocked", "true");
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("inputPin").value = "";
+        err.textContent = "";
+      } else {
+        err.textContent = "合言葉が違います。もう一度お試しください。";
+        document.getElementById("inputPin").value = "";
+        document.getElementById("inputPin").focus();
+      }
+    }
+    function lockAppNow() {
+      sessionStorage.removeItem("chiharu_unlocked");
+      document.getElementById("lockScreen").style.display = "flex";
+      document.getElementById("inputPin").value = "";
+      setTimeout(() => document.getElementById("inputPin").focus(), 100);
+    }
+    function toggleLockSetting() {
+      appSettings.lockEnabled = !appSettings.lockEnabled;
+      saveSettings();
+      alert(`パスコードロックを【${appSettings.lockEnabled ? "有効" : "無効"}】にしました。`);
+    }
+    function updatePin() {
+      const newPin = document.getElementById("newPinInput").value.trim();
+      if (!newPin || newPin.length < 4) {
+        alert("4桁以上の合言葉を入力してください。");
+        return;
+      }
+      appSettings.pin = newPin;
+      saveSettings();
+      document.getElementById("newPinInput").value = "";
+      alert(`合言葉を「${newPin}」に変更しました。忘れないようにメモしてください！`);
+    }
+    function updateSettingsUI() {
+      const btn = document.getElementById("btnToggleLock");
+      if (btn) {
+        btn.textContent = appSettings.lockEnabled ? "有効 (ON)" : "無効 (OFF)";
+        btn.style.color = appSettings.lockEnabled ? "#34d399" : "#f87171";
+        btn.style.borderColor = appSettings.lockEnabled ? "#10b981" : "#ef4444";
+      }
+    }
+
+    // ==========================================
+    // 📷 ノート画像OCR（文字認識）処理
+    // ==========================================
+    function setupDragAndDrop() {
+      const dropzone = document.getElementById("ocrDropzone");
+      if (!dropzone) return;
+
+      ["dragenter", "dragover"].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.add("dragover");
+        }, false);
+      });
+      ["dragleave", "drop"].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.remove("dragover");
+        }, false);
+      });
+      dropzone.addEventListener("drop", (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length > 0 && files[0].type.startsWith("image/")) {
+          processImageFile(files[0]);
+        }
+      }, false);
+    }
+
+    function handleImageSelected(e) {
+      const file = e.target.files[0];
+      if (file) {
+        processImageFile(file);
+      }
+    }
+
+    function processImageFile(file) {
+      selectedImageFile = file;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById("ocrPreviewImg");
+        preview.src = e.target.result;
+        document.getElementById("ocrPreviewBox").style.display = "block";
+      };
+      reader.readAsText ? reader.readAsDataURL(file) : null;
+    }
+
+    async function startOcrProcess() {
+      if (!selectedImageFile) {
+        alert("画像が選択されていません。");
+        return;
+      }
+
+      const progressBox = document.getElementById("ocrProgressBox");
+      const progressText = document.getElementById("ocrProgressText");
+      const progressFill = document.getElementById("ocrProgressFill");
+      const btn = document.getElementById("btnRunOcr");
+
+      progressBox.style.display = "block";
+      btn.disabled = true;
+      btn.textContent = "文字認識を実行中...";
+
+      try {
+        if (typeof Tesseract === "undefined") {
+          throw new Error("Tesseract.js OCRライブラリが読み込めませんでした。ネット接続を確認してください。");
+        }
+
+        // Tesseract.js で英語・日本語を同時認識
+        const worker = await Tesseract.createWorker("eng+jpn");
+
+        const result = await worker.recognize(selectedImageFile, {}, {
+          logger: m => {
+            if (m.status === "recognizing text") {
+              const p = Math.round(m.progress * 100);
+              progressText.textContent = `ノートをスキャン解析中... ${p}%`;
+              progressFill.style.width = `${p}%`;
+            }
+          }
+        });
+
+        await worker.terminate();
+
+        const rawText = result.data.text;
+        const formatted = cleanOcrText(rawText);
+
+        const currentArea = document.getElementById("noteRawText");
+        currentArea.value = (currentArea.value ? currentArea.value + "\n" : "") + formatted;
+
+        progressText.textContent = "✅ スキャン完了！単語リストへ反映しました";
+        alert("ノート写真から文字認識が完了しました！\n下の「単語リスト」欄を確認・修正して登録してください。");
+
+      } catch (err) {
+        console.error("OCR error:", err);
+        alert("文字認識中にエラーが発生しました: " + err.message + "\n手動でのテキスト入力もお試しください。");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "🔍 この写真から文字を再スキャン";
+      }
+    }
+
+    // OCRテキストの整形・クレンジング
+    function cleanOcrText(text) {
+      const lines = text.split("\n");
+      const output = [];
+
+      for (let line of lines) {
+        let cleaned = line.trim();
+        if (!cleaned) continue;
+
+        // ノイズ除去・記号の正規化
+        cleaned = cleaned.replace(/[|│]/g, " ");
+        cleaned = cleaned.replace(/\s+/g, " ");
+
+        // 英単語 + 日本語のパターンを探す
+        const match = cleaned.match(/^([a-zA-Z\s'-]+)[\s:：\-—]+(.+)$/);
+        if (match) {
+          const eng = match[1].trim();
+          const jpn = match[2].trim();
+          if (eng.length >= 2 && jpn.length >= 1) {
+            output.push(`${eng} ${jpn}`);
+            continue;
+          }
+        }
+        // そのまま出力
+        if (cleaned.length >= 3) {
+          output.push(cleaned);
+        }
+      }
+      return output.join("\n");
+    }
+
+    // ==========================================
+    // 忘却曲線アルゴリズム (SM-2)
+    // ==========================================
+    const INTERVAL_DAYS = [1, 3, 7, 14, 30, 60];
+
+    function calculateNextDate(fromBaseDateStr, level) {
+      const parts = fromBaseDateStr.split("-").map(Number);
+      const d = new Date(parts[0], parts[1] - 1, parts[2]);
+      const addDays = INTERVAL_DAYS[Math.min(level, INTERVAL_DAYS.length - 1)];
+      d.setDate(d.getDate() + addDays);
+
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function isDue(word) {
+      if (!word.nextTest) return true;
+      return word.nextTest <= TODAY_STR;
+    }
+
+    // 統計表示
+    function renderStats() {
+      const total = appData.words.length;
+      const dueWords = appData.words.filter(isDue);
+      const dueCount = dueWords.length;
+      const masteredCount = appData.words.filter(w => w.level >= 4).length;
+
+      const l1Count = appData.words.filter(w => w.level <= 1).length;
+      const l23Count = appData.words.filter(w => w.level === 2 || w.level === 3).length;
+      const l45Count = masteredCount;
+
+      document.getElementById("statDueCount").textContent = dueCount;
+      document.getElementById("statMasteredCount").textContent = masteredCount;
+      document.getElementById("tabDueBadge").textContent = dueCount;
+
+      document.getElementById("gridDueCount").textContent = dueCount;
+      document.getElementById("gridL1Count").textContent = l1Count;
+      document.getElementById("gridL23Count").textContent = l23Count;
+      document.getElementById("gridL45Count").textContent = l45Count;
+
+      document.getElementById("bannerDueCount").textContent = dueCount;
+      document.getElementById("btnDueCount").textContent = dueCount;
+
+      if (dueCount === 0) {
+        document.getElementById("bannerTitle").textContent = "✨ 今日の復習はすべて完了しています！";
+        document.getElementById("bannerDesc").innerHTML = "素晴らしいペースです！新しいノート写真を追加するか、総復習テストに挑戦してみましょう。";
+      } else {
+        document.getElementById("bannerTitle").textContent = "🧠 忘れる直前のベストタイミングです！";
+        document.getElementById("bannerDesc").innerHTML = `忘却曲線の科学的理論に基づき、本日期日を迎えた単語が <strong style="color:#fcd34d; font-size:16px;">${dueCount}</strong> 件あります。<br>短時間の復習で、短期記憶を一気に一生モノの長期記憶（入試即答レベル）へ昇華させましょう！`;
+      }
+    }
+
+    // タブ切り替え
+    function switchTab(tabId) {
+      document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
+
+      if (tabId === "today") {
+        document.getElementById("viewToday").classList.add("active");
+        document.querySelector(".tab-btn:nth-child(1)").classList.add("active");
+        renderStats();
+      } else if (tabId === "add") {
+        document.getElementById("viewAdd").classList.add("active");
+        document.querySelector(".tab-btn:nth-child(2)").classList.add("active");
+      } else if (tabId === "list") {
+        document.getElementById("viewList").classList.add("active");
+        document.querySelector(".tab-btn:nth-child(3)").classList.add("active");
+        renderVocabTable();
+      } else if (tabId === "settings") {
+        document.getElementById("viewSettings").classList.add("active");
+        document.querySelector(".tab-btn:nth-child(4)").classList.add("active");
+        updateSettingsUI();
+      }
+    }
+
+    // テスト開始
+    function startTest(type, targetWords = null) {
+      if (targetWords) {
+        currentTestQueue = [...targetWords];
+      } else if (type === "due") {
+        currentTestQueue = appData.words.filter(isDue);
+        if (currentTestQueue.length === 0) {
+          alert("本日期日を迎えている単語はありません。全単語から総復習テストを出題します！");
+          currentTestQueue = [...appData.words];
+        }
+      } else {
+        currentTestQueue = [...appData.words];
+      }
+
+      if (currentTestQueue.length === 0) {
+        alert("登録された単語がありません。まずは練習ノートを追加してください。");
+        switchTab("add");
+        return;
+      }
+
+      currentTestQueue.sort(() => Math.random() - 0.5);
+      currentTestIndex = 0;
+      testStats = { total: currentTestQueue.length, easy: 0, good: 0, again: 0 };
+
+      document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
+      document.getElementById("viewTestRunning").classList.add("active");
+
+      loadCurrentQuestion();
+    }
+
+    function abortTest() {
+      if (confirm("テストを中断してホームに戻りますか？")) {
+        switchTab("today");
+      }
+    }
+
+    function setTestSubMode(mode) {
+      currentSubMode = mode;
+      document.getElementById("subModeCard").style.display = mode === "card" ? "block" : "none";
+      document.getElementById("subModeQuiz").style.display = mode === "quiz" ? "block" : "none";
+      document.getElementById("subModeSpell").style.display = mode === "spell" ? "block" : "none";
+
+      document.getElementById("btnModeCard").style.background = mode === "card" ? "var(--primary)" : "var(--surface-card)";
+      document.getElementById("btnModeCard").style.color = mode === "card" ? "#fff" : "var(--text-muted)";
+      document.getElementById("btnModeQuiz").style.background = mode === "quiz" ? "var(--primary)" : "var(--surface-card)";
+      document.getElementById("btnModeQuiz").style.color = mode === "quiz" ? "#fff" : "var(--text-muted)";
+      document.getElementById("btnModeSpell").style.background = mode === "spell" ? "var(--primary)" : "var(--surface-card)";
+      document.getElementById("btnModeSpell").style.color = mode === "spell" ? "#fff" : "var(--text-muted)";
+
+      loadCurrentQuestion();
+    }
+
+    function loadCurrentQuestion() {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+
+      const item = currentTestQueue[currentTestIndex];
+      const total = currentTestQueue.length;
+      document.getElementById("testCounter").textContent = `${currentTestIndex + 1} / ${total}`;
+      const progress = ((currentTestIndex) / total) * 100;
+      document.getElementById("testProgressFill").style.width = `${progress}%`;
+
+      // アクションボックス初期化
+      const quizNextBox = document.getElementById("quizNextActionBox");
+      if (quizNextBox) quizNextBox.style.display = "none";
+      const spellNextBox = document.getElementById("spellNextActionBox");
+      if (spellNextBox) spellNextBox.style.display = "none";
+
+      isFlipped = false;
+      const cardEl = document.getElementById("flashcardElement");
+      if (cardEl) {
+        cardEl.classList.remove("flipped");
+        // 単語切り替えアニメーション
+        cardEl.style.animation = "none";
+        cardEl.offsetHeight; // リフロー
+        cardEl.style.animation = "popIn 0.25s ease";
+      }
+
+      document.getElementById("cardFrontWord").textContent = item.word;
+      document.getElementById("cardBackMeaning").textContent = item.meaning;
+      document.getElementById("cardBackWordSub").textContent = item.word;
+
+      document.getElementById("quizQuestionWord").textContent = item.word;
+      buildQuizOptions(item);
+
+      document.getElementById("spellQuestionMeaning").textContent = item.meaning;
+      const spellInput = document.getElementById("spellInput");
+      spellInput.value = "";
+      document.getElementById("spellFeedback").textContent = "";
+      if (currentSubMode === "spell") {
+        setTimeout(() => spellInput.focus(), 100);
+      }
+      const btnFlip = document.getElementById("btnFlipCardAction");
+      if (btnFlip) btnFlip.textContent = "💡 答え（日本語訳）を見る ↻";
+    }
+
+    function flipCard() {
+      isFlipped = !isFlipped;
+      const cardEl = document.getElementById("flashcardElement");
+      const btnFlip = document.getElementById("btnFlipCardAction");
+      if (isFlipped) {
+        if (cardEl) cardEl.classList.add("flipped");
+        if (btnFlip) btnFlip.textContent = "↩️ 単語（表面）に戻す";
+      } else {
+        if (cardEl) cardEl.classList.remove("flipped");
+        if (btnFlip) btnFlip.textContent = "💡 答え（日本語訳）を見る ↻";
+      }
+    }
+
+    function skipQuestion() {
+      nextQuestion();
+    }
+
+    function speakWord(customWord = null) {
+      try {
+        const item = currentTestQueue[currentTestIndex];
+        const word = customWord || (item ? item.word : "");
+        if (word && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+          const utter = new SpeechSynthesisUtterance(word);
+          utter.lang = "en-US";
+          utter.rate = 0.9;
+          window.speechSynthesis.speak(utter);
+        }
+      } catch (err) {
+        console.warn("Speech synthesis bypassed:", err);
+      }
+    }
+
+    let lastQuizDelta = 1;
+    let lastSpellDelta = 2;
+    let autoNextTimer = null;
+
+    function prevQuestion() {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+      if (currentTestIndex > 0) {
+        currentTestIndex--;
+        loadCurrentQuestion();
+      }
+    }
+
+    // 1. カードめくり用：ランク変化なし (±0)
+    function submitCardProgress() {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+      try {
+        const item = currentTestQueue[currentTestIndex];
+        if (item && appData && appData.words) {
+          const wordInDb = appData.words.find(w => w.id === item.id);
+          if (wordInDb) {
+            wordInDb.lastTest = TODAY_STR;
+            // カードめくりは暗記確認のためランク変動なし
+            saveData();
+          }
+        }
+      } catch (err) {
+        console.error("submitCardProgress error:", err);
+      }
+      nextQuestion();
+    }
+
+    // 2. クイズ・スペル用：ランク変動適用
+    function applyRankChange(delta, modeName) {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+
+      try {
+        const item = currentTestQueue[currentTestIndex];
+        if (item && appData && appData.words) {
+          const wordInDb = appData.words.find(w => w.id === item.id);
+          if (wordInDb) {
+            wordInDb.lastTest = TODAY_STR;
+            const prevLevel = (wordInDb.level !== undefined) ? wordInDb.level : 1;
+            const newLevel = Math.max(0, Math.min(5, prevLevel + delta));
+            wordInDb.level = newLevel;
+
+            // 新ランクに応じた次回テスト日の再計算
+            wordInDb.nextTest = calculateNextDate(TODAY_STR, newLevel);
+
+            if (delta > 0) {
+              testStats.easy++;
+            } else if (delta < 0) {
+              testStats.again++;
+            } else {
+              testStats.good++;
+            }
+            saveData();
+          }
+        }
+      } catch (err) {
+        console.error("applyRankChange save error:", err);
+      }
+
+      nextQuestion();
+    }
+
+    function proceedQuizNext() {
+      applyRankChange(lastQuizDelta, "quiz");
+    }
+
+    function proceedSpellNext() {
+      applyRankChange(lastSpellDelta, "spell");
+    }
+
+    function nextQuestion() {
+      if (autoNextTimer) {
+        clearTimeout(autoNextTimer);
+        autoNextTimer = null;
+      }
+
+      currentTestIndex++;
+      if (currentTestIndex >= currentTestQueue.length) {
+        finishTest();
+      } else {
+        loadCurrentQuestion();
+      }
+    }
+
+    function finishTest() {
+      document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
+      document.getElementById("viewTestFinished").classList.add("active");
+      document.getElementById("resTotalCount").textContent = `${testStats.total} 問`;
+      document.getElementById("resEasyCount").textContent = `${testStats.easy} 語`;
+      try {
+        saveData();
+      } catch (e) {
+        console.error("finishTest save error:", e);
+      }
+    }
+
+    // 4択クイズ：正解で+1、不正解で-1
+    function buildQuizOptions(correctItem) {
+      const container = document.getElementById("quizOptionsContainer");
+      container.innerHTML = "";
+
+      const choices = [correctItem];
+      const otherWords = appData.words.filter(w => w.id !== correctItem.id);
+      otherWords.sort(() => Math.random() - 0.5);
+
+      for (let i = 0; i < Math.min(3, otherWords.length); i++) {
+        choices.push(otherWords[i]);
+      }
+      choices.sort(() => Math.random() - 0.5);
+
+      choices.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "btn-quiz-opt";
+        btn.textContent = opt.meaning;
+        btn.onclick = () => {
+          Array.from(container.children).forEach(b => b.disabled = true);
+
+          const nextBox = document.getElementById("quizNextActionBox");
+          const nextBtn = document.getElementById("btnQuizNext");
+
+          if (opt.id === correctItem.id) {
+            btn.classList.add("correct");
+            lastQuizDelta = 1; // 1ランクアップ
+            if (nextBtn) {
+              nextBtn.innerHTML = "⭕️ <strong>正解！</strong> (1ランクUP 🚀) 次の問題へ ➔";
+              nextBtn.style.background = "#10b981";
+            }
+            speakWord(correctItem.word);
+          } else {
+            btn.classList.add("wrong");
+            lastQuizDelta = -1; // 1ランクダウン
+            Array.from(container.children).forEach(child => {
+              if (child.textContent === correctItem.meaning) {
+                child.classList.add("correct");
+              }
+            });
+            if (nextBtn) {
+              nextBtn.innerHTML = "👀 <strong>正解を確認したよ！</strong> 次の問題へ ➔";
+              nextBtn.style.background = "#3b82f6";
+            }
+            speakWord(correctItem.word);
+          }
+
+          if (nextBox) {
+            nextBox.style.display = "block";
+            if (nextBtn) nextBtn.focus();
+          }
+
+          // 自動ジャンプは廃止（千春ちゃんが自分のペースで納得して「次に進む」を押せる）
+          if (autoNextTimer) clearTimeout(autoNextTimer);
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    // キーボード操作：4択クイズの次へ進む
+    document.addEventListener("keydown", (e) => {
+      const quizNextBox = document.getElementById("quizNextActionBox");
+      if (quizNextBox && quizNextBox.style.display === "block") {
+        if (e.key === "Enter" || e.key === " " || e.key === "ArrowRight") {
+          e.preventDefault();
+          proceedQuizNext();
+        }
+      }
+    });
+
+    // スペル入力：正解で+2、不正解で±0
+    function handleSpellKey(e) {
+      if (e.key === "Enter") {
+        const nextBox = document.getElementById("spellNextActionBox");
+        // すでに答え合わせが表示されている状態でEnterを押したら「次へ進む」
+        if (nextBox && nextBox.style.display === "block") {
+          proceedSpellNext();
+        } else {
+          checkSpell();
+        }
+      }
+    }
+    function checkSpell() {
+      const input = document.getElementById("spellInput").value.trim().toLowerCase();
+      const item = currentTestQueue[currentTestIndex];
+      const correct = item.word.trim().toLowerCase();
+      const feedback = document.getElementById("spellFeedback");
+      const nextBox = document.getElementById("spellNextActionBox");
+      const nextBtn = document.getElementById("btnSpellNext");
+
+      if (input === correct) {
+        feedback.style.color = "#34d399";
+        feedback.innerHTML = `⭕️ <strong>大正解！</strong> (+2ランク大幅UP 🌟)`;
+        lastSpellDelta = 2; // 2ランクアップ！
+        if (nextBtn) {
+          nextBtn.innerHTML = "🌟 <strong>完璧！(+2ランクUP)</strong> 次の問題へ ➔";
+          nextBtn.style.background = "#10b981";
+        }
+        speakWord(item.word);
+      } else {
+        feedback.style.color = "#f87171";
+        feedback.innerHTML = `❌ 正解は <span style="background: rgba(239,68,68,0.25); color: #fca5a5; padding: 4px 10px; border-radius: 8px; font-size: 18px; border: 1px solid rgba(239,68,68,0.5); font-weight: 800;">${item.word}</span> でした`;
+        lastSpellDelta = 0; // ランク変化なし！
+        if (nextBtn) {
+          nextBtn.innerHTML = "👀 <strong>正解を覚えたよ！</strong> 次の問題へ ➔";
+          nextBtn.style.background = "#3b82f6";
+        }
+        speakWord(item.word);
+      }
+
+      if (nextBox) {
+        nextBox.style.display = "block";
+        if (nextBtn) nextBtn.focus();
+      }
+
+      // 自動ジャンプは廃止（自分のタイミングで「次へ」を押して進む）
+      if (autoNextTimer) clearTimeout(autoNextTimer);
+    }
+
+    function setNoteDatePreset(daysAgo) {
+      const parts = TODAY_STR.split("-").map(Number);
+      const d = new Date(parts[0], parts[1] - 1, parts[2]);
+      d.setDate(d.getDate() - daysAgo);
+
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      document.getElementById("noteDate").value = `${y}-${m}-${day}`;
+    }
+
+    function parseRawWords(text) {
+      const lines = text.split("\n");
+      const results = [];
+
+      for (let line of lines) {
+        line = line.trim();
+        if (!line) continue;
+
+        let parts = null;
+        if (line.includes("\t")) parts = line.split("\t");
+        else if (line.includes("：")) parts = line.split("：");
+        else if (line.includes(":")) parts = line.split(":");
+        else if (line.includes(" - ")) parts = line.split(" - ");
+        else if (line.includes(",")) parts = line.split(",");
+        else {
+          const match = line.match(/^([a-zA-Z\s'-]+)\s+(.+)$/);
+          if (match) parts = [match[1], match[2]];
+          else parts = line.split(/\s+/);
+        }
+
+        if (parts && parts.length >= 2) {
+          const word = parts[0].trim();
+          const meaning = parts.slice(1).join(" ").trim();
+          if (word && meaning) results.push({ word, meaning });
+        }
+      }
+      return results;
+    }
+
+    function saveNewNote() {
+      const title = document.getElementById("noteTitle").value.trim();
+      const date = document.getElementById("noteDate").value;
+      const rawText = document.getElementById("noteRawText").value.trim();
+
+      if (!title || !date || !rawText) {
+        alert("ノート名、実施日、単語リストを入力してください。");
+        return;
+      }
+
+      const parsedWords = parseRawWords(rawText);
+      if (parsedWords.length === 0) {
+        alert("単語を解析できませんでした。「単語 意味」の形式で入力してください。");
+        return;
+      }
+
+      const noteId = "note-" + Date.now();
+      const newNote = { id: noteId, title, date, wordsCount: parsedWords.length };
+      appData.notes.unshift(newNote);
+
+      parsedWords.forEach((item, idx) => {
+        const nextTest = calculateNextDate(date, 1);
+        appData.words.unshift({
+          id: "w-" + Date.now() + "-" + idx,
+          noteId: noteId,
+          word: item.word,
+          meaning: item.meaning,
+          level: 1,
+          lastTest: date,
+          nextTest: nextTest
+        });
+      });
+
+      saveData();
+      renderNoteList();
+      renderVocabTable();
+
+      alert(`ノート「${title}」から ${parsedWords.length} 語を登録しました！\n忘却曲線スケジュールを自動作成しました。`);
+      document.getElementById("noteRawText").value = "";
+      document.getElementById("ocrPreviewBox").style.display = "none";
+      document.getElementById("ocrProgressBox").style.display = "none";
+      selectedImageFile = null;
+      switchTab("today");
+    }
+
+    function renderNoteList() {
+      const container = document.getElementById("noteListContainer");
+      container.innerHTML = "";
+      if (appData.notes.length === 0) {
+        container.innerHTML = `<div style="color:var(--text-muted); font-size:13px;">登録されたノートはありません。</div>`;
+        return;
+      }
+      appData.notes.forEach(note => {
+        const item = document.createElement("div");
+        item.className = "note-item";
+        const noteWords = appData.words.filter(w => w.noteId === note.id);
+
+        item.innerHTML = `
+          <div class="note-info">
+            <h4>${escapeHtml(note.title)}</h4>
+            <p>実施日: ${note.date} ｜ 登録単語: ${noteWords.length} 語</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-primary" style="padding:6px 14px; font-size:12px;" onclick="testSingleNote('${note.id}')">このノートをテスト</button>
+            <button class="btn-date-preset" style="color:#f87171; border-color:rgba(239,68,68,0.4);" onclick="deleteNote('${note.id}')">削除</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function testSingleNote(noteId) {
+      const words = appData.words.filter(w => w.noteId === noteId);
+      if (words.length === 0) {
+        alert("このノートには単語がありません。");
+        return;
+      }
+      startTest("custom", words);
+    }
+
+    function deleteNote(noteId) {
+      if (confirm("この練習ノートと含まれる単語を削除しますか？")) {
+        appData.notes = appData.notes.filter(n => n.id !== noteId);
+        appData.words = appData.words.filter(w => w.noteId !== noteId);
+        saveData();
+        renderNoteList();
+        renderVocabTable();
+      }
+    }
+
+    function renderVocabTable() {
+      const tbody = document.getElementById("vocabTableBody");
+      tbody.innerHTML = "";
+      const query = (document.getElementById("tableSearch")?.value || "").toLowerCase();
+
+      const filtered = appData.words.filter(w => {
+        if (!query) return true;
+        return w.word.toLowerCase().includes(query) || w.meaning.toLowerCase().includes(query);
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:20px;">該当する単語がありません</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(w => {
+        const note = appData.notes.find(n => n.id === w.noteId);
+        const tr = document.createElement("tr");
+        const due = isDue(w);
+        const dueBadge = due ? `<span style="color:#f87171; font-weight:800; font-size:11px; margin-left:4px;">[今日!]</span>` : "";
+
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(w.word)}</strong></td>
+          <td><button class="btn-audio" style="padding:3px 8px; font-size:11px;" onclick="speakWord('${escapeHtml(w.word)}')">🔊</button></td>
+          <td>${escapeHtml(w.meaning)}</td>
+          <td style="color:var(--text-muted); font-size:12px;">${note ? escapeHtml(note.title) : "-"}</td>
+          <td><span class="badge-level badge-level-${w.level || 0}">Lv.${w.level || 0}</span></td>
+          <td>${w.nextTest || "-"} ${dueBadge}</td>
+          <td><button class="btn-date-preset" style="padding:4px 8px; font-size:11px; color:#f87171;" onclick="deleteWord('${w.id}')">削除</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterVocabTable() { renderVocabTable(); }
+    function deleteWord(wordId) {
+      if (confirm("この単語を削除しますか？")) {
+        appData.words = appData.words.filter(w => w.id !== wordId);
+        saveData();
+        renderVocabTable();
+      }
+    }
+
+    function exportDataJson() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+      const a = document.createElement("a");
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `千春_英単語忘却曲線データ_${TODAY_STR}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    function importDataJson(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed && Array.isArray(parsed.words)) {
+            appData = parsed;
+            saveData();
+            init();
+            alert("データを正常に復元・インポートしました！");
+          } else {
+            alert("無効なJSONデータです。");
+          }
+        } catch (err) {
+          alert("JSONの読み込みに失敗しました: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetToInitialData() {
+      if (confirm("データを初期状態にリセットしますか？\n（現在の変更内容は上書きされます）")) {
+        appData = JSON.parse(JSON.stringify(INITIAL_DATA));
+        saveData();
+        init();
+        alert("初期データにリセットしました。");
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
