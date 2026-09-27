@@ -355,6 +355,14 @@
       filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
       touch-action: manipulation;
     }
+    .dust-target.bonus-dust {
+      animation: bonusDustFloat 1.2s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+    }
+    @keyframes bonusDustFloat {
+      0% { transform: translate(-50%, -50%) translateY(0) scale(1); filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6)); }
+      100% { transform: translate(-50%, -50%) translateY(-10px) scale(1.15); filter: drop-shadow(0 0 16px rgba(255, 235, 59, 1)); }
+    }
     .dust-target::before {
       content: '';
       position: absolute;
@@ -1271,6 +1279,66 @@ function score(skillObj,meta){
   return n+Math.random();
 }
 
+function generateSort4Question(baseItem){
+  const pool = state.history.filter(h => h.quizEligible !== false && h.yearStart > 0);
+  if (pool.length < 4) return null;
+  
+  // baseItemと同じ時代または年代が近い出来事を優先抽出
+  let others = pool.filter(h => h.id !== baseItem.id && h.yearStart !== baseItem.yearStart);
+  others.sort((a, b) => Math.abs(a.yearStart - baseItem.yearStart) - Math.abs(b.yearStart - baseItem.yearStart));
+  const candidatePool = others.slice(0, 14).sort(() => Math.random() - 0.5);
+  
+  const picked = [];
+  const pickedYears = new Set([baseItem.yearStart]);
+  for (const it of candidatePool) {
+    if (!pickedYears.has(it.yearStart)) {
+      picked.push(it);
+      pickedYears.add(it.yearStart);
+      if (picked.length === 3) break;
+    }
+  }
+  if (picked.length < 3) return null;
+  
+  const four = [baseItem, ...picked];
+  // 年代順にソート（正解判定用）
+  const chrono = [...four].sort((a, b) => a.yearStart - b.yearStart);
+  
+  // 提示順（シャッフルして記号ア・イ・ウ・エを付与）
+  const presented = [...four].sort(() => Math.random() - 0.5);
+  const labels = ['ア', 'イ', 'ウ', 'エ'];
+  const itemToLabel = new Map();
+  presented.forEach((it, idx) => {
+    itemToLabel.set(it.id, labels[idx]);
+  });
+  
+  // 正解文字列
+  const correctStr = chrono.map(it => itemToLabel.get(it.id)).join(' → ');
+  
+  // ダミー選択肢3つ
+  const allPerms = [
+    [0,1,2,3],[0,1,3,2],[0,2,1,3],[0,2,3,1],[0,3,1,2],[0,3,2,1],
+    [1,0,2,3],[1,0,3,2],[1,2,0,3],[1,2,3,0],[1,3,0,2],[1,3,2,0],
+    [2,0,1,3],[2,0,3,1],[2,1,0,3],[2,1,3,0],[2,3,0,1],[2,3,1,0],
+    [3,0,1,2],[3,0,2,1],[3,1,0,2],[3,1,2,0],[3,2,0,1],[3,2,1,0]
+  ].map(p => p.map(i => labels[i]).join(' → ')).filter(s => s !== correctStr);
+  
+  const dummyChoices = allPerms.sort(() => Math.random() - 0.5).slice(0, 3);
+  const finalChoices = [correctStr, ...dummyChoices].sort(() => Math.random() - 0.5);
+  
+  return {
+    subject: 'history',
+    type: 'chronology_sort',
+    prompt: '次の4つの出来事を、年代の古い順に正しく並べ替えたものはどれ？',
+    item: baseItem,
+    presentedItems: presented.map(it => ({ id: it.id, title: it.title, label: itemToLabel.get(it.id), yearStart: it.yearStart, displayYear: it.displayYear, era: it.era })),
+    chronoItems: chrono.map(it => ({ id: it.id, title: it.title, label: itemToLabel.get(it.id), yearStart: it.yearStart, displayYear: it.displayYear, era: it.era })),
+    choices: finalChoices,
+    correct: correctStr,
+    skill: baseItem.skills.chronology,
+    score: score(baseItem.skills.chronology, {exam: baseItem.examImportance, turning: baseItem.turningPoint, interest: baseItem.interest})
+  };
+}
+
 function buildQuestions(subject){
   let qs=[];
   state.english.forEach(x=>{
@@ -1278,7 +1346,10 @@ function buildQuestions(subject){
     qs.push({subject:'english',type:'spelling',prompt:`「${x.meaning}」を英語で書こう`,item:x,skill:x.skills.spelling,score:score(x.skills.spelling,{exam:2})});
   });
   state.history.forEach(x=>{
-    if(x.quizEligible!==false) qs.push({subject:'history',type:'chronology',prompt:`「${x.title}」はどのあたり？`,item:x,skill:x.skills.chronology,score:score(x.skills.chronology,{exam:x.examImportance,turning:x.turningPoint,interest:x.interest})});
+    if(x.quizEligible!==false){
+      const sortQ = generateSort4Question(x);
+      if(sortQ) qs.push(sortQ);
+    }
     if(state.relations.some(r=>r.from===x.id)&&x.quizEligible!==false) qs.push({subject:'history',type:'cause',prompt:`「${x.title}」のあとにつながる出来事は？`,item:x,skill:x.skills.cause,score:score(x.skills.cause,{exam:x.examImportance,turning:x.turningPoint,interest:x.interest})});
     if(x.people?.length&&x.quizEligible!==false) qs.push({subject:'history',type:'person',prompt:`「${x.title}」に関係する人物は？`,item:x,skill:x.skills.person,score:score(x.skills.person,{exam:x.examImportance,turning:x.turningPoint,interest:x.interest})});
   });
@@ -1310,7 +1381,7 @@ function renderQuestion(){
   current=queue[qIndex];
   startedAt=Date.now();
   document.querySelector('#qSubject').textContent=current.subject==='english'?'🔤 英語':'🏯 歴史';
-  const names={meaning:'意味',spelling:'スペル',chronology:'どっちが先？',cause:'原因→結果',person:'人物'};
+  const names={meaning:'意味',spelling:'スペル',chronology:'年代',chronology_sort:'年代並べ替え',cause:'原因→結果',person:'人物'};
   document.querySelector('#qType').textContent=names[current.type];
   document.querySelector('#qCount').textContent=`${qIndex+1} / ${queue.length}`;
   document.querySelector('#qPrompt').textContent=current.prompt;
@@ -1318,6 +1389,35 @@ function renderQuestion(){
   if(current.type==='spelling'){
     body.innerHTML='<input id="textAnswer" autocomplete="off" placeholder="英語を入力"><p class="muted">大文字・小文字は区別しません。</p>';
     document.querySelector('#submitAnswer').classList.remove('hidden');
+  } else if(current.type==='chronology_sort'){
+    const listHtml = `
+      <div style="background:#0d2136; border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin-bottom:14px;">
+        <div style="font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:bold;">【4つの出来事】古い順に並べ替えよう：</div>
+        ${current.presentedItems.map(it => `
+          <div style="display:flex; align-items:center; gap:10px; margin:7px 0; font-size:15px;">
+            <span style="background:linear-gradient(135deg,var(--pink),#9c70ff); color:#fff; font-weight:900; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;">${it.label}</span>
+            <span style="font-weight:bold; color:var(--text);">${escapeHtml(it.title)}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    const choicesHtml = `
+      <div class="choices" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:10px;">
+        ${current.choices.map(c => `
+          <button class="choice" data-answer="${escapeHtml(c)}" style="font-size:15px; font-weight:800; text-align:center; padding:14px 10px; letter-spacing:1px;">
+            ${escapeHtml(c)}
+          </button>
+        `).join('')}
+      </div>
+    `;
+    body.innerHTML = listHtml + choicesHtml;
+    body.querySelectorAll('.choice').forEach(b => b.onclick = () => {
+      body.querySelectorAll('.choice').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      selected = [b.dataset.answer];
+      document.querySelector('#submitAnswer').classList.remove('hidden');
+    });
+    current.correct = current.correct;
   } else {
     let correct,pool;
     if(current.type==='meaning'){
@@ -1357,38 +1457,69 @@ async function submit(){
   
   state.activity.push({ id:uid('a'), date:today(), at:new Date().toISOString(), subject:current.subject, type:current.type, itemId:current.item.id, correct:ok, elapsedMs:elapsed });
   
-  // ── お勉強したら埃が溜まる仕組み ──
-  // 1. 通常の問題回答で埃+1
-  let dustToAdd = 1;
-  let dustNotice = '🧹 勉強により宿舎に埃が1個溜まりました！';
+  // 今日の累計回答数（10問超え判定）
+  const todayCount = state.activity.filter(a => a.date === today()).length;
+  const isOvertime = todayCount > 10;
   
-  // 2. 「記憶の定着の欄が増えたら多めに埃をあげる」
+  // ── お勉強したら埃が溜まる仕組み ──
+  let dustToAdd = 1;
+  let dustNotice = isOvertime 
+    ? '✨【壁外調査ボーナス】金色のチリが発生！（掃除で+6Pt）' 
+    : '🧹 宿舎に埃が1個溜まりました（掃除で+2Pt）';
+  
+  // 記憶の定着ボーナス
   if (ok && newStage > oldStage) {
     if (newStage >= 4) {
-      // 「定着」に到達した！ドカンと+5個
-      dustToAdd += 5;
-      dustNotice = '🌟 祝・記憶が「定着」！宿舎に埃がどっさり+6個発生！';
-    } else {
-      // レベルアップ！多めに+3個
       dustToAdd += 3;
-      dustNotice = '📈 記憶の定着度アップ！宿舎に埃が多めに+4個発生！';
+      dustNotice = isOvertime 
+        ? '🌟【祝・定着】金色のチリがどっさり+4個発生！（掃除で+24Pt）' 
+        : '🌟 祝・記憶が「定着」！宿舎に埃が+4個発生！';
+    } else {
+      dustToAdd += 2;
+      dustNotice = isOvertime 
+        ? '📈【定着度UP】金色のチリが多めに+3個発生！（掃除で+18Pt）' 
+        : '📈 記憶の定着度アップ！宿舎に埃が+3個発生！';
     }
   }
-  spawnDust(dustToAdd, false);
+  
+  // 11問目以上の猛勉強特訓ボーナス（正解で即座に直接+5Pt！）
+  let directPtMsg = '';
+  if (isOvertime && ok) {
+    if (!state.piggRoom) state.piggRoom = defaultPiggRoom();
+    state.piggRoom.points += 5;
+    directPtMsg = ' 🔥【おかわり勉強ボーナス】直接 +5 Pt 獲得！';
+  }
+  
+  spawnDust(dustToAdd, false, isOvertime);
 
   const fb=document.querySelector('#feedback');
   fb.className='feedback show '+(ok?'ok':'ng');
   let why='';
-  if(current.subject==='history'){
+  if(current.type==='chronology_sort'){
+    why = `
+      <div style="margin-top:10px; background:#0a1a2c; border:1px solid var(--line); border-radius:12px; padding:12px; font-size:13px; line-height:1.7;">
+        <div style="font-weight:bold; color:var(--yellow); margin-bottom:6px;">📅 古い順の流れ（年号・時代）：</div>
+        ${current.chronoItems.map((it, idx) => `
+          <div style="margin:4px 0;">
+            <span style="color:var(--pink); font-weight:bold;">${idx + 1}. 【${it.label}】</span> 
+            <b>${escapeHtml(it.title)}</b> 
+            <span style="color:#54c7ff; font-size:12px;">（${escapeHtml(it.displayYear || it.yearStart + '年')}・${escapeHtml(it.era || '')}）</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } else if(current.subject==='history'){
     const rel=state.relations.find(r=>r.from===current.item.id);
     why=rel?.explanation||current.item.learningNotes?.[0]||'';
   }
   fb.innerHTML=`
     <b>${ok?'⭕ 正解！':'💡 もう一度覚えよう'}</b>
     <div>答え：${escapeHtml(correct)}</div>
-    ${why?`<div class="muted" style="margin-top:7px">なぜ？ ${escapeHtml(why)}</div>`:''}
+    ${why?`<div class="muted" style="margin-top:7px">${why}</div>`:''}
     <div class="muted" style="margin-top:4px;">次回の復習：${current.skill.nextDue}</div>
-    <div style="margin-top:6px; color:var(--yellow); font-size:13px; font-weight:bold;">${dustNotice}</div>
+    <div style="margin-top:6px; color:${isOvertime ? '#ffd700' : 'var(--yellow)'}; font-size:13px; font-weight:bold;">
+      ${dustNotice}${directPtMsg}
+    </div>
   `;
   document.querySelector('#submitAnswer').classList.add('hidden');
   document.querySelector('#nextQuestion').classList.remove('hidden');
@@ -1398,21 +1529,34 @@ async function submit(){
 
 async function finishSet(){
   state.profile.completedSets++;
-  // 10問完了ボーナス埃+2
-  spawnDust(2, false);
+  const todayTotal = state.activity.filter(a => a.date === today()).length;
+  // セット完了ボーナス埃
+  spawnDust(1, false, todayTotal > 10);
   updateTopAndHomeStats();
   await save();
   
-  document.querySelector('#qSubject').textContent='完了';
+  document.querySelector('#qSubject').textContent='セット完了';
   document.querySelector('#qType').textContent='';
-  document.querySelector('#qCount').textContent='';
-  document.querySelector('#qPrompt').textContent='今日の学習、最後までやり切りました！';
+  document.querySelector('#qCount').textContent=`本日: ${todayTotal}問`;
+  document.querySelector('#qPrompt').textContent='10問クリア！兵長からの指令：';
   document.querySelector('#qBody').innerHTML=`
-    <p class="muted">間違えた問題も、次に覚えるための大切な記録です。</p>
-    <div class="card" style="background:#1b382b; border:1px solid #c5a059; margin-top:14px;">
-      <h3 style="color:#ffd700; margin-bottom:6px;">🧹 宿舎に埃が溜まりました！</h3>
-      <p style="font-size:14px; margin:0 0 10px;">勉強の熱気で宿舎に埃が散らばっています。リヴァイ兵長たちと掃除して調査Ptを稼ぎ、家具を手に入れよう！</p>
-      <button class="btn primary" onclick="showView('dorm')">宿舎へ行く 🧹</button>
+    <div class="card" style="background:linear-gradient(135deg, #1b382b, #2d5a45); border:2px solid #ffd700; padding:22px; text-align:center; border-radius:18px;">
+      <div style="font-size:36px; margin-bottom:6px;">⚔️ 🔥 ⚔️</div>
+      <h2 style="color:#ffd700; margin:0 0 10px; font-size:20px;">「10問で終わりだと？甘ったれるな！」</h2>
+      <p style="font-size:14px; color:#f3e5ab; line-height:1.6; margin:0 0 18px; text-align:left;">
+        基本の10問だけでは、ポイントはほとんど貯まらん（掃除2Pt）。<br>
+        だが、ここから<strong>11問目以上の「壁外調査（おかわり特訓）」</strong>へ出撃すれば、<br>
+        <span style="color:#ff8a80; font-weight:bold;">① 正解するたびに直接 +5 Pt 獲得！</span><br>
+        <span style="color:#ffd700; font-weight:bold;">② お掃除Pt 3倍の「金色のチリ(+6Pt)」が湧き出るぞ！</span>
+      </p>
+      <div style="display:flex; flex-direction:column; gap:10px; max-width:320px; margin:auto;">
+        <button class="btn" style="background:linear-gradient(135deg,#ff7a9d,#ff5252); color:#fff; font-size:15px; font-weight:900; padding:14px; border-radius:12px; border:none; cursor:pointer;" onclick="startSet()">
+          🔥 壁外調査へ出撃！（もう10問解く）
+        </button>
+        <button class="btn" style="background:#10233a; border:1px solid #c5a059; color:#f3e5ab; font-size:13px; padding:10px; border-radius:12px; cursor:pointer;" onclick="showView('dorm')">
+          宿舎へ戻ってお掃除する 🧹
+        </button>
+      </div>
     </div>
   `;
   document.querySelector('#feedback').className='feedback';
@@ -1833,8 +1977,8 @@ const CHARACTERS = [
     id: 'eren',
     name: 'エレン・イェーガー',
     title: '熱血の新兵',
-    cost: 150,
-    desc: '「駆逐してやる…埃を一匹残らず！」調査Ptで解放可能。',
+    cost: 1500,
+    desc: '「駆逐してやる…埃を一匹残らず！」調査Pt 1500 で解放可能。',
     lines: [
       '駆逐してやる…！この部屋の埃を、一匹残らず！',
       '戦わなければ勝てない…掃除も同じだ！',
@@ -1869,8 +2013,8 @@ const CHARACTERS = [
     id: 'armin',
     name: 'アルミン・アルレルト',
     title: '知略の参謀',
-    cost: 200,
-    desc: '「効率的な片付けの作戦を立てよう」調査Ptで解放可能。',
+    cost: 3000,
+    desc: '「効率的な片付けの作戦を立てよう」調査Pt 3000 で解放可能。',
     lines: [
       '何かを変えることができる人は、部屋の埃を捨てることができる人だ。',
       'よく観察すれば、効率的な掃除のルートが見えてくるよ。',
@@ -1899,8 +2043,8 @@ const CHARACTERS = [
     id: 'mikasa',
     name: 'ミカサ・アッカーマン',
     title: '最強の護衛兵',
-    cost: 250,
-    desc: '「千春、勉強頑張ってる。部屋は私が綺麗に保つ。」調査Ptで解放可能。',
+    cost: 5000,
+    desc: '「千春、勉強頑張ってる。部屋は私が綺麗に保つ。」調査Pt 5000 で解放可能。',
     lines: [
       '千春、勉強頑張ってる。部屋は私が守る。',
       'この世界は残酷だ…そして、とても美しい（掃除後）。',
@@ -1949,8 +2093,8 @@ const BUDDIES = [
     id: 'horse',
     name: '軍馬（ホワイト号）',
     title: '誇り高き白馬',
-    cost: 100,
-    desc: '後ろをとことこ付いてくる調査兵団の駿馬。調査Ptで解放！',
+    cost: 1000,
+    desc: '後ろをとことこ付いてくる調査兵団の駿馬。調査Pt 1000 で解放！',
     svg: `
       <svg viewBox="0 0 64 64" width="64" height="64">
         <ellipse cx="32" cy="58" rx="20" ry="5" fill="rgba(0,0,0,0.3)"/>
@@ -1971,8 +2115,8 @@ const BUDDIES = [
     id: 'drone',
     name: '蒸気駆動型ルンバ',
     title: '立体機動式自律モップ',
-    cost: 180,
-    desc: '蒸気機関で自走し、床のチリを吸引・拭き掃除する。調査Ptで解放！',
+    cost: 2000,
+    desc: '蒸気機関で自走し、床のチリを吸引・拭き掃除する。調査Pt 2000 で解放！',
     svg: `
       <svg viewBox="0 0 64 64" width="64" height="64">
         <ellipse cx="32" cy="58" rx="18" ry="4" fill="rgba(0,0,0,0.3)"/>
@@ -1989,8 +2133,8 @@ const BUDDIES = [
     id: 'mini_titan',
     name: 'モップ持ちミニ巨人',
     title: '改心したお掃除隊員',
-    cost: 300,
-    desc: '頭に手ぬぐいを巻き、真面目にモップ掛けを手伝う。調査Ptで解放！',
+    cost: 3500,
+    desc: '頭に手ぬぐいを巻き、真面目にモップ掛けを手伝う。調査Pt 3500 で解放！',
     svg: `
       <svg viewBox="0 0 64 64" width="64" height="64">
         <ellipse cx="32" cy="58" rx="16" ry="4" fill="rgba(0,0,0,0.3)"/>
@@ -2015,7 +2159,7 @@ const FURNITURE_CATALOG = [
     id: 'supply_crates',
     name: '補給所の木箱と樽',
     desc: '立体機動装置の替刃やガス缶が整然と保管されている木箱。',
-    cost: 30,
+    cost: 100,
     svg: `
       <svg viewBox="0 0 75 65" width="75" height="65">
         <ellipse cx="37" cy="58" rx="30" ry="6" fill="rgba(0,0,0,0.35)"/>
@@ -2034,7 +2178,7 @@ const FURNITURE_CATALOG = [
     id: 'cleaning_rack',
     name: '兵長謹製・お掃除スタンド',
     desc: 'はたき・ほうき・モップ・雑巾が所定の位置に美しく収まる片付けの象徴。',
-    cost: 60,
+    cost: 300,
     svg: `
       <svg viewBox="0 0 55 80" width="55" height="80">
         <ellipse cx="28" cy="74" rx="20" ry="5" fill="rgba(0,0,0,0.3)"/>
@@ -2052,7 +2196,7 @@ const FURNITURE_CATALOG = [
     id: 'corps_banner',
     name: '自由の翼タペストリー',
     desc: '部屋を飾る調査兵団の誇り高き紋章旗。士気が大きく向上する。',
-    cost: 75,
+    cost: 500,
     svg: `
       <svg viewBox="0 0 60 75" width="60" height="75">
         <ellipse cx="30" cy="70" rx="18" ry="4" fill="rgba(0,0,0,0.3)"/>
@@ -2068,7 +2212,7 @@ const FURNITURE_CATALOG = [
     id: 'study_desk',
     name: '調査兵団の作戦机',
     desc: '巨人の生態研究や壁外作戦の計画書、整頓された書類が並ぶ重厚な机。',
-    cost: 90,
+    cost: 800,
     svg: `
       <svg viewBox="0 0 90 70" width="90" height="70">
         <ellipse cx="45" cy="64" rx="40" ry="6" fill="rgba(0,0,0,0.35)"/>
@@ -2085,7 +2229,7 @@ const FURNITURE_CATALOG = [
     id: 'book_shelf',
     name: '兵団の片付け書棚',
     desc: '整理術の本や壁外調査記録が背表紙を揃えて完璧に整理された本棚。',
-    cost: 120,
+    cost: 1200,
     svg: `
       <svg viewBox="0 0 70 85" width="70" height="85">
         <ellipse cx="35" cy="80" rx="30" ry="5" fill="rgba(0,0,0,0.35)"/>
@@ -2106,7 +2250,7 @@ const FURNITURE_CATALOG = [
     id: 'levi_tea_table',
     name: '兵長愛用の紅茶テーブル',
     desc: 'リヴァイが執務の合間に紅茶を嗜むアンティーク円卓。ピカピカに磨かれている。',
-    cost: 150,
+    cost: 1800,
     svg: `
       <svg viewBox="0 0 70 60" width="70" height="60">
         <ellipse cx="35" cy="54" rx="28" ry="6" fill="rgba(0,0,0,0.3)"/>
@@ -2122,7 +2266,7 @@ const FURNITURE_CATALOG = [
     id: 'soldier_bed',
     name: '古城宿舎の兵士ベッド',
     desc: '調査兵団宿舎の頑丈な木製ベッド。シーツの四隅は兵長基準でビシッと整頓されている。',
-    cost: 180,
+    cost: 2500,
     svg: `
       <svg viewBox="0 0 100 75" width="100" height="75">
         <ellipse cx="50" cy="68" rx="45" ry="6" fill="rgba(0,0,0,0.3)"/>
@@ -2138,13 +2282,14 @@ const FURNITURE_CATALOG = [
 ];
 
 // 5. 埃の発生ロジック（お勉強・単語登録・歴史カード登録時）
-function spawnDust(amount = 1, showMsg = true) {
+function spawnDust(amount = 1, showMsg = true, isBonus = false) {
   if (!state.piggRoom) state.piggRoom = defaultPiggRoom();
   for (let i = 0; i < amount; i++) {
     const newDust = {
       id: `d_${Date.now()}_${Math.random().toString(36).slice(2,5)}`,
       x: Math.floor(260 + Math.random() * 300),
-      y: Math.floor(250 + Math.random() * 180)
+      y: Math.floor(250 + Math.random() * 180),
+      isBonus: !!isBonus
     };
     state.piggRoom.dustTargets.push(newDust);
   }
@@ -2152,7 +2297,11 @@ function spawnDust(amount = 1, showMsg = true) {
   renderEntities();
   updateTopAndHomeStats();
   if (showMsg) {
-    showSpeech(`埃が${amount}個溜まったぞ…掃除せねばな。`);
+    if (isBonus) {
+      showSpeech(`✨ 壁外調査の熱気で金色のチリが${amount}個溜まったぞ！（掃除Pt3倍）`);
+    } else {
+      showSpeech(`埃が${amount}個溜まったぞ…掃除せねばな。`);
+    }
   }
 }
 
@@ -2301,11 +2450,21 @@ function createFurnitureElement(item, cat, zIndex) {
 
 function createDustElement(dust, zIndex) {
   const div = document.createElement('div');
-  div.className = 'dust-target';
+  div.className = `dust-target ${dust.isBonus ? 'bonus-dust' : ''}`;
   div.style.left = `${dust.x}px`;
   div.style.top = `${dust.y}px`;
   div.style.zIndex = zIndex;
-  div.innerHTML = `
+  div.innerHTML = dust.isBonus ? `
+    <svg viewBox="0 0 48 48" width="48" height="48">
+      <ellipse cx="24" cy="24" rx="20" ry="16" fill="#ffd700" opacity="0.85"/>
+      <circle cx="18" cy="20" r="9" fill="#ffb300"/>
+      <circle cx="30" cy="20" r="10" fill="#ffa000"/>
+      <circle cx="24" cy="28" r="11" fill="#ffe082"/>
+      <circle cx="14" cy="26" r="6" fill="#ffd54f"/>
+      <circle cx="34" cy="27" r="7" fill="#ffca28"/>
+      <text x="15" y="27" font-size="14" fill="#fff">✨</text>
+    </svg>
+  ` : `
     <svg viewBox="0 0 44 44" width="44" height="44">
       <ellipse cx="22" cy="22" rx="18" ry="14" fill="#555" opacity="0.6"/>
       <circle cx="16" cy="18" r="8" fill="#444"/>
@@ -2388,15 +2547,15 @@ function cleanDust(dust) {
     createSparkles(dust.x, dust.y);
     
     state.piggRoom.dustTargets = state.piggRoom.dustTargets.filter(d => d.id !== dust.id);
-    const earned = 30;
+    const earned = dust.isBonus ? 6 : 2;
     state.piggRoom.points += earned;
     
-    showFloatingText(dust.x, dust.y - 20, `+${earned} Pt!`, '#ffd700');
+    showFloatingText(dust.x, dust.y - 20, `+${earned} Pt!`, dust.isBonus ? '#ffd700' : '#81d4fa');
     updateCleanRateUI();
     updateTopAndHomeStats();
     
     const char = CHARACTERS.find(c => c.id === state.piggRoom.player.charId) || CHARACTERS[0];
-    const line = char.lines[Math.floor(Math.random() * char.lines.length)];
+    const line = dust.isBonus ? '「金色のチリだと…！？よくぞ壁外で特訓してきたな。」' : char.lines[Math.floor(Math.random() * char.lines.length)];
     showSpeech(line);
     
     renderEntities();
